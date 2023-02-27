@@ -1,6 +1,14 @@
 # team-5-sp23
 
-# Getting Started with Create React App
+## Website: https://csci-499-sp23.github.io/team-5-sp23/
+
+### Team 5 Members: https://github.com/csci-499-sp23/team-5-sp23 
+Michael Kim  // https://github.com/mike787k 
+Lucas Gunkel // https://github.com/lujogu 
+Lanique Peterson // https://github.com/La-Nique 
+Nabeel Amin  // https://github.com/AminDevelopment 
+
+<!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -69,4 +77,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
