@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import Logo from './assets/background.png';
+import Logo from './assets/background.png'; // it says theres an error but the image still shows up
 
 export default class App extends React.Component {
   render() {
