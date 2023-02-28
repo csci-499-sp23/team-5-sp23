@@ -1,20 +1,24 @@
 import React from 'react';
 import { Dimensions, ImageBackground, StyleSheet, Text, View, Button, Image } from 'react-native';
-import Logo from './assets/background.png'; // it says theres an error but the image still shows up
+// it says theres an error but the image still shows up
+import bg from './assets/background.png'; 
+import Baby from './assets/landingBaby.png'; 
+import Parents from './assets/landingParents.png'; 
+import Pic1 from './assets/landingPic1.png'; 
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.row}>
+          <View style={styles.container}>
+            <Text style={styles.h1}>GeneAI</Text>
+          </View>
           <View style={styles.row}>
-            <View style={styles.container}>
-              <Text style={styles.h1}>GeneAI</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.h2}>test</Text>
-              <Text style={styles.h2}>test2</Text>
-              <Text style={styles.h2}>test3</Text>
-              <View style={styles.buttonContainer}>
+            <Text style={styles.h2}>test</Text>
+            <Text style={styles.h2}>test2</Text>
+            <Text style={styles.h2}>test3</Text>
+            <View style={styles.buttonContainer}>
               <Button
               title="Log in"
               color="#f194ff"
@@ -23,7 +27,26 @@ export default class App extends React.Component {
             </View>
           </View>
         </View>
-        <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
+        <View style={styles.row}>
+          <View style={styles.container}>
+            <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
+            <Text style={styles.h3}>GeneAI is the only dating app that incorporates image generation technology. Utilize novel image processing techniques to find your matches today!</Text>
+            <View style={styles.buttonContainer}>
+              <Button
+              title="Create an Account"
+              color="#f194ff"
+              onPress={() => alert('Relocate to the Account Creation page.')}
+              />
+            </View>
+          </View>
+          <View style={styles.container}>
+            <Image
+            source={Pic1}
+            style={styles.image}
+            />
+          </View>
+        </View>
+        
       </View>
     );
   }
@@ -57,9 +80,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 8,
   },
+  h3: {
+    color: '#FAE042',
+    fontSize: 12,
+    marginTop: 8,
+  },
   image: {
-    height: ScreenHeight,
-    width: ScreenWidth,
+    resizeMode:'contain',
+    width: 400,
+    height: 347,
     justifyContent: 'center',
   },
   buttonContainer: {
