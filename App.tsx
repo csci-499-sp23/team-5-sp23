@@ -48,14 +48,18 @@ export default class App extends React.Component {
         </View>
         <View style={styles.row}>
           <View style={styles.row2}>
-            <Image
-            source={Baby}
-            style={styles.image}
-            />
-            <Image
-            source={Parents}
-            style={styles.image}
-            />
+            <View style={styles.container}>
+              <Image
+              source={Baby}
+              style={styles.image}
+              />
+            </View>
+            <View style={styles.container}>
+              <Image
+              source={Parents}
+              style={styles.image}
+              />
+            </View>
           </View>
           <View style={styles.container}>
             <Text style={styles.h2}>Obtain AI-Generated Renditions</Text>
