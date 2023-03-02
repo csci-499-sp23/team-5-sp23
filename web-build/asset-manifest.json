@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.js": "/team-5-sp23/static/js/main.697c9ef0.js",
+    "static/js/557.c5850530.js": "/team-5-sp23/static/js/557.c5850530.js",
+    "static/media/landingPic1.png": "/team-5-sp23/static/media/landingPic1.cd2e006a41f560a889ff.png",
+    "static/media/landingBaby.png": "/team-5-sp23/static/media/landingBaby.b0293c6238002eddee8f.png",
+    "static/media/landingParents.png": "/team-5-sp23/static/media/landingParents.fdbf9dc25629d212d658.png",
+    "favicon.ico": "/team-5-sp23/favicon.ico",
+    "index.html": "/team-5-sp23/index.html",
+    "favicon-32.png": "/team-5-sp23/favicon-32.png",
+    "favicon-16.png": "/team-5-sp23/favicon-16.png",
+    "serve.json": "/team-5-sp23/serve.json",
+    "manifest.json": "/team-5-sp23/manifest.json",
+    "main.697c9ef0.js.map": "/team-5-sp23/static/js/main.697c9ef0.js.map",
+    "557.c5850530.js.map": "/team-5-sp23/static/js/557.c5850530.js.map"
+  },
+  "entrypoints": [
+    "static/js/557.c5850530.js",
+    "static/js/main.697c9ef0.js"
+  ]
+}
