@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, ImageBackground, StyleSheet, Text, View, Button, Image } from 'react-native'; //i want to use imagebackground to add the purple gradient bg that was in the wireframe
+import { Dimensions, ImageBackground, StyleSheet, Text, View, Button, Image } from 'react-native'; 
 // it says theres an error but the image still shows up
 import bg from './assets/background.png'; 
 import Baby from './assets/landingBaby.png'; 
