@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dimensions, ImageBackground, StyleSheet, Text, View, Button, Image } from 'react-native'; 
 // it says theres an error but the image still shows up
-import bg from './assets/background.png'; 
-import Baby from './assets/landingBaby.png'; 
-import Parents from './assets/landingParents.png'; 
-import Pic1 from './assets/landingPic1.png'; 
+import bg from '../assets/background.png'; 
+import Baby from '../assets/landingBaby.png'; 
+import Parents from '../assets/landingParents.png'; 
+import Pic1 from '../assets/landingPic1.png'; 
 
 //MUST ADD FOR LINKING
 // yarn add @react-navigation/native
