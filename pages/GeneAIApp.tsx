@@ -1,11 +1,13 @@
 import React from 'react';
 import { Dimensions, ImageBackground, StyleSheet, Text, View, Button, Image } from 'react-native'; 
+import { StackNavigationProp } from '@react-navigation/stack';
 // it says theres an error but the image still shows up
 import bg from '../assets/background.png'; 
 import Baby from '../assets/landingBaby.png'; 
 import Parents from '../assets/landingParents.png'; 
 import Pic1 from '../assets/landingPic1.png'; 
 import titlelogo from '../assets/titlelogo.png'; 
+
 
 //MUST ADD FOR LINKING
 // yarn add @react-navigation/native
@@ -14,7 +16,16 @@ import titlelogo from '../assets/titlelogo.png';
 // yarn add @react-navigation/bottom-tabs
 
 
-const GeneAIAPP = () =>{
+type ProfileScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>;
+
+type Props = {
+  navigation: ProfileScreenNavigationProp;
+};
+
+const GeneAIAPP = ({navigation}: Props) =>{
     return (
         //<View style={styles.outercontainer}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.outercontainer}>
@@ -33,7 +44,7 @@ const GeneAIAPP = () =>{
                   <Button
                   title="Log in"
                   color="#C64C85"
-                  onPress={() => alert('You just logged in!')}
+                  onPress={() => navigation.navigate('Login')}
                   />
                 </View>
               </View>
