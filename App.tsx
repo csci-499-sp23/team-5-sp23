@@ -16,7 +16,7 @@ export default function App(){
     <NavigationContainer>
       <Stack.Navigator 
         screenOptions={{
-          headerShown: true //pls make this false
+          headerShown: false //pls make this false
         }}>
         <Stack.Screen
           name="Home"

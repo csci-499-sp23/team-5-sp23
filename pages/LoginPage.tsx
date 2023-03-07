@@ -1,8 +1,8 @@
 import React from "react"
-import { Dimensions, ImageBackground, StyleSheet, Text, View, Button, Image } from 'react-native'; 
+import { Text, View } from 'react-native'; 
 
 
-const LoginPage = ({navigation}: Props) => {
+const LoginPage = () => {
     return(
     <View
     style={{
@@ -10,7 +10,7 @@ const LoginPage = ({navigation}: Props) => {
         justifyContent: 'center',
         alignItems: 'center',
     }}>
-        <Text>Hello, world!</Text>
+        <Text>THIS IS THE LOGIN PAGE!</Text>
     </View>
     );
 };
