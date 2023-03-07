@@ -12,7 +12,6 @@ import Pic1 from './assets/landingPic1.png';
 // yarn add @react-navigation/stack
 // yarn add @react-navigation/bottom-tabs
 
-
 export default class App extends React.Component {
   render() {
     return (
@@ -22,20 +21,20 @@ export default class App extends React.Component {
             <View style={styles.container}>
               <Text style={styles.h1}>GeneAI</Text>
             </View>
-            <View style={styles.row}>
-              <Text style={styles.h2}>test</Text>
-              <Text style={styles.h2}>test2</Text>
-              <Text style={styles.h2}>test3</Text>
-              <View style={styles.buttonContainer}>
-                <Button
-                title="Log in"
-                color="#f194ff"
-                onPress={() => alert('You just logged in!')}
-                />
+              <View style={styles.row}>      
+                <Text style={styles.h2}>test</Text>
+                <Text style={styles.h2}>test2</Text>
+                <Text style={styles.h2}>test3</Text>
+                <View style={styles.buttonContainer}>
+                  <Button
+                  title="Log in"
+                  color="#f194ff"
+                  onPress={() => alert('You just logged in!')}
+                  />
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.row}>
+          <View style={styles.middlebottomrow}>
             <View style={styles.container}>
               <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
               <Text style={styles.h3}>GeneAI is the only dating app that incorporates image generation technology. Utilize novel image processing techniques to find your matches today!</Text>
@@ -54,7 +53,7 @@ export default class App extends React.Component {
               />
             </View>
           </View>
-          <View style={styles.row}>
+          <View style={styles.middlebottomrow}>
             <View style={styles.row2}>
               <View style={styles.container}>
                 <Image
@@ -107,9 +106,19 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    borderBottomWidth: "1px", //make sure to delete these
+    borderBottomWidth: 1, //make sure to delete these
     borderColor: "#008F68", //same with this
     flex: 1,
+    justifyContent: 'space-between',
+    //backgroundColor: '#000',
+    alignItems: 'center',
+    width: '70%',
+  },
+  middlebottomrow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1, //make sure to delete these
+    borderColor: "#008F68", //same with this
+    flex: 3,
     justifyContent: 'space-between',
     //backgroundColor: '#000',
     alignItems: 'center',
