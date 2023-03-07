@@ -5,6 +5,7 @@ import bg from '../assets/background.png';
 import Baby from '../assets/landingBaby.png'; 
 import Parents from '../assets/landingParents.png'; 
 import Pic1 from '../assets/landingPic1.png'; 
+import titlelogo from '../assets/titlelogo.png'; 
 
 //MUST ADD FOR LINKING
 // yarn add @react-navigation/native
@@ -19,7 +20,10 @@ const GeneAIAPP = () =>{
         <ImageBackground source={bg} resizeMode="cover" style={styles.outercontainer}>
           <View style={styles.row}>
             <View style={styles.container}>
-              <Text style={styles.h1}>GeneAI</Text>
+              <Image
+              source={titlelogo}
+              style={styles.logoimage}
+              />
             </View>
               <View style={styles.row}>      
                 <Text style={styles.h2}>test</Text>
@@ -28,43 +32,43 @@ const GeneAIAPP = () =>{
                 <View style={styles.buttonContainer}>
                   <Button
                   title="Log in"
-                  color="#f194ff"
+                  color="#C64C85"
                   onPress={() => alert('You just logged in!')}
                   />
                 </View>
               </View>
             </View>
-          <View style={styles.middlebottomrow}>
+          <View style={styles.middlerow}>
             <View style={styles.container}>
               <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
               <Text style={styles.h3}>GeneAI is the only dating app that incorporates image generation technology. Utilize novel image processing techniques to find your matches today!</Text>
               <View style={styles.buttonContainer}>
                 <Button
                 title="Create an Account"
-                color="#f194ff"
+                color="#C64C85"
                 onPress={() => alert('Relocate to the Account Creation page.')}
                 />
               </View>
             </View>
-            <View style={styles.container}>
+            <View style={styles.imageportioncontainer}>
               <Image
               source={Pic1}
-              style={styles.image}
+              style={styles.topimage}
               />
             </View>
           </View>
-          <View style={styles.middlebottomrow}>
+          <View style={styles.bottomrow}>
             <View style={styles.row2}>
               <View style={styles.container}>
                 <Image
                 source={Baby}
-                style={styles.image}
+                style={styles.bottomimage}
                 />
               </View>
               <View style={styles.container}>
                 <Image
                 source={Parents}
-                style={styles.image}
+                style={styles.bottomimage}
                 />
               </View>
             </View>
@@ -74,7 +78,7 @@ const GeneAIAPP = () =>{
               <View style={styles.buttonContainer}>
                 <Button
                 title="Get It Now"
-                color="#f194ff"
+                color="#C64C85"
                 onPress={() => alert('You just logged in!')}
                 />
               </View>
@@ -103,6 +107,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
       },
+      imageportioncontainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        //backgroundColor: '#000',
+        alignItems: 'center',
+        width: '100%',
+      },
       row: {
         flexDirection: 'row',
         borderBottomWidth: 1, //make sure to delete these
@@ -113,7 +124,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '70%',
       },
-      middlebottomrow: {
+      middlerow: {
         flexDirection: 'row',
         borderBottomWidth: 1, //make sure to delete these
         borderColor: "#008F68", //same with this
@@ -123,9 +134,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '70%',
       },
+      bottomrow: {
+        flexDirection: 'row',
+        borderBottomWidth: 1, //make sure to delete these
+        borderColor: "#008F68", //same with this
+        flex: 2,
+        justifyContent: 'space-between',
+        //backgroundColor: '#000',
+        alignItems: 'center',
+        width: '70%',
+      },
       row2: {
         flexDirection: 'row',
-        flex: 1,
+        flex: 2,
         justifyContent: 'space-between',
         //backgroundColor: '#000',
         alignItems: 'center',
@@ -145,14 +166,26 @@ const styles = StyleSheet.create({
         fontSize: 12,
         marginTop: 8,
       },
-      image: {
+      topimage: {
+        resizeMode:'contain',
+        width: 400,
+        height: 356,
+        justifyContent: 'center',
+      },
+      bottomimage: {
         resizeMode:'contain',
         width: 300,
         height: 267,
         justifyContent: 'center',
       },
+      logoimage: {
+        resizeMode:'contain',
+        width: 200, //fix
+        height: 178,
+        justifyContent: 'center',
+      },
       buttonContainer: {
-        backgroundColor: '#008F68',
+        //backgroundColor: '#008F68',
         borderRadius: 5,
         padding: 8,
         margin: 8,
