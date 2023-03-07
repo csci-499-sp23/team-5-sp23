@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
       },
       row: {
         flexDirection: 'row',
-        borderBottomWidth: 1, //make sure to delete these
-        borderColor: "#008F68", //same with this
+        //borderBottomWidth: 1, //make sure to delete these
+        //borderColor: "#008F68", //same with this
         flex: 1,
         justifyContent: 'space-between',
         //backgroundColor: '#000',
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
       },
       middlerow: {
         flexDirection: 'row',
-        borderBottomWidth: 1, //make sure to delete these
+        //borderBottomWidth: 1, //make sure to delete these
         borderColor: "#008F68", //same with this
         flex: 3,
         justifyContent: 'space-between',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
       },
       bottomrow: {
         flexDirection: 'row',
-        borderBottomWidth: 1, //make sure to delete these
+        //borderBottomWidth: 1, //make sure to delete these
         borderColor: "#008F68", //same with this
         flex: 2,
         justifyContent: 'space-between',
