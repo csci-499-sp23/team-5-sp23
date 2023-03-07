@@ -1,0 +1,33 @@
+body{
+  margin: 0;
+  padding: 0;
+  background-color: lightcoral;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup{
+  max-width: 500px;
+  background-color: lightgray;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  padding: 50px 50px;
+}
+
+.text{
+  padding: 10px 40px;
+  font-size: 15px;
+  height: 550px;
+  font-weight: 200;
+  overflow-y: auto;
+}
+
+.text::-webkit-scrollbar{
+  width: 5px;
+  background-color: honeydew;
+}
+
+.text::-webkit-scrollbar-thumb{
+  background-color: rgb(224, 220, 206);
+}
