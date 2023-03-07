@@ -12,74 +12,77 @@ import Pic1 from './assets/landingPic1.png';
 // yarn add @react-navigation/stack
 // yarn add @react-navigation/bottom-tabs
 
+
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.container}>
-            <Text style={styles.h1}>GeneAI</Text>
+      //<View style={styles.outercontainer}>
+        <ImageBackground source={bg} resizeMode="cover" style={styles.outercontainer}>
+          <View style={styles.row}>
+            <View style={styles.container}>
+              <Text style={styles.h1}>GeneAI</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.h2}>test</Text>
+              <Text style={styles.h2}>test2</Text>
+              <Text style={styles.h2}>test3</Text>
+              <View style={styles.buttonContainer}>
+                <Button
+                title="Log in"
+                color="#f194ff"
+                onPress={() => alert('You just logged in!')}
+                />
+              </View>
+            </View>
           </View>
           <View style={styles.row}>
-            <Text style={styles.h2}>test</Text>
-            <Text style={styles.h2}>test2</Text>
-            <Text style={styles.h2}>test3</Text>
-            <View style={styles.buttonContainer}>
-              <Button
-              title="Log in"
-              color="#f194ff"
-              onPress={() => alert('You just logged in!')}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.container}>
-            <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
-            <Text style={styles.h3}>GeneAI is the only dating app that incorporates image generation technology. Utilize novel image processing techniques to find your matches today!</Text>
-            <View style={styles.buttonContainer}>
-              <Button
-              title="Create an Account"
-              color="#f194ff"
-              onPress={() => alert('Relocate to the Account Creation page.')}
-              />
-            </View>
-          </View>
-          <View style={styles.container}>
-            <Image
-            source={Pic1}
-            style={styles.image}
-            />
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.row2}>
             <View style={styles.container}>
-              <Image
-              source={Baby}
-              style={styles.image}
-              />
+              <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
+              <Text style={styles.h3}>GeneAI is the only dating app that incorporates image generation technology. Utilize novel image processing techniques to find your matches today!</Text>
+              <View style={styles.buttonContainer}>
+                <Button
+                title="Create an Account"
+                color="#f194ff"
+                onPress={() => alert('Relocate to the Account Creation page.')}
+                />
+              </View>
             </View>
             <View style={styles.container}>
               <Image
-              source={Parents}
+              source={Pic1}
               style={styles.image}
               />
             </View>
           </View>
-          <View style={styles.container}>
-            <Text style={styles.h2}>Obtain AI-Generated Renditions</Text>
-            <Text style={styles.h3}>Each match allows users to obtain high quality, one-of-a-kind images of your children. </Text>
-            <View style={styles.buttonContainer}>
-              <Button
-              title="Get It Now"
-              color="#f194ff"
-              onPress={() => alert('You just logged in!')}
-              />
+          <View style={styles.row}>
+            <View style={styles.row2}>
+              <View style={styles.container}>
+                <Image
+                source={Baby}
+                style={styles.image}
+                />
+              </View>
+              <View style={styles.container}>
+                <Image
+                source={Parents}
+                style={styles.image}
+                />
+              </View>
+            </View>
+            <View style={styles.container}>
+              <Text style={styles.h2}>Obtain AI-Generated Renditions</Text>
+              <Text style={styles.h3}>Each match allows users to obtain high quality, one-of-a-kind images of your children. </Text>
+              <View style={styles.buttonContainer}>
+                <Button
+                title="Get It Now"
+                color="#f194ff"
+                onPress={() => alert('You just logged in!')}
+                />
+              </View>
             </View>
           </View>
-        </View>
-      </View>
+        </ImageBackground>  
+      //</View>
     );
   }
 }
@@ -88,18 +91,27 @@ let ScreenHeight = Dimensions.get('window').height;
 let ScreenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-  container: {
+  outercontainer: {
     flex: 1,
     justifyContent: 'space-between',
     backgroundColor: '#000',
     alignItems: 'center',
     width: '100%',
   },
-  row: {
-    flexDirection: 'row',
+  container: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: '#000',
+    //backgroundColor: '#000',
+    alignItems: 'center',
+    width: '100%',
+  },
+  row: {
+    flexDirection: 'row',
+    borderBottomWidth: "1px", //make sure to delete these
+    borderColor: "#008F68", //same with this
+    flex: 1,
+    justifyContent: 'space-between',
+    //backgroundColor: '#000',
     alignItems: 'center',
     width: '70%',
   },
@@ -107,7 +119,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: '#000',
+    //backgroundColor: '#000',
     alignItems: 'center',
     width: '30%',
   },
