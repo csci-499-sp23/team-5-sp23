@@ -8,14 +8,6 @@ import Parents from '../assets/landingParents.png';
 import Pic1 from '../assets/landingPic1.png'; 
 import titlelogo from '../assets/titlelogo.png'; 
 
-
-//MUST ADD FOR LINKING
-// yarn add @react-navigation/native
-// (npx) expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
-// yarn add @react-navigation/stack
-// yarn add @react-navigation/bottom-tabs
-
-
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Login'
