@@ -9,8 +9,7 @@ import Pic1 from '../assets/landingPic1.png';
 import titlelogo from '../assets/titlelogo.png'; 
 
 type ProfileScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Login'
+  RootStackParamList
 >;
 
 type Props = {
@@ -19,7 +18,7 @@ type Props = {
 
 const GeneAIAPP = ({navigation}: Props) =>{
     return (
-        //<View style={styles.outercontainer}>
+      //<View style={styles.outercontainer}>
         <ImageBackground source={bg} resizeMode="cover" style={styles.outercontainer}>
           <View style={styles.row}>
             <View style={styles.container}>
@@ -29,14 +28,49 @@ const GeneAIAPP = ({navigation}: Props) =>{
               />
             </View>
               <View style={styles.row}>      
-                <Text style={styles.h2}>test</Text>
+                {/* <Text style={styles.h2}>test</Text>
                 <Text style={styles.h2}>test2</Text>
-                <Text style={styles.h2}>test3</Text>
-                <View style={styles.buttonContainer}>
+                <Text style={styles.h2}>test3</Text> */}
+                <View style={styles.buttonContainertemp}>
                   <Button
                   title="Log in"
                   color="#C64C85"
                   onPress={() => navigation.navigate('Login')}
+                  />
+                </View>
+                <View style={styles.buttonContainertemp}>
+                  <Button
+                  title="Signup"
+                  color="#C64C85"
+                  onPress={() => navigation.navigate('Signup')}
+                  />
+                </View>
+                <View style={styles.buttonContainertemp}>
+                  <Button
+                  title="Matchup"
+                  color="#C64C85"
+                  onPress={() => navigation.navigate('Matchup')}
+                  />
+                </View>
+                <View style={styles.buttonContainertemp}>
+                  <Button
+                  title="Messaging"
+                  color="#C64C85"
+                  onPress={() => navigation.navigate('Messaging')}
+                  />
+                </View>
+                <View style={styles.buttonContainertemp}>
+                  <Button
+                  title="Profile"
+                  color="#C64C85"
+                  onPress={() => navigation.navigate('Profile')}
+                  />
+                </View>
+                <View style={styles.buttonContainertemp}>
+                  <Button
+                  title="TOS"
+                  color="#C64C85"
+                  onPress={() => navigation.navigate('TOS')}
                   />
                 </View>
               </View>
@@ -45,14 +79,14 @@ const GeneAIAPP = ({navigation}: Props) =>{
             <View style={styles.container}>
               <Text style={styles.h2}>A ONE-OF-A-KIND DATING EXPERIENCE.</Text>
               <Text style={styles.h3}>GeneAI is the only dating app that incorporates image generation technology. Utilize novel image processing techniques to find your matches today!</Text>
-              <View style={styles.buttonContainer}>
-                <Button
-                title="Create an Account"
-                color="#C64C85"
-                onPress={() => alert('Relocate to the Account Creation page.')}
-                />
-              </View>
+            <View style={styles.buttonContainer}>
+              <Button
+              title="Create an Account"
+              color="#C64C85"
+              onPress={() => alert('Relocate to the Account Creation page.')}
+              />
             </View>
+          </View>
             <View style={styles.imageportioncontainer}>
               <Image
               source={Pic1}
@@ -91,9 +125,6 @@ const GeneAIAPP = ({navigation}: Props) =>{
       //</View>
     );
 };
-
-let ScreenHeight = Dimensions.get('window').height;
-let ScreenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     outercontainer: {
@@ -192,6 +223,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 8,
         margin: 8,
+      },
+      buttonContainertemp: {
+        //backgroundColor: '#008F68',
+        borderRadius: 5,
+        padding: 2,
+        margin: 2,
       },
 });
 
