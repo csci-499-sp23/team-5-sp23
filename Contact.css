@@ -1,0 +1,36 @@
+body{
+  margin: 0;
+  padding: 0;
+  background-color: lightcoral;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type=textsub], select, textarea{
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-top: 5px;
+	margin-bottom: 20px;
+	resize: vertical;
+  }
+  
+  input[type=submit] {
+	background-color: hsl(347, 53%, 49%);
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+  }
+
+
+.contactbox {
+	border-radius: 5px;
+	padding: 30px;
+	margin:0;
+  }
