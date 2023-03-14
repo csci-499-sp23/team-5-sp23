@@ -1,12 +1,50 @@
 # team-5-sp23 - Lucas Temp Branch PR
 
-## Website: https://csci-499-sp23.github.io/team-5-sp23/
+###### Our Site: https://csci-499-sp23.github.io/team-5-sp23/
 
-### Team 5 Members: https://github.com/csci-499-sp23/team-5-sp23 
-Michael Kim  // https://github.com/mike787k 
+#### To run client:
+
+```bash
+$ npm start
+$ w
+```
+
+View in browser at <code>http://localhost:3000</code>
+
+#### To deploy client:
+
+```bash
+$ yarn deploy
+```
+
+<!-- #### To start server:
+
+<ol>
+  <li>Navigate to server folder <code>cd server</code></li>
+  <li>Install dependencies <code>npm i</code></li>
+  <li>Build <code>dist</code> folder with <code>npm run build</code></li>
+  <li>Create a <code>.env</code> file directly in the server folder and add the MongoDB connection string (ask Manav)</li>
+  <li>Run server with <code>npm run watch</code></li>
+  <li>Server hosted at port 3001 by default <code>http://localhost:3001</code>
+  <br/>
+  </li>
+</ol> -->
+
+
+
+---
+
+
+### Team 5 Members: 
+
+Michael Kim // https://github.com/mike787k 
+
 Lucas Gunkel // https://github.com/lujogu 
+
 Lanique Peterson // https://github.com/La-Nique 
+
 Nabeel Amin  // https://github.com/AminDevelopment 
+
 
 <!-- # Getting Started with Create React App
 
