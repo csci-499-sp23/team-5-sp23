@@ -1,4 +1,4 @@
-# team-5-sp23 - Lucas Temp Branch PR
+# team-5-sp23
 
 ###### Our Site: https://csci-499-sp23.github.io/team-5-sp23/
 
