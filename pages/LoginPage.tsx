@@ -1,6 +1,6 @@
 import React from "react"
 // import { Text, View } from 'react-native'; 
-// import Logo from '../assets/logo.png';
+import Logo from '../assets/logo.png';
 import { onChange, validateForm } from './utils';
 
 class LoginPage extends React.Component<any, any> {
@@ -17,23 +17,23 @@ class LoginPage extends React.Component<any, any> {
     render() {
         const { email, password, rememberMe } = this.state;
         return (
-            <div className="container-fluid" >
-                <div className="row my-3">
-                    <div className="col-md-4 offset-md-4">
-                        <div className="text-center">
+            <div >
+                <div >
+                    <div >
+                        <div >
                             {/* <img src={Logo} height="250" /> */}
                         </div>
-                        <form onSubmit={this.onSubmit} className="login-box bg-light br-3">
-                            <div className="row">
-                                <div className="col-12">
-                                    <div className="p-3">
-                                        <h1 className="font-weight-bold">Login</h1>
-                                        <p className="mb-0">Login with your credentials</p>
-                                        <hr className="mb-0" />
+                        <form onSubmit={this.onSubmit} className="">
+                            <div >
+                                <div >
+                                    <div >
+                                        <h1 >Login</h1>
+                                        <p >Login with your credentials</p>
+                                        <hr />
                                     </div>
                                 </div>
-                                <div className="col-12">
-                                    <div className="px-3">
+                                <div >
+                                    <div >
                                         <div className="form-group">
                                             <label>Email *</label>
                                             <input
@@ -60,11 +60,11 @@ class LoginPage extends React.Component<any, any> {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-6">
-                                    <div className="p-3 form-group">
-                                        <div className="form-check">
-                                            <label className="form-check-label">
+                            <div >
+                                <div >
+                                    <div >
+                                        <div >
+                                            <label >
                                                 <input
                                                     name={rememberMe.name}
                                                     checked={rememberMe.value}
@@ -77,20 +77,20 @@ class LoginPage extends React.Component<any, any> {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-6">
-                                    <div className="p-3 text-right">
+                                <div >
+                                    <div >
                                         <button type="submit" className="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
 
-                        <div className="row mt-3">
-                            <div className="col-6">
-                                <a className="text-light" href="#">Register here</a>
+                        <div >
+                            <div >
+                                <a className="" href="#">Register here</a>
                             </div>
-                            <div className="col-6 text-right">
-                                <a className="text-light" href="#">Forgot password ?</a>
+                            <div >
+                                <a className="" href="#">Forgot password ?</a>
                             </div>
                         </div>
                     </div>
