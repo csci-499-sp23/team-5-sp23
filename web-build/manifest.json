@@ -1,9 +1,0 @@
-{
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "lang": "en",
-  "name": "Gene-Ai",
-  "short_name": "Gene-Ai",
-  "start_url": "/?utm_source=web_app_manifest",
-  "orientation": "portrait"
-}
