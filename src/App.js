@@ -22,9 +22,56 @@ export default function App() {
           <Route path="Profile Page" element={<Profile />} />
           <Route path="Signup for GeneAI" element={<Signup />} />
           <Route path="Legal Stuff" element={<Legal />} />
-          {/* <Route path="*" element={<NoMatch />} /> */}
+          <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
+    </div>
+  );
+}
+
+var navStyle = { textDecoration: "none", color: "red" };
+
+function Layout() {
+  return (
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link style={navStyle} to="/">Home</Link>
+          </li>
+          <li>
+            <Link style={navStyle} to="/Login-Page">Login</Link>
+          </li>
+          <li>
+            <Link style={navStyle} to="/Matching-Page">Find Love</Link>
+          </li>
+          <li>
+            <Link style={navStyle} to="/Chat-Page">Chat</Link>
+          </li>
+          <li>
+            <Link style={navStyle} to="/Profile-Page">User Profile</Link>
+          </li>
+          <li>
+            <Link style={navStyle} to="/Signup-Page">Join Now</Link>
+          </li>
+          <li>
+            <Link style={navStyle} to="/Terms-Conditions-Page">Legal Stuff</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <hr />
+
+      <Outlet />
+    </div>
+  );
+}
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>Whoopsies. You are lost!</h2>
+      <Link to="/">click here to return to the home page :)</Link>
     </div>
   );
 }

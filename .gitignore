@@ -9,6 +9,7 @@
 # testing
 /coverage
 /firebase-debug.log
+/deploy-prod.yml
 
 # production
 /build
