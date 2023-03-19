@@ -13,6 +13,8 @@ Lanique Peterson // https://github.com/La-Nique
 Nabeel Amin  // https://github.com/AminDevelopment 
 
 
+###### deprecated site: https://csci-499-sp23.github.io/team-5-sp23/
+
 <!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
