@@ -18,19 +18,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} /> 
         <Route path="/Login-Page" element={<Login />} />
-<<<<<<< HEAD
-        <Route path="Match" element={<Match />} />
-        <Route path="Chat" element={<Chat />} />
-        <Route path="/Profile-Page" element={<Profile />} />
-        <Route path="Signup for GeneAI" element={<Signup />} />
-        <Route path="Legal Stuff" element={<Legal />} />
-=======
         <Route path="/Matching-Page" element={<Match />} />
         <Route path="/Chat-Page" element={<Chat />} />
         <Route path="/Profile-Page" element={<Profile />} />
         <Route path="/Signup-Page" element={<Signup />} />
         <Route path="/Terms-Conditions-Page" element={<Legal />} />
->>>>>>> 8c625d708ed136ee20c922b40184b65e58590cef
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </div>
