@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import './css/profileStyles.css'
 import profilePicture from './img/profile_pic_guy.jpeg'
 
@@ -25,5 +26,14 @@ const Profile = () =>{
         </div>
     );
 }
+=======
+const Profile = () => {
+    return (
+        <div>
+            <h1>Profile!</h1>
+        </div>
+    );
+};
+>>>>>>> 8c625d708ed136ee20c922b40184b65e58590cef
 
 export default Profile;
