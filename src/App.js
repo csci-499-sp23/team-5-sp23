@@ -21,7 +21,7 @@ export default function App() {
         <Route path="/Login-Page" element={<Login />} />
         <Route path="Match" element={<Match />} />
         <Route path="Chat" element={<Chat />} />
-        <Route path="Profile Page" element={<Profile />} />
+        <Route path="/Profile-Page" element={<Profile />} />
         <Route path="Signup for GeneAI" element={<Signup />} />
         <Route path="Legal Stuff" element={<Legal />} />
         <Route path="*" element={<NoMatch />} />
