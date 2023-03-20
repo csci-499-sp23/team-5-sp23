@@ -24,7 +24,7 @@ export default function App() {
         <Route path="Profile Page" element={<Profile />} />
         <Route path="Signup for GeneAI" element={<Signup />} />
         <Route path="Legal Stuff" element={<Legal />} />
-        {/* <Route path="*" element={<NoMatch />} /> */}
+        <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
     </div>
