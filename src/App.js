@@ -7,14 +7,14 @@ import Chat from './components/Chat-Page';
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
 import Legal from './components/Terms-Conditions-Page';
-import NavBar from './components/NavBar';
+// import NavBar from './components/NavBar';
 
 import { Routes, Route, NavLink } from "react-router-dom";
 
 export default function App() {
   return (
     <div className="App">
-      <NavBar />
+      {/* <NavBar /> */}
       <Routes>
         <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
