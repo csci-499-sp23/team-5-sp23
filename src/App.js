@@ -16,16 +16,15 @@ export default function App() {
     <div className="App">
       {/* <NavBar /> */}
       <Routes>
-        <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="Login" element={<Login />} />
+        <Route path="/" element={<Layout />} /> 
+        {/* <Route index element={<Home />} /> */}
+        <Route path="/Login-Page" element={<Login />} />
         <Route path="Match" element={<Match />} />
         <Route path="Chat" element={<Chat />} />
         <Route path="Profile Page" element={<Profile />} />
         <Route path="Signup for GeneAI" element={<Signup />} />
         <Route path="Legal Stuff" element={<Legal />} />
         <Route path="*" element={<NoMatch />} />
-        </Route>
       </Routes>
     </div>
   );
@@ -38,7 +37,6 @@ function Layout() {
  return (
  <nav>
     <div>
-
        <ul>
           <li>
             <NavLink to="/">Home</NavLink>
