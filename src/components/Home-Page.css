@@ -1,0 +1,118 @@
+
+.outercontainer {
+    flex: 1;
+    justify-content: 'space-between';
+    background-color: '#000';
+    align-items: 'center';
+    width: '100%';
+}
+
+.container {
+    flex: 1;
+    justify-content: 'space-between';
+    /* backgroundColor: '#000'; */
+    align-items: 'center';
+    width: '100%';
+}
+
+.imageportioncontainer {
+    flex: 1;
+    justify-content: 'space-between';
+    /* backgroundColor: '#000'; */
+    align-items: 'center';
+    width: '100%';
+}
+
+.row {
+    flex-direction: 'row';
+    /* //borderBottomWidth: 1; //make sure to delete these
+    //border-color: "#008F68"; //same with this */
+    flex: 1;
+    justify-content: 'space-between';
+    /* //backgroundColor: '#000'; */
+    align-items: 'center';
+    width: '70%';
+}
+
+.middlerow {
+    flex-direction: 'row';
+    /* //borderBottomWidth: 1; //make sure to delete these */
+    border-color: "#008F68";
+    flex: 3;
+    justify-content: 'space-between';
+    /* //backgroundColor: '#000'; */
+    align-items: 'center';
+    width: '70%';
+}
+
+.bottomrow {
+    flex-direction: 'row';
+    /* //borderBottomWidth: 1; //make sure to delete these */
+    border-color: "#008F68";
+    flex: 2;
+    justify-content: 'space-between';
+    /* //backgroundColor: '#000'; */
+    align-items: 'center';
+    width: '70%';
+}
+
+.row2 {
+    flex-direction: 'row';
+    flex: 2;
+    justify-content: 'space-between';
+    /* //backgroundColor: '#000'; */
+    align-items: 'center';
+    width: '30%';
+}
+
+.h1 {
+    color: '#008F68';
+    font-size: 40;
+}
+
+.h2 {
+    color: '#FAE042';
+    font-size: 18;
+    margin-top: 8;
+}
+
+.h3 {
+    color: '#FAE042';
+    font-size: 12;
+    margin-top: 8;
+}
+
+.topimage {
+    object-fit:'contain';
+    width: 400;
+    height: 356;
+    justify-content: 'center';
+}
+
+.bottomimage {
+    object-fit:'contain';
+    width: 300;
+    height: 267;
+    justify-content: 'center';
+}
+
+.logoimage {
+    object-fit:'contain';
+    width: 200; 
+    height: 178;
+    justify-content: 'center';
+}
+
+.buttonContainer {
+    /* //backgroundColor: '#008F68'; */
+    border-radius: 5;
+    padding: 8;
+    margin: 8;
+}
+
+.buttonContainertemp {
+    /* //backgroundColor: '#008F68'; */
+    border-radius: 5;
+    padding: 2;
+    margin: 2;
+}
