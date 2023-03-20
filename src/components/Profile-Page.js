@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import './css/profileStyles.css'
 import profilePicture from './img/profile_pic_guy.jpeg'
 
