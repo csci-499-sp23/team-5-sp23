@@ -8,7 +8,7 @@ const Match = () => {
             <div className="left_card" >
                 <h1>Left Hand side</h1>
                 <div>
-                    <img src={profilePicture} />
+                    <img src={profilePicture} alt='Profile'/>
                     <div className="bottom_div">
                         This is where names and additional information goes
                     </div>
@@ -16,9 +16,8 @@ const Match = () => {
             </div>
             <div className="right_card">
                 <h1>Right Side</h1>
-                <img src={dating_potential} />
+                <img src={dating_potential} alt='DatingPotential'/>
             </div>
-            
         </div>
     );
 };

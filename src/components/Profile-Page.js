@@ -7,7 +7,7 @@ const Profile = () =>{
             <div className="left_card" >
                 <h1>Left Hand side</h1>
                 <div>
-                    <img src={profilePicture} />
+                    <img src={profilePicture} alt='Profile'/>
                     <div className="bottom_div">
                         This is where names and additional information goes
                     </div>
