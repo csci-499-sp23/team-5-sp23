@@ -1,0 +1,133 @@
+.outercontainer {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+    background-color: #000;
+    align-items: center;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+    /* backgroundColor: #000; */
+    align-items: center;
+    width: 100%;
+}
+
+.imageportioncontainer {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    /* backgroundColor: #000; */
+    align-items: center;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    border: 1px; 
+    border-color: #008F68;
+    justify-content: space-around;
+    flex: 1;
+    /* //backgroundColor: #000; */
+    align-items: center;
+    width: 70%;
+}
+
+.middlerow {
+    display: flex;
+    flex-direction: row;
+    /* //borderBottomWidth: 1; //make sure to delete these */
+    border-color: #008F68;
+    flex: 3;
+    justify-content: space-between;
+    /* //backgroundColor: #000; */
+    align-items: center;
+    width: 70%;
+}
+
+.bottomrow {
+    display: flex;
+    flex-direction: row;
+    /* //borderBottomWidth: 1; //make sure to delete these */
+    border-color: #008F68;
+    flex: 2;
+    justify-content: space-between;
+    /* //backgroundColor: #000; */
+    align-items: center;
+    width: 70%;
+}
+
+.row2 {
+    display: flex;
+    flex-direction: row;
+    flex: 2;
+    justify-content: space-between;
+    /* //backgroundColor: #000; */
+    align-items: center;
+    width: 30%;
+}
+
+h1 {
+    /* display: flex; */
+    color: #008F68;
+    font-size: 40;
+}
+
+h2 {
+    /* display: flex; */
+    color: #FAE042;
+    font-size: 18;
+    margin-top: 8;
+}
+
+h3 {
+    /* display: flex; */
+    color: #FAE042;
+    font-size: 12;
+    margin-top: 8;
+}
+
+.topimage {
+    /* display: flex; */
+    object-fit:contain;
+    width: 400;
+    height: 356;
+    justify-content: center;
+}
+
+.bottomimage {
+    object-fit:contain;
+    width: 300;
+    height: 267;
+    justify-content: center;
+}
+
+.logoimage {
+    object-fit:contain;
+    width: 200px; 
+    height: 178px;
+    justify-content: center;
+}
+
+.buttonContainer {
+    display: flex;
+    /* //backgroundColor: #008F68; */
+    border-radius: 5;
+    padding: 8;
+    margin: 8;
+}
+
+.buttonContainertemp {
+    display: flex;
+    /* //backgroundColor: #008F68; */
+    border-radius: 5;
+    padding: 2;
+    margin: 2;
+}
+

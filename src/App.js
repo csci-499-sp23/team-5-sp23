@@ -7,65 +7,28 @@ import Chat from './components/Chat-Page';
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
 import Legal from './components/Terms-Conditions-Page';
-// import NavBar from './components/NavBar';
+import NavBar from './components/NavBar';
+
 
 import { Routes, Route, NavLink } from "react-router-dom";
 
 export default function App() {
   return (
     <div className="App">
-      {/* <NavBar /> */}
+      <NavBar />
       <Routes>
-        <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="Login" element={<Login />} />
-        <Route path="Match" element={<Match />} />
-        <Route path="Chat" element={<Chat />} />
-        <Route path="Profile Page" element={<Profile />} />
-        <Route path="Signup for GeneAI" element={<Signup />} />
-        <Route path="Legal Stuff" element={<Legal />} />
+        <Route path="/" element={<Home />} /> 
+        <Route path="/Login-Page" element={<Login />} />
+        <Route path="/Matching-Page" element={<Match />} />
+        <Route path="/Chat-Page" element={<Chat />} />
+        <Route path="/Profile-Page" element={<Profile />} />
+        <Route path="/Signup-Page" element={<Signup />} />
+        <Route path="/Terms-Conditions-Page" element={<Legal />} />
         <Route path="*" element={<NoMatch />} />
-        </Route>
       </Routes>
     </div>
   );
 }
-
-// Components/NavBar.js
-// import { NavLink } from 'react-router-dom';
-
-function Layout() {
- return (
- <nav>
-    <div>
-
-       <ul>
-          <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Login-Page">Login</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Matching-Page">Find Love</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Chat-Page">Chat</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Profile-Page">User Profile</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Signup-Page">Join Now</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Terms-Conditions-Page">Legal Stuff</NavLink>
-          </li>
-        </ul>
-    </div>
- </nav>
- );
-};
 
 function NoMatch() {
   return (
