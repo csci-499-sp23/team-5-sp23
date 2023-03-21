@@ -1,8 +1,11 @@
+button {
+    color: #C64C85;
+}
+
 .outercontainer {
     display: flex;
-    flex-direction: row;
-    flex: 1;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     background-color: #000;
     align-items: center;
     width: 100%;
@@ -10,7 +13,7 @@
 
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex: 1;
     justify-content: space-between;
     /* backgroundColor: #000; */
@@ -21,7 +24,7 @@
 .imageportioncontainer {
     display: flex;
     flex: 1;
-    justify-content: space-between;
+    justify-content: flex-end;
     /* backgroundColor: #000; */
     align-items: center;
     width: 100%;
@@ -117,7 +120,7 @@ h3 {
 
 .buttonContainer {
     display: flex;
-    /* //backgroundColor: #008F68; */
+    background-color: #008F68;
     border-radius: 5;
     padding: 8;
     margin: 8;
@@ -125,7 +128,7 @@ h3 {
 
 .buttonContainertemp {
     display: flex;
-    /* //backgroundColor: #008F68; */
+    background-color: #008F68;
     border-radius: 5;
     padding: 2;
     margin: 2;
