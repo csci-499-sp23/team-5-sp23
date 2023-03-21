@@ -17,7 +17,10 @@ const Home = () => {
                     className='logoimage'
                     alt='GeneAI'/>
                 </div>
-                <div className='row'>      
+                <div className='row'>
+                    <h2>test</h2>
+                    <h2>test2</h2>
+                    <h2>test3</h2>
                     <div className='buttonContainertemp'>
                         <button>
                             <p>Log in</p>
