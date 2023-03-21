@@ -15,13 +15,14 @@ const Home = () => {
                     <img
                     src={titlelogo}
                     className='logoimage'
-                    alt='missing'/>
+                    alt='GeneAI'/>
                 </div>
                 <div className='row'>      
-                    <h2>test</h2>
-                    <h2>test2</h2>
-                    <h2>test3</h2>
-                    <div className='buttonContainertemp'></div>
+                    <div className='buttonContainertemp'>
+                        <button>
+                            <p>Log in</p>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,11 +35,7 @@ export default Home;
 //     return (
     
 //               
-//                   <Button
-//                   title="Log in"
-//                   color="#C64C85"
-//                   onPress={() => navigation.navigate('Login')}
-//                   />
+//                   
 //                 </View>
 //                 <View style={styles.buttonContainertemp}>
 //                   <Button
