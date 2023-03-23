@@ -9,7 +9,6 @@ import Signup from './components/Signup-Page';
 import Legal from './components/Terms-Conditions-Page';
 import NavBar from './components/NavBar';
 
-
 import { Routes, Route, NavLink } from "react-router-dom";
 
 export default function App() {
