@@ -1,7 +1,8 @@
-import './css/profileStyles.css'
+import './css/matchupStyles.css'
 import profilePicture from './img/profile_pic_guy.jpeg'
+import dating_potential from './img/woman_dating.jpeg'
 
-const Profile = () =>{
+const Match = () => {
     return(
         <div className="main_card">
             <div className="left_card" >
@@ -15,16 +16,10 @@ const Profile = () =>{
             </div>
             <div className="right_card">
                 <h1>Right Side</h1>
-                <h1>Get Name</h1>
-                
-                <div>
-                    <p>Blur about user</p>
-                </div>
-                
+                <img src={dating_potential} alt='DatingPotential'/>
             </div>
         </div>
     );
-}
+};
 
-
-export default Profile;
+export default Match;
