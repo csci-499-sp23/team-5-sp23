@@ -1,0 +1,35 @@
+body{
+  margin:0;
+  padding: 0;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+form{
+  display: block;
+  box-shadow: 1px 1px 2px 2px #be2fb7;
+  margin: 300px auto;
+  max-width: 800px;
+  max-height: 800px;
+  padding: 10px 20px;
+}
+
+form input, textarea{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+form button{
+  height: 30px;
+  width: 60px;
+  align-items: center;
+  border: none;
+  background-color: #3a0137;
+  cursor: pointer;
+}
+

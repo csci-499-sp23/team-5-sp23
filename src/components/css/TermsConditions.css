@@ -1,0 +1,20 @@
+.ScrollingBox{
+  max-width: 460px;
+  /* background-color:#a43563;
+  color: #a43563; */
+  font-family: cursive;
+  padding: 60px 30px;
+  justify-content: center;
+}
+
+/* .TOSText{
+  padding: 0 20px
+  
+
+} */
+
+/* .TOS-text.TOS-text::-webkit-scroollbar{
+  width: 2px;
+  background-color: aliceblue;
+} */
+
