@@ -1,5 +1,3 @@
-import './App.css';
-
 import Home from './components/Home-Page';
 import Login from './components/Login-Page';
 import Match from './components/Matching-Page';

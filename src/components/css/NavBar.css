@@ -1,6 +1,9 @@
-.row {
+.navbar_container {
+    background-color: black;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
