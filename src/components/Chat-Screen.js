@@ -6,12 +6,12 @@ function ChatScreen() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([
     {
-      name: 'bro',
+      name: 'Example Guy',
       image: 'https://static.wikia.nocookie.net/gametoons-among-us/images/d/da/RBBro.jpeg/revision/latest?cb=20210520145438',
-      message: "I love you bro ;)"
+      message: "Hey dude, do you like this example message?"
     },
     {
-      message: "love you too bro"
+      message: "I love it bro"
     }
   ]);
 
@@ -24,11 +24,11 @@ function ChatScreen() {
 
   return (
     <div className="chatScreen">
-      <p className="chatScreen_timestamp"> YOU MATCHED WITH BRO ON 09/03/2006 </p>
+      <p className="chatScreen_timestamp"> YOU MATCHED WITH EXAMPLE GUY ON 09/03/2006 </p>
       {messages.map(message => (
         message.name ? (
           <div className="chatScreen_message">
-            <Avatar className="ChatScreen_image" src={message.image} alt={message.name} name="bro" githubHandle="sitebase" size={75} round="20px" />
+            <Avatar className="ChatScreen_image" src={message.image} name={message.name} githubHandle="sitebase" size={75} round="20px" />
             {/* hardcoded for now */}
             <p className="chatScreen_text">{message.message}</p>
           </div>
