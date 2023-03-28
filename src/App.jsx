@@ -2,7 +2,7 @@ import './App.css';
 
 import Home from './components/Home-Page';
 import Login from './components/Login-Page';
-import Match from './components/Matching-Page';
+import Test from './components/Test';
 import Chat from './components/Chat-Page';
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
@@ -18,7 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} /> 
         <Route path="/Login-Page" element={<Login />} />
-        <Route path="/Matching-Page" element={<Match />} />
+        <Route path="/Test" element={<Test />} />
         <Route path="/Chat-Page" element={<Chat />} />
         <Route path="/Profile-Page" element={<Profile />} />
         <Route path="/Signup-Page" element={<Signup />} />
