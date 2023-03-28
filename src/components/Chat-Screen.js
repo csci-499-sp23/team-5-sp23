@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import Avatar from '@mui/material/Avatar';
+import Avatar from 'react-avatar';
 import './Chat-Screen.css';
 
 function ChatScreen() {
@@ -28,11 +28,8 @@ function ChatScreen() {
       {messages.map(message => (
         message.name ? (
           <div className="chatScreen_message">
-            {/* <Avatar
-              className="ChatScreen_image"
-              alt={message.name}
-              src={message.image}
-            /> */}
+            <Avatar className="ChatScreen_image" src={message.image} alt={message.name} name="bro" githubHandle="sitebase" size={75} round="20px" />
+            {/* hardcoded for now */}
             <p className="chatScreen_text">{message.message}</p>
           </div>
         ) : (

@@ -16,7 +16,7 @@ const NavBar = () => {
       <NavLink to="/Matching-Page">Find Love</NavLink>
     </li>
     <li>
-      <NavLink to="/Chat-Page">Chat</NavLink>
+      <NavLink to="/Chat-Screen">Chat</NavLink>
     </li>
     <li>
       <NavLink to="/Profile-Page">User Profile</NavLink>
