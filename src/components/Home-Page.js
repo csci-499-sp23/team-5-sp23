@@ -21,9 +21,9 @@ const Home = () => {
           <img src={titlelogo} className="logoimage" alt="GeneAI" />
         </div>
         <div className="row">
-          <h2>test</h2>
-          <h2>test2</h2>
-          <h2>test3</h2>
+          <h2 className="selectedButton">Home</h2>
+          <h2 className="notSelectedButton">TOS</h2>
+          <h2 className="notSelectedButton">Contact Us</h2>
           <div className="buttonContainertemp">
             <button>
               <p>Log in</p>
@@ -33,14 +33,16 @@ const Home = () => {
       </div>
       <div className="middlerow">
         <div className="container">
-          <h2>A ONE-OF-A-KIND DATING EXPERIENCE.</h2>
+          <h2 className="orbTitle">A ONE-OF-A-KIND DATING EXPERIENCE.</h2>
           <h3>
             GeneAI is the only dating app that incorporates image generation
             technology. Utilize novel image processing techniques to find your
             matches today!
           </h3>
-          <div className="buttonContainer">
-            <button>Create an Account</button>
+          <div className="buttonContainertemp">
+            <button>
+                <p>Create an Account</p>
+            </button>
           </div>
         </div>
         <div className="imageportioncontainer">
@@ -57,13 +59,15 @@ const Home = () => {
           </div>
         </div>
         <div className="container">
-          <h2>Obtain AI-Generated Renditions</h2>
+          <h2 className="orbTitle">Obtain AI-Generated Renditions</h2>
           <h3>
             Each match allows users to obtain high quality, one-of-a-kind imgs
-            of your children.{" "}
+            of your children.
           </h3>
-          <div className="buttonContainer">
-            <button>Get It Now</button>
+          <div className="buttonContainertemp">
+            <button>
+                <p>Get It Now</p>
+            </button>
           </div>
         </div>
       </div>
