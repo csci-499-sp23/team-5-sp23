@@ -5,8 +5,11 @@ import titlelogo from "./img/titlelogo.png";
 import Pic1 from "./img/landingPic1.png";
 import Baby from "./img/landingBaby.png";
 import Parents from "./img/landingParents.png";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       className="outercontainer"
@@ -21,11 +24,17 @@ const Home = () => {
           <img src={titlelogo} className="logoimage" alt="GeneAI" />
         </div>
         <div className="row">
-          <h2 className="selectedButton">Home</h2>
-          <h2 className="notSelectedButton">TOS</h2>
-          <h2 className="notSelectedButton">Contact Us</h2>
+          <button className="invisibleButton" onClick={() => navigate("/")}>
+            <h2 className="selectedButton">Home</h2>
+          </button>
+          <button className="invisibleButton" onClick={() => navigate("/Terms-Conditions-Page")}>
+            <h2 className="notSelectedButton">TOS</h2>
+          </button>
+          <button className="invisibleButton" onClick={() => navigate("/Contact-Page")}>
+            <h2 className="notSelectedButton">Contact Us</h2>
+          </button>
           <div className="buttonContainertemp">
-            <button>
+            <button onClick={() => navigate("/Login-Page")}>
               <p>Log in</p>
             </button>
           </div>
@@ -40,7 +49,7 @@ const Home = () => {
             matches today!
           </h3>
           <div className="buttonContainertemp">
-            <button>
+            <button onClick={() => navigate("/Login-Page")}>
                 <p>Create an Account</p>
             </button>
           </div>
@@ -65,7 +74,7 @@ const Home = () => {
             of your children.
           </h3>
           <div className="buttonContainertemp">
-            <button>
+            <button onClick={() => navigate("/Login-Page")}>
                 <p>Get It Now</p>
             </button>
           </div>
