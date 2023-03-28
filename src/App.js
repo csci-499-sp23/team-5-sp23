@@ -3,7 +3,7 @@ import './App.css';
 import Home from './components/Home-Page';
 import Login from './components/Login-Page';
 import Match from './components/Matching-Page';
-import Chat from './components/Chat-Page';
+import Chat from './components/Chat-Screen'; //temporary
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
 import Legal from './components/Terms-Conditions-Page';
@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/" element={<Home />} /> 
         <Route path="/Login-Page" element={<Login />} />
         <Route path="/Matching-Page" element={<Match />} />
-        <Route path="/Chat-Page" element={<Chat />} />
+        <Route path="/Chat-Screen" element={<Chat />} />
         <Route path="/Profile-Page" element={<Profile />} />
         <Route path="/Signup-Page" element={<Signup />} />
         <Route path="/Terms-Conditions-Page" element={<Legal />} />
