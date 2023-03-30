@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<nav
+  className="navbar_container"
+>
+  <div
+    className="row"
+  >
+    <li>
+      <a
+        aria-current="page"
+        className="active"
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Login-Page"
+        onClick={[Function]}
+      >
+        Login
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Matching-Page"
+        onClick={[Function]}
+      >
+        Find Love
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Chat-Screen"
+        onClick={[Function]}
+      >
+        Chat
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Profile-Page"
+        onClick={[Function]}
+      >
+        User Profile
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Signup-Page"
+        onClick={[Function]}
+      >
+        Join Now
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Terms-Conditions-Page"
+        onClick={[Function]}
+      >
+        Terms and Conditions
+      </a>
+    </li>
+    <li>
+      <a
+        className=""
+        href="/Contact-Page"
+        onClick={[Function]}
+      >
+        Contact Us!
+      </a>
+    </li>
+  </div>
+</nav>
+`;
