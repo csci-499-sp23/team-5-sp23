@@ -1,48 +1,45 @@
-import React, { useState } from "react";
-import axios from "axios";
+const https = require('https');
+const fs = require('fs');
+const FormData = require('form-data');
+const path = require('path');
+//MUST MAKE REQUEST TO BACKEND PORT
+const http_url = 'https://api-us.faceplusplus.com/facepp/v3/detect';
+const key = 'please entry YOUR API_KEY';
+const secret = 'please entry YOUR API_SECRET';
+const filepath = 'YOUR IMAGE PATH';
+const boundary = `----------${hex(Math.floor(new Date().getTime() / 1000))}`;
 
-//Do not touch//Need to figure out merge conflict with Matching Page.js
+const form = new FormData();
+form.append('api_key', key);
+form.append('api_secret', secret);
+form.append('image_file', fs.createReadStream(filepath), {
+  filename: path.basename(filepath),
+});
 
-const Match = () => {
-  const [image, setImage] = useState(null);
-
-  const img = null;
-  /*
-  const setImg = (image) => {
-    img = image;
-  }
-   */
-
-  const data = new FormData();
-  data.append("image_template");
-  data.append("image_target");
-
-  const options = {
-    method: "POST",
-    url: "https://merge-portraits.p.rapidapi.com/face/effect/merge",
-    headers: {
-      "X-RapidAPI-Key": process.env,
-      "X-RapidAPI-Host": "merge-portraits.p.rapidapi.com",
-      ...data.getHeaders(),
-    },
-    data: data,
-  };
-
-  const onClick = axios
-    .request(options)
-    .then(function (response) {
-      setImage(response.data.result.merge_image);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-
-  return (
-    <>
-      <button onClick={() => onClick()}>Merge Images</button>
-      {image ? <img src={`data:image/png;base64,${image}`} /> : null}
-    </>
-  );
+const options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': `multipart/form-data; boundary=${boundary}`,
+    ...form.getHeaders(),
+  },
 };
 
-export default Match;
+const req = https.request(http_url, options, (res) => {
+  let data = '';
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+  res.on('end', () => {
+    console.log(data);
+  });
+});
+
+form.pipe(req);
+
+req.on('error', (error) => {
+  console.error(error);
+});
+
+req.setTimeout(5000, () => {
+  req.abort();
+});
