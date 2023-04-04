@@ -30,7 +30,9 @@ const TOS = () => {
               the floor in the round, baby People always told me be careful of
               what you do And don't go around breaking young girls' hearts She
               came and stood right by me Just the smell of sweet perfume This
-              happened much too soon She called me to her room
+              happened much too soon She called me to her room blah blah blah 
+              blah blah blah blah blah blah blah blah blah blah blah blah
+              blah blah blah blah blah blah
             </p>
             <h5> I Agree to the Terms and Conditions</h5>
             <div class="btn">

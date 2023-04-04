@@ -2,7 +2,7 @@
 .bodyTOS{
   margin: 0;
   padding: 0;
-  min-height: 400px;
+  min-height: 600px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -19,6 +19,7 @@
   padding: 0 20px;
   height: 300px;
   font-family: "Cursive";
+  font-size: 18px;
   justify-content: center;
 }
 
