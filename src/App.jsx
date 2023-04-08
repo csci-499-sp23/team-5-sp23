@@ -1,14 +1,13 @@
-import './App.css';
-
 import Home from './components/Home-Page';
 import Login from './components/Login-Page';
 import Test from './components/Test';
 import Match from './components/Matching-Page';
-import Chat from './components/Chat-Page';
+import Chat from './components/Chat-Screen'; //temporary
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
-import Legal from './components/Terms-Conditions-Page';
+import TOS from './components/Terms-Conditions-Page';
 import NavBar from './components/NavBar';
+import Contact from './components/Contact-Page';
 
 import { Routes, Route, NavLink } from "react-router-dom";
 
@@ -21,10 +20,11 @@ export default function App() {
         <Route path="/Login-Page" element={<Login />} />
         <Route path="/Test" element={<Test />} />
         <Route path="/Matching-Page" element={<Match />} />
-        <Route path="/Chat-Page" element={<Chat />} />
+        <Route path="/Chat-Screen" element={<Chat />} />
         <Route path="/Profile-Page" element={<Profile />} />
         <Route path="/Signup-Page" element={<Signup />} />
-        <Route path="/Terms-Conditions-Page" element={<Legal />} />
+        <Route path="/Terms-Conditions-Page" element={<TOS />} />
+        <Route path="/Contact-Page" element={<Contact />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>
     </div>

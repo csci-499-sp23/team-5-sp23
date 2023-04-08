@@ -1,6 +1,6 @@
 // Components/NavBar.js
-import { NavLink } from 'react-router-dom';
-import './css/NavBar.css';
+import { NavLink } from "react-router-dom";
+import "./css/NavBar.css";
 
 const NavBar = () => {
  return (
@@ -14,9 +14,6 @@ const NavBar = () => {
     </li>
     <li>
       <NavLink to="/Matching-Page">Find Love</NavLink>
-    </li>
-    <li>
-      <NavLink to="/Test">Test Image</NavLink>
     </li>
     <li>
       <NavLink to="/Chat-Page">Chat</NavLink>
