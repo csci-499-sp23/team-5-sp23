@@ -1,27 +1,30 @@
 import React from "react";
 import "./css/Home-Page.css";
+import "./API.jsx";
 import bg from "./img/background.png";
 import titlelogo from "./img/titlelogo.png";
 import Pic1 from "./img/landingPic1.png";
 import Baby from "./img/landingBaby.png";
 import Parents from "./img/landingParents.png";
 import { useNavigate } from "react-router-dom";
+import {makerequest} from "./API.jsx";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
     <div
-      className="outercontainer"
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-      }}
+    className="outercontainer"
+    style={{
+      backgroundImage: `url(${bg})`,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+    }}
     >
       <div className="row">
         <div className="container">
           <img src={titlelogo} className="logoimage" alt="GeneAI" />
+          {makerequest()}
         </div>
         <div className="row">
           <button className="invisibleButton" onClick={() => navigate("/")}>
@@ -85,3 +88,4 @@ const Home = () => {
 };
 
 export default Home;
+
