@@ -6,9 +6,11 @@ import Pic1 from "./img/landingPic1.png";
 import Baby from "./img/landingBaby.png";
 import Parents from "./img/landingParents.png";
 import { useNavigate } from "react-router-dom";
+import { getMap } from "./API";
 
 const Home = () => {
   const navigate = useNavigate();
+  getMap();
 
   return (
     <div
@@ -27,10 +29,16 @@ const Home = () => {
           <button className="invisibleButton" onClick={() => navigate("/")}>
             <h2 className="selectedButton">Home</h2>
           </button>
-          <button className="invisibleButton" onClick={() => navigate("/Terms-Conditions-Page")}>
+          <button
+            className="invisibleButton"
+            onClick={() => navigate("/Terms-Conditions-Page")}
+          >
             <h2 className="notSelectedButton">TOS</h2>
           </button>
-          <button className="invisibleButton" onClick={() => navigate("/Contact-Page")}>
+          <button
+            className="invisibleButton"
+            onClick={() => navigate("/Contact-Page")}
+          >
             <h2 className="notSelectedButton">Contact Us</h2>
           </button>
           <div className="buttonContainertemp">
@@ -50,7 +58,7 @@ const Home = () => {
           </h3>
           <div className="buttonContainertemp">
             <button onClick={() => navigate("/Login-Page")}>
-                <p>Create an Account</p>
+              <p>Create an Account</p>
             </button>
           </div>
         </div>
@@ -75,7 +83,7 @@ const Home = () => {
           </h3>
           <div className="buttonContainertemp">
             <button onClick={() => navigate("/Login-Page")}>
-                <p>Get It Now</p>
+              <p>Get It Now</p>
             </button>
           </div>
         </div>
