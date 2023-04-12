@@ -1,30 +1,39 @@
-// import { Link } from "react-router-dom";
-import "./Chat-Page.css";
+import React, { useState, useEffect } from 'react';
+// import Database APIs
 
-const Chat = () => {
+function ChatPage(props) {
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+
+    useEffect(() => {
+        // Load chat messages from the server
+    }, []);
+
+    const handleNewMessage = event => {
+        setNewMessage(event.target.value);
+    };
+
+    const handleSendMessage = () => {
+        // Send the new message to the server
+    };
+
     return (
         <div>
-            <h1>Chat</h1>
+            <h1>Chat Page</h1>
+            <div>
+                {messages.map(message => (
+                    <div key={message.id}>
+                        <p>{message.text}</p>
+                        <small>{message.timestamp}</small>
+                    </div>
+                ))}
+            </div>
+            <div>
+                <input type="text" value={newMessage} onChange={handleNewMessage} />
+                <button onClick={handleSendMessage}>Send</button>
+            </div>
         </div>
     );
-};
+}
 
-export default Chat;
-
-
-// function Chat({ name, message, profilePic, timestamp }) {
-//   return (
-//     <Link to={`/chat/${name}`}>
-//       <div className="chat">
-//         <Avatar className="chat_image"src={profilePic} />
-//         <div className="chat_details">
-//           <h2>{name}</h2>
-//           <p>{message}</p>
-//         </div>
-//         <p className="chat_timestamp" >{timestamp}</p>
-//       </div>
-//     </Link>
-//   );
-// }
-
-// export default Chat;
+export default ChatPage;
