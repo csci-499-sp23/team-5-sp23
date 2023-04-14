@@ -6,11 +6,10 @@ import Pic1 from "./img/landingPic1.png";
 import Baby from "./img/landingBaby.png";
 import Parents from "./img/landingParents.png";
 import { useNavigate } from "react-router-dom";
-import { getMap } from "./GooglePlacesAPI";
+// import { GooglePlacesApp } from "./GooglePlacesAPI";
 
 const Home = () => {
   const navigate = useNavigate();
-  getMap(); //calling getMap function for API
 
   return (
     <div
