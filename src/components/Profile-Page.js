@@ -11,8 +11,8 @@ const Profile = () =>{
     
     //const [profile, setProfile] = useState([])
     //const {user, logout} = UserAuth();
-    const [profile_id, setID ] = useState("Add id")
-    const [single_profile, setSingleProfile] = useState("")
+   //const [profile_id, setID ] = useState("Add id")
+   //const [single_profile, setSingleProfile] = useState("")
     //const profileCollectionRef = collection(db, 'profiles');
     //const {logoutAccount} = UserAuth();
     /*useEffect(() => {
@@ -23,32 +23,32 @@ const Profile = () =>{
         console.log(profile)
     }, [profile])*/
 
-    useEffect(() => {
-        console.log(single_profile)
-    }, [single_profile])
-
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        getProfile();
-    };
-
-
-    const handleLogout = () => {
-
-    };
-
-    async function getProfile(){
-        console.log(profile_id)
-        const docRef = doc(db, "profiles", profile_id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    };
+    //useEffect(() => {
+    //    console.log(single_profile)
+    //}, [single_profile])
+//
+    //const handleSubmit = (e) =>{
+    //    e.preventDefault();
+    //    getProfile();
+    //};
+//
+//
+    //const handleLogout = () => {
+//
+    //};
+//
+    //async function getProfile(){
+    //    console.log(profile_id)
+    //    const docRef = doc(db, "profiles", profile_id);
+    //    const docSnap = await getDoc(docRef);
+//
+    //    if (docSnap.exists()) {
+    //        console.log("Document data:", docSnap.data());
+    //      } else {
+    //        // doc.data() will be undefined in this case
+    //        console.log("No such document!");
+    //    }
+    //};
     /*function getProfiles(){
         
         getDocs(profileCollectionRef)
@@ -82,13 +82,13 @@ const Profile = () =>{
                 
             </div>
         }*/
-
+//<p>{profile_id}</p>
+//<button onClick={handleLogout}>Logout</button>
+        
     return(
         <div>
             <h1>Hello</h1>
-            <p>{profile_id}</p>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
+            </div>
     );
 }
 
