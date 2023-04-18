@@ -26,7 +26,7 @@ function LoginPage() {
         try{
             await signIn(username, password);
         }catch(err){
-            setError(err);
+           
             console.log(err);
         }
         console.log(`Logging in with username: ${username} and password: ${password}`);
