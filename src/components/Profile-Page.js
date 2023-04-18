@@ -1,9 +1,68 @@
-import './css/profileStyles.css'
-import profilePicture from './img/profile_pic_guy.jpeg'
+import './css/profileStyles.css';
+import React, { useEffect, useState } from 'react';
+import profilePicture from './img/profile_pic_guy.jpeg';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase-config';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { UserAuth } from '../context/UserAuthContext';
 
 const Profile = () =>{
-    return(
-        <div className="main_card">
+
+    
+    //const [profile, setProfile] = useState([])
+    //const {user, logout} = UserAuth();
+    const [profile_id, setID ] = useState("Add id")
+    const [single_profile, setSingleProfile] = useState("")
+    const profileCollectionRef = collection(db, 'profiles');
+    const {logoutAccount} = UserAuth();
+    /*useEffect(() => {
+        getProfiles();
+    }, [])*/
+
+    /*useEffect(() => {
+        console.log(profile)
+    }, [profile])*/
+
+    useEffect(() => {
+        console.log(single_profile)
+    }, [single_profile])
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        getProfile();
+    };
+
+
+    const handleLogout = () => {
+
+    };
+
+    async function getProfile(){
+        console.log(profile_id)
+        const docRef = doc(db, "profiles", profile_id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    };
+    /*function getProfiles(){
+        
+        getDocs(profileCollectionRef)
+            .then(response => {
+                const prof = response.docs.map(doc => ({
+                    data: doc.data(),
+                    id: doc.id,
+
+                }))
+                setProfile(prof);
+            })
+            .catch(error => console.log(error.message))
+
+            /*
             <div className="left_card" >
                 <h1>Left Hand side</h1>
                 <div>
@@ -22,6 +81,13 @@ const Profile = () =>{
                 </div>
                 
             </div>
+        }*/
+
+    return(
+        <div>
+            <h1>Hello</h1>
+            <p>{profile_id}</p>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 }

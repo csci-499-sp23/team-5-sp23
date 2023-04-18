@@ -1,8 +1,12 @@
 // Components/NavBar.js
 import { NavLink } from "react-router-dom";
 import "./css/NavBar.css";
+import {UserAuth} from '../context/UserAuthContext';
+import { useState } from "react";
 
 const NavBar = () => {
+  
+
   return (
     <nav className="navbar_container">
       <div className="row">
@@ -30,6 +34,7 @@ const NavBar = () => {
         <li>
           <NavLink to="/Contact-Page">Contact Us!</NavLink>
         </li>
+        
       </div>
     </nav>
   );

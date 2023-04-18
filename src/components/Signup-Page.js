@@ -1,18 +1,45 @@
 import React, { useState } from 'react';
+import { async } from '@firebase/util';
+import { UserAuth } from '../context/UserAuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+// Moving following to UserAuthContext.js
+// import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+// import { auth } from '../firebase-config';
+
+
 
 function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { createUser, logoutAccount } = UserAuth();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Submitted:', { firstName, lastName, email, password });
-    // TODO: handle signup logic using Database:
-    // Where calls need to go to submit the user's form data.
-    //
+    try{
+      await createUser(email, password);
+      navigate(('/Profile-Page'))
+    }catch(err){
+      console.error(err);
+    }
   };
+
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    try{
+      await logoutAccount();
+      navigate(('/'))
+    }catch(err){
+      console.error(err);
+    }
+  };
+
+  // Check which user is signed in:
+  // console.log(auth?.currentUser?.email)
+
 
   return (
     <div>
@@ -56,6 +83,8 @@ function Signup() {
         </div>
         <button type="submit">Submit</button>
       </form>
+
+      <button onClick={handleLogout}> Logout </button>
     </div>
   );
 }
