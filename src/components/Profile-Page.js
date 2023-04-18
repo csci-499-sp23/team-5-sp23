@@ -1,10 +1,10 @@
 import './css/profileStyles.css';
 import React, { useEffect, useState } from 'react';
-import profilePicture from './img/profile_pic_guy.jpeg';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+//import profilePicture from './img/profile_pic_guy.jpeg';
+import {  doc, getDoc } from 'firebase/firestore'; //getDocs,  collection,
 import { db } from '../firebase-config';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { UserAuth } from '../context/UserAuthContext';
+//import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+//import { UserAuth } from '../context/UserAuthContext';
 
 const Profile = () =>{
 
@@ -13,8 +13,8 @@ const Profile = () =>{
     //const {user, logout} = UserAuth();
     const [profile_id, setID ] = useState("Add id")
     const [single_profile, setSingleProfile] = useState("")
-    const profileCollectionRef = collection(db, 'profiles');
-    const {logoutAccount} = UserAuth();
+    //const profileCollectionRef = collection(db, 'profiles');
+    //const {logoutAccount} = UserAuth();
     /*useEffect(() => {
         getProfiles();
     }, [])*/

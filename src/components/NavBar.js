@@ -1,8 +1,7 @@
 // Components/NavBar.js
 import { NavLink } from "react-router-dom";
 import "./css/NavBar.css";
-import {UserAuth} from '../context/UserAuthContext';
-import { useState } from "react";
+
 
 const NavBar = () => {
   

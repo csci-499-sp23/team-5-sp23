@@ -33,7 +33,7 @@ export const AuthContextProvider = ({children}) => {
         return () => {
             unsuscribe();
         };
-    }, []);
+    }, );
     
     return (
         <userContext.Provider value={{createUser, user, logoutAccount, signIn}}>

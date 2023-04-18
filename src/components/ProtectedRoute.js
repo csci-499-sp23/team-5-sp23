@@ -1,8 +1,8 @@
-import React, { Children } from 'react';
+import React from 'react';
 import {Navigate} from 'react-router-dom';
 import {UserAuth} from '../context/UserAuthContext';
 
-const ProtectedRoute = ({Children}) => {
+const ProtectedRoute = ({children}) => {
 
     const {user} = UserAuth();
 
@@ -10,7 +10,7 @@ const ProtectedRoute = ({Children}) => {
         return <Navigate to='/' />
     }
     console.log(user);
-    return Children
+    return children
 
 }
 
