@@ -1,8 +1,8 @@
 import './css/profileStyles.css';
-import React, { useEffect, useState } from 'react';
+//import React, { useEffect, useState } from 'react';
 //import profilePicture from './img/profile_pic_guy.jpeg';
-import {  doc, getDoc } from 'firebase/firestore'; //getDocs,  collection,
-import { db } from '../firebase-config';
+//import {  doc, getDoc } from 'firebase/firestore'; //getDocs,  collection,
+//import { db } from '../firebase-config';
 //import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 //import { UserAuth } from '../context/UserAuthContext';
 
