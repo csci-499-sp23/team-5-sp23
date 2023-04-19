@@ -27,6 +27,9 @@ const NavBar = () => {
     <li>
       <NavLink to="/Terms-Conditions-Page">Legal Stuff</NavLink>
     </li>
+    <li>
+      <NavLink to="/GoogleAPI">API Test</NavLink>
+    </li>
   </div>
  </nav>
  );
