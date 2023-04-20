@@ -39,7 +39,7 @@ function GoogleAPI() {
           console.log("Retrieved places:", allPlaces); //comments to make sure this runs properly
         });
       });
-    }, [category]);
+    }, []);
     
     
     return (
