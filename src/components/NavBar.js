@@ -2,7 +2,9 @@
 import { NavLink } from "react-router-dom";
 import "./css/NavBar.css";
 
+
 const NavBar = () => {
+
  return (
  <nav className='container'>
   <div className='row'>
