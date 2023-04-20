@@ -7,6 +7,8 @@ import Signup from './components/Signup-Page';
 import TOS from './components/Terms-Conditions-Page';
 import NavBar from './components/NavBar';
 import Contact from './components/Contact-Page';
+import GoogleAPI from './components/GoogleAPI';
+
 
 import { Routes, Route, NavLink } from "react-router-dom";
 import {AuthContextProvider} from './context/UserAuthContext'
