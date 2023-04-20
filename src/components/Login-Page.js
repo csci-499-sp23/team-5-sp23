@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserAuth } from '../context/UserAuthContext';
 
 function LoginPage() {
+
+    const { signIn } = UserAuth();
+
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+
+    const navigate = useNavigate();
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -12,15 +21,16 @@ function LoginPage() {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // TODO: handle login logic using Database:
-        // 1. The user enters their credentials (username and password) into a login form.
-        // 2. The form data is submitted to the server for validation.
-        // 3. The server verifies that the user's credentials are valid by checking them against a database or some other authentication mechanism.
-        // 4. If the user's credentials are valid, the server creates a session or token that represents the user's authenticated state and sends it back to the client.
-        // 5. The client stores the session or token(e.g., in a cookie or local storage) and sends it back to the server with each subsequent request to identify the user.
+        try{
+            await signIn(username, password);
+        }catch(err){
+           
+            console.log(err);
+        }
         console.log(`Logging in with username: ${username} and password: ${password}`);
+        navigate(('/Profile-Page'))
     };
 
     return (
