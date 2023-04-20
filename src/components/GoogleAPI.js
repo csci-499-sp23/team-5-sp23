@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+// require('dotenv').config()
 
 function GoogleAPI() {
   const [places, setPlaces] = useState([]);
@@ -12,7 +13,7 @@ function GoogleAPI() {
   
   useEffect(() => {
     
-    const API_KEY = "INSERT API KEY";
+    const API_KEY = process.env.REACT_APP_API_KEY;
     navigator.geolocation.getCurrentPosition((position) => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
@@ -22,7 +23,8 @@ function GoogleAPI() {
       for (const key in category) {
         const types = category[key].join("|");
         const promise = axios.get(
-          `https://us-central1-MY_PROJECT.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}&key=${API_KEY}`
+          `http://localhost:5001/csci499/us-central1/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}&key=${API_KEY}`
+          //`https://us-central1-geneai.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}&key=${API_KEY}`
           )
           .then((response) => response.data)
           .catch((error) => console.error(error));
