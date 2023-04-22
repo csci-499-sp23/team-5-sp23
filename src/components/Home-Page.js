@@ -1,6 +1,6 @@
 import React from "react";
 import "./css/Home-Page.css";
-import bg from "./img/background.png";
+// import bg from "./img/background.png";
 import titlelogo from "./img/titlelogo.png";
 import Pic1 from "./img/landingPic1.png";
 import Baby from "./img/landingBaby.png";
@@ -15,9 +15,9 @@ const Home = () => {
     <div
       className="outercontainer"
       style={{
-        backgroundImage: `url(${bg})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
+        // backgroundImage: `url(${bg})`,
+        // backgroundRepeat: "no-repeat",
+        // backgroundSize: "cover",
       }}
     >
       <div className="row">

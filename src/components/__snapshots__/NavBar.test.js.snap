@@ -38,7 +38,7 @@ exports[`renders correctly 1`] = `
     <li>
       <a
         className=""
-        href="/Chat-Screen"
+        href="/Chat-Page"
         onClick={[Function]}
       >
         Chat
