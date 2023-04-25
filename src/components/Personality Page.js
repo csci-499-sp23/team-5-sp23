@@ -1,6 +1,6 @@
-import './css/matchupStyles.css'
+// import './css/matchupStyles.css'
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Match = ({ match }) => {
   return (
@@ -8,7 +8,7 @@ const Match = ({ match }) => {
       <h3>{match.name}</h3>
       <p>{match.age} years old</p>
       <p>Location: {match.location}</p>
-      <p>Interests: {match.interests.join(', ')}</p>
+      <p>Interests: {match.interests.join(", ")}</p>
     </div>
   );
 };
@@ -37,7 +37,7 @@ const MatchingFunction = () => {
 
   const findMatches = async () => {
     try {
-      const response = await fetch('YOUR_API_ENDPOINT');
+      const response = await fetch("YOUR_API_ENDPOINT");
       const data = await response.json();
       const matchedUsers = data.filter((user) => {
         const userInterests = user.interests;
@@ -56,33 +56,15 @@ const MatchingFunction = () => {
       <h2>Find your match</h2>
       <div>
         <h4>Select your interests:</h4>
-        <button onClick={() => handleInterestClick('music')}>
-          Music
-        </button>
-        <button onClick={() => handleInterestClick('sports')}>
-          Sports
-        </button>
-        <button onClick={() => handleInterestClick('travel')}>
-          Travel
-        </button>
-        <button onClick={() => handleInterestClick('hiking')}>
-          Hiking
-        </button>
-        <button onClick={() => handleInterestClick('reading')}>
-          Reading
-        </button>
-        <button onClick={() => handleInterestClick('cooking')}>
-          Cooking
-        </button>
-        <button onClick={() => handleInterestClick('art')}>
-          Art
-        </button>
-        <button onClick={() => handleInterestClick('movies')}>
-          Movies
-        </button>
-        <button onClick={() => handleInterestClick('yoga')}>
-          Yoga
-        </button>
+        <button onClick={() => handleInterestClick("music")}>Music</button>
+        <button onClick={() => handleInterestClick("sports")}>Sports</button>
+        <button onClick={() => handleInterestClick("travel")}>Travel</button>
+        <button onClick={() => handleInterestClick("hiking")}>Hiking</button>
+        <button onClick={() => handleInterestClick("reading")}>Reading</button>
+        <button onClick={() => handleInterestClick("cooking")}>Cooking</button>
+        <button onClick={() => handleInterestClick("art")}>Art</button>
+        <button onClick={() => handleInterestClick("movies")}>Movies</button>
+        <button onClick={() => handleInterestClick("yoga")}>Yoga</button>
       </div>
       <button onClick={findMatches}>Find Matches</button>
       {matches.length > 0 && <MatchList matches={matches} />}
