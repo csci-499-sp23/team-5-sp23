@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Avatar, Box } from "@mui/material";
+import { UserAuth } from "../context/UserAuthContext";
+import { storage, db } from "../firebase-config";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore'
+import { v4 } from 'uuid'
 
 const styles = {
     container: {
@@ -7,7 +12,7 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        background: "black",
+        background: "pink",
     },
     textField: {
         color: "white",
@@ -34,14 +39,18 @@ const Profile = () => {
     const [bio, setBio] = useState("");
     const [interests, setInterests] = useState("");
     const [photos, setPhotos] = useState([]);
+    const [url, setURL] = useState([])
 
-    const handleNameChange = (event) => setName(event.target.value);
+    const handleNameChange = (event) => {setName(event.target.value); console.log(name)};
     const handleLocationChange = (event) => setLocation(event.target.value);
     const handleBirthdateChange = (event) => setBirthdate(event.target.value);
     const handleBioChange = (event) => setBio(event.target.value);
     const handleInterestsChange = (event) => setInterests(event.target.value);
 
+    const {user} = UserAuth();
+
     const handlePhotoUpload = (event) => {
+        console.log(event);
         const file = event.target.files[0];
         if (file && photos.length < 6) {
             setPhotos((prevPhotos) => [...prevPhotos, file]);
@@ -67,40 +76,70 @@ const Profile = () => {
         });
     };
 
+    // Submit information functions:
+    const sumbitPhotos = () => {
+        const email = user.email
+        for(let i = 0; i< photos.length; i++){
+            const imageRef = ref(storage, `${email}/${photos[i].name + v4()}`)
+            uploadBytes(imageRef, photos[i])
+                .then(()=>{
+                    console.log("Item has been uploaded: ", photos[i].name)
+                })
+        };
+    };
+    const submitProfileInformation = async () =>{
+        const docRef = doc(db, 'profiles' , user.email);
+        await setDoc(docRef, {
+            name: `${name}`,
+            location: `${location}`,
+            birthdate: `${birthdate}`,
+            bio: `${bio}`,
+            interests: `${interests}`
+        })
+    };
+    const submitProfile = (event) => {
+        event.preventDefault();
+        sumbitPhotos();
+        submitProfileInformation();
+    };
+
     return (
-        <div style={styles.container}>
+        <div style={{background: "white"}}>
         <div>
             <h1>Profile</h1>
             <div>
                 <input type="file" accept="image/*" onChange={handlePhotoUpload} />
                 {photos.map((photo, index) => (
                     <div key={index}>
-                        <img src={URL.createObjectURL(photo)} alt="" />
+                        <img src={URL.createObjectURL(photo)} style={{ width: 500, height: 600 }} alt="" />
                         <button onClick={() => handleRemovePhoto(index)}>Remove</button>
                     </div>
                 ))}
+                
             </div>
-            <div>
-                    <TextField
-                        label="Name"
-                        InputLabelProps={{
-                            style: {
-                                color: "white"
-                            }
-                        }}
-                        InputProps={{
-                            style: {
-                                color: "white"
-                            }
-                        }}
-                        value={name}
-                        onChange={handleNameChange}
-                    />
-            </div>
-            <div>
+            <Box component="form" sx={{'& > :not(style)': { m: 1, width: '25ch' },}} noValidate autoComplete="off">
+                <TextField
+                    id="filled-basic" 
+                    variant="filled"
+                    label="Name"
+                    color="secondary"
+                    InputLabelProps={{
+                        style: {
+                            color: "white"
+                        }
+                    }}
+                    InputProps={{
+                        style: {
+                            color: "white"
+                        }
+                    }}
+                    value={name}
+                    onChange={handleNameChange}
+                />
                 <TextField
                     label="Location"
                     value={location}
+                    variant="filled"
                     onChange={handleLocationChange}
                     InputLabelProps={{
                         style: {
@@ -113,11 +152,10 @@ const Profile = () => {
                         }
                     }}
                 />
-            </div>
-            <div>
                 <TextField
                     label="Birthdate"
                     type="date"
+                    variant="filled"
                     value={birthdate}
                     onChange={handleBirthdateChange}
                     InputLabelProps={{
@@ -131,11 +169,10 @@ const Profile = () => {
                         }
                     }}
                 />
-            </div>
-            <div>
                 <TextField
                     label="Bio"
                     multiline
+                    variant="filled"
                     rows={4}
                     value={bio}
                     onChange={handleBioChange}
@@ -150,11 +187,10 @@ const Profile = () => {
                         }
                     }}
                 />
-            </div>
-            <div>
                 <TextField
                     label="Interests"
                     multiline
+                    variant="filled"
                     rows={4}
                     value={interests}
                     onChange={handleInterestsChange}
@@ -169,7 +205,10 @@ const Profile = () => {
                         }
                     }}
                 />
-            </div>
+                 <button type="submit" onClick={submitProfile}>Submit Profile</button>
+            </Box>
+            
+            
                 <div>
                     <Button variant="contained" color="primary" onClick={handleSave} style={{ color: 'white' }}>
                         Save
@@ -183,8 +222,9 @@ const Profile = () => {
                         Like
                     </Button>
                 </div>
-
+                
         </div>
+        
         </div>
     );
 };
