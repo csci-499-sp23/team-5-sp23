@@ -8,6 +8,7 @@ import TOS from './components/Terms-Conditions-Page';
 import NavBar from './components/NavBar';
 import Contact from './components/Contact-Page';
 import GoogleAPI from './components/GoogleAPI';
+import AwaitSignout from './components/await-Signout'
 
 
 import { Routes, Route, NavLink } from "react-router-dom";
@@ -17,17 +18,20 @@ import ProtectedRoute from './components/ProtectedRoute';
 export default function App() {
   return (
     <div className="App">
-      <NavBar />
+      
       <AuthContextProvider>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/Login-Page" element={<Login />} />
           <Route path="/Matching-Page" element={<ProtectedRoute><Match /></ProtectedRoute>} />
-          <Route path="/Chat-Screen" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+          <Route path="/Chat-Page" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
           <Route path="/Profile-Page" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/Signup-Page" element={<Signup />} />
           <Route path="/Terms-Conditions-Page" element={<TOS />} />
           <Route path="/Contact-Page" element={<Contact />} />
+          <Route path='/GoogleAPI' element={<ProtectedRoute><GoogleAPI/></ProtectedRoute>} />
+          <Route path='/await-Signout' element={<AwaitSignout />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>
