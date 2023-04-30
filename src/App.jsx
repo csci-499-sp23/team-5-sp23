@@ -8,6 +8,7 @@ import TOS from './components/Terms-Conditions-Page';
 import NavBar from './components/NavBar';
 import Contact from './components/Contact-Page';
 import GoogleAPI from './components/GoogleAPI';
+import './App.css';
 
 
 import { Routes, Route, NavLink } from "react-router-dom";
