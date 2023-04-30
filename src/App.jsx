@@ -28,6 +28,7 @@ export default function App() {
           <Route path="/Signup-Page" element={<Signup />} />
           <Route path="/Terms-Conditions-Page" element={<TOS />} />
           <Route path="/Contact-Page" element={<Contact />} />
+          <Route path="/GoogleAPI" element={<GoogleAPI />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>

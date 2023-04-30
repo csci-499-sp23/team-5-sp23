@@ -1,47 +1,52 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-// require('dotenv').config()
 
 function GoogleAPI() {
   const [places, setPlaces] = useState([]);
-  const category = { //may need to push out
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const category = {
     romantic: ["restaurant", "cafe", "park", "museum"],
     adventurous: ["zoo", "aquarium", "amusement_park"],
     cultural: ["art_gallery", "library", "theatre"],
     outdoor: ["beach", "hiking", "campground"],
   };
-  
+
+  // Call geolocation API every 10 seconds
   useEffect(() => {
-    
-    const API_KEY = process.env.REACT_APP_API_KEY;
-    navigator.geolocation.getCurrentPosition((position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      
+    const intervalId = setInterval(() => {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      });
+    }, 10000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  // Fetch places when latitude and longitude change
+  useEffect(() => {
+    if (latitude && longitude) {
       const promises = [];
-      
+
       for (const key in category) {
         const types = category[key].join("|");
-        const promise = axios.get(
-          `http://localhost:5001/csci499/us-central1/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}&key=${API_KEY}`
-          //`https://us-central1-geneai.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}&key=${API_KEY}`
+        const promise = axios
+          .get(
+              `http://localhost:5001/csci499/us-central1/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
+              // `https://us-central1-csci499.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
           )
           .then((response) => response.data)
           .catch((error) => console.error(error));
-          promises.push(promise);
-          
-          console.log("useEffect called"); //comments to make sure this runs properly
-        }
-        
-        Promise.all(promises).then((results) => {
-          const allPlaces = results.flat();
-          setPlaces(allPlaces);
-          console.log("Retrieved places:", allPlaces); //comments to make sure this runs properly
-        });
+        promises.push(promise);
+      }
+
+      Promise.all(promises).then((results) => {
+        const allPlaces = results.flat();
+        setPlaces(allPlaces);
       });
-    }, []);
-    
-    
+    }
+  }, [latitude, longitude]);
+  
     return (
       <div>
       <h1>Date ideas near you:</h1>

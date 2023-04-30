@@ -6,7 +6,6 @@ import Pic1 from "./img/landingPic1.png";
 import Baby from "./img/landingBaby.png";
 import Parents from "./img/landingParents.png";
 import { useNavigate } from "react-router-dom";
-// import { GooglePlacesApp } from "./GooglePlacesAPI";
 
 const Home = () => {
   const navigate = useNavigate();
