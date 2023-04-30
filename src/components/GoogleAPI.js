@@ -32,8 +32,8 @@ function GoogleAPI() {
         const types = category[key].join("|");
         const promise = axios
           .get(
-              `http://localhost:5001/csci499/us-central1/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
-              // `https://us-central1-csci499.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
+              // `http://localhost:5001/csci499/us-central1/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
+              `https://us-central1-csci499.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
           )
           .then((response) => response.data)
           .catch((error) => console.error(error));
