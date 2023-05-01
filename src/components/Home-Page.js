@@ -1,46 +1,46 @@
 import React from "react";
 import "./css/Home-Page.css";
-// import bg from "./img/background.png";
-import { useNavigate } from "react-router-dom";
-// import { GooglePlacesApp } from "./GooglePlacesAPI";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
+import { textTransform } from "@mui/system";
+
+const title = String("<insert dating app name here/>");
+
+const ButtonGroup = ({ children }) => (
+  <div style={{ display: 'flex' }}>
+    {children}
+  </div>
+);
 
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
-    <div
-      className="outercontainer"
-      style={{
-        // backgroundImage: `url(${bg})`,
-        // backgroundRepeat: "no-repeat",
-        // backgroundSize: "cover",
-      }}
-    >
-      <div className="row">
-        <div className="row">
-          <button className="invisibleButton" onClick={() => navigate("/")}>
-            <h2 className="selectedButton">Home</h2>
-          </button>
-          <button
-            className="invisibleButton"
-            onClick={() => navigate("/Terms-Conditions-Page")}
-          >
-            <h2 className="notSelectedButton">TOS</h2>
-          </button>
-          <button
-            className="invisibleButton"
-            onClick={() => navigate("/Contact-Page")}
-          >
-            <h2 className="notSelectedButton">Contact Us</h2>
-          </button>
-          <div className="buttonContainertemp">
-            <button onClick={() => navigate("/Login-Page")}>
-              <p>Log in</p>
-            </button>
-          </div>
-        </div>
-      </div>
-        </div>
+    
+    <div className="homepageContent">
+      <div id = "homeBody"/>
+      <h1>{title}</h1>
+      <ButtonGroup>
+        <Link to="/Login-Page">
+          <Button className="buttonHome" style={{ 
+            marginRight: '13px', 
+            backgroundColor: "#efefef",
+            color: 'black',
+            textTransform: 'uppercase',
+            border: '5px solid white',
+            fontSize: '15px',
+            fontFamily: 'Verdana' }}>Join Now</Button>
+        </Link>
+
+        <Link to="/Signup-Page">
+        <Button className="buttonHome" style={{ 
+            backgroundColor: "#efefef",
+            color: 'black',
+            textTransform: 'uppercase',
+            border: '5px solid white',
+            fontSize: '15px',
+            fontFamily: 'Verdana' }}>Login</Button>
+        </Link>
+      </ButtonGroup>
+    </div>
   );
 };
 
