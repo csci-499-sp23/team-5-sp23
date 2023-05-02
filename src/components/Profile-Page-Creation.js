@@ -5,6 +5,7 @@ import { storage, db } from "../firebase-config";
 import { ref, uploadBytes } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 } from 'uuid';
+import { useNavigate } from "react-router";
 
 const styles = {
     container: {
@@ -41,13 +42,14 @@ const Profile_Creation = () => {
     const [photos, setPhotos] = useState([]);
     
 
-    const handleNameChange = (event) => {setName(event.target.value); console.log(name)};
+    const handleNameChange = (event) => setName(event.target.value);
     const handleLocationChange = (event) => setLocation(event.target.value);
     const handleBirthdateChange = (event) => setBirthdate(event.target.value);
     const handleBioChange = (event) => setBio(event.target.value);
-    const handleInterestsChange = (event) => setInterests(event.target.value);
+    const handleInterestsChange = (event) => {setInterests(event.target.value); console.log(interests);};
 
     const {user} = UserAuth();
+    const navigate = useNavigate();
 
     const handlePhotoUpload = (event) => {
         console.log(event);
@@ -101,6 +103,7 @@ const Profile_Creation = () => {
         event.preventDefault();
         sumbitPhotos();
         submitProfileInformation();
+        navigate(('/Profile-Page'))
     };
 
     return (

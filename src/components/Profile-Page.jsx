@@ -31,7 +31,7 @@ const Profile = () =>{
         data.location != '' ? setLocation(data.location) : console.log("There is no location");
         data.bio != '' ? setBio(data.bio) : console.log("There is no bio");
         data.birthdate != '' ? setBirthdate(data.birthdate) : console.log("There is no birthdate");
-        data.interest != null ? setInterests(data.interest) : console.log("There is no interests");
+        data.interests != '' ? setInterests(data.interests) : console.log("There is no interests");
         setData(true);
     };
     
