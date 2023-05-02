@@ -1,7 +1,7 @@
 import Home from './components/Home-Page';
 import Login from './components/Login-Page';
 import Match from './components/Matching-Page';
-import Chat from './components/Chat-Screen'; //temporary
+import Chat from './components/Chat-Page';
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
 import TOS from './components/Terms-Conditions-Page';
@@ -9,7 +9,6 @@ import NavBar from './components/NavBar';
 import Contact from './components/Contact-Page';
 import GoogleAPI from './components/GoogleAPI';
 import AwaitSignout from './components/await-Signout'
-
 
 import { Routes, Route, NavLink } from "react-router-dom";
 import {AuthContextProvider} from './context/UserAuthContext'

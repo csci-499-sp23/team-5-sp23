@@ -3,7 +3,7 @@ import TinderCard from "react-tinder-card";
 import {useEffect, useState} from "react";
 import "./css/Cards.css";
 import { db } from "../firebase-config"; 
-import {onSnapshot, docs, collection} from "firebase/firestore";
+import {onSnapshot, collection} from "firebase/firestore";
 //may have this wrong
 
 function Card() {
