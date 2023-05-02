@@ -3,12 +3,13 @@ import Login from './components/Login-Page';
 import Match from './components/Matching-Page';
 import Chat from './components/Chat-Page';
 import Profile from './components/Profile-Page';
+import ProfileMaker from './components/Profile-Page-Creation';
 import Signup from './components/Signup-Page';
 import TOS from './components/Terms-Conditions-Page';
 import NavBar from './components/NavBar';
 import Contact from './components/Contact-Page';
 import GoogleAPI from './components/GoogleAPI';
-import AwaitSignout from './components/await-Signout'
+import Profile from './components/Profile-Page';
 
 import { Routes, Route, NavLink } from "react-router-dom";
 import {AuthContextProvider} from './context/UserAuthContext'
@@ -25,12 +26,12 @@ export default function App() {
           <Route path="/Login-Page" element={<Login />} />
           <Route path="/Matching-Page" element={<ProtectedRoute><Match /></ProtectedRoute>} />
           <Route path="/Chat-Page" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-          <Route path="/Profile-Page" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/Profile-Page-Creation" element={<ProtectedRoute><ProfileMaker /></ProtectedRoute>} />
           <Route path="/Signup-Page" element={<Signup />} />
           <Route path="/Terms-Conditions-Page" element={<TOS />} />
           <Route path="/Contact-Page" element={<Contact />} />
           <Route path='/GoogleAPI' element={<ProtectedRoute><GoogleAPI/></ProtectedRoute>} />
-          <Route path='/await-Signout' element={<AwaitSignout />} />
+          <Route path='/Profile-Page' element={<ProtectedRoute>< Profile/></ProtectedRoute>} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>

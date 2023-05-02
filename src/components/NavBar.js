@@ -21,7 +21,7 @@ const NavBar = () => {
       <NavLink to="/Chat-Page">Chat</NavLink>
     </li>
     <li>
-      <NavLink to="/Profile-Page">User Profile</NavLink>
+      <NavLink to="/Profile-Page-Creation">Create User Profile</NavLink>
     </li>
     <li>
       <NavLink to="/Signup-Page">Join Now</NavLink>
@@ -31,6 +31,9 @@ const NavBar = () => {
     </li>
     <li>
       <NavLink to="/GoogleAPI">API Test</NavLink>
+    </li>
+    <li>
+      <NavLink to="/Profile-Page">User Profile</NavLink>
     </li>
   </div>
  </nav>
