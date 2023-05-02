@@ -4,47 +4,57 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import logo from "./img/logo.png";
 
-const title = String("<insert dating app name here/>");
+const title = String("PerSona");
 
 const ButtonGroup = ({ children }) => (
-  <div style={{ display: 'flex' }}>
-    {children}
-  </div>
+  <div style={{ display: "flex" }}>{children}</div>
 );
 
 const Home = () => {
   return (
     <div className="homepageContent">
       <div className="logo-container">
-      <Link to="/">
-        <img src={logo} alt="logo" className="logo" />
-      </Link>
+        <Link to="/">
+          <img src={logo} alt="logo" className="logo" />
+        </Link>
       </div>
 
-      <div id = "homeBody"/>
+      <div id="homeBody" />
       <h1>{title}</h1>
       <ButtonGroup>
         <Link to="/Login-Page">
-          <Button className="buttonHome" style={{ 
-            marginRight: '18px', 
-            backgroundColor: "#AB8D84",
-            color: '#312E29',
-            fontVariantCaps: 'all-petite-caps',
-            border: '5px solid #AB8D84',
-            fontSize: '15px',
-            fontWeight: '600',
-            fontFamily: 'Verdana' }}>Join Now</Button>
+          <Button
+            className="buttonHome"
+            style={{
+              marginRight: "18px",
+              backgroundColor: "#AB8D84",
+              color: "#312E29",
+              fontVariantCaps: "all-petite-caps",
+              border: "5px solid #AB8D84",
+              fontSize: "15px",
+              fontWeight: "600",
+              fontFamily: "Verdana",
+            }}
+          >
+            Login
+          </Button>
         </Link>
 
         <Link to="/Signup-Page">
-        <Button className="buttonHome" style={{ 
-            backgroundColor: "#AB8D84",
-            color: '#312E29',
-            border: '5px solid #AB8D84',
-            fontSize: '15px',
-            fontWeight: '600',
-            fontVariantCaps: 'all-petite-caps',
-            fontFamily: 'Verdana' }}>Login</Button>
+          <Button
+            className="buttonHome"
+            style={{
+              backgroundColor: "#AB8D84",
+              color: "#312E29",
+              border: "5px solid #AB8D84",
+              fontSize: "15px",
+              fontWeight: "600",
+              fontVariantCaps: "all-petite-caps",
+              fontFamily: "Verdana",
+            }}
+          >
+            Join Now
+          </Button>
         </Link>
       </ButtonGroup>
     </div>
