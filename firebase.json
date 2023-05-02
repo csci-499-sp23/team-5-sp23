@@ -5,8 +5,8 @@
       "codebase": "default"
     },
     {
-      "source": "team-5-sp23",
-      "codebase": "team-5-sp23",
+      "source": "geneai",
+      "codebase": "geneai",
       "ignore": [
         "node_modules",
         ".git",

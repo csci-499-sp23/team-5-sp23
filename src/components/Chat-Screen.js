@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import Avatar from "react-avatar";
-import "./Chat-Screen.css";
+import "./css/Chat-Screen.css";
 
 function ChatScreen() {
   const [input, setInput] = useState("");

@@ -1,50 +1,50 @@
 import "./css/matchupStyles.css";
 import TinderCard from "react-tinder-card";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import "./css/Cards.css";
-import { db } from "../firebase-config"; 
-import {onSnapshot, docs, collection} from "firebase/firestore";
+import { db } from "../firebase-config";
+import { onSnapshot, collection } from "firebase/firestore";
 //may have this wrong
 
 function Card() {
-    const [people, setPeople] = useState([]);
-  
-    useEffect(() => {
-  
-      const unsubscribe = onSnapshot(collection(db, 'exampleprofiles'), snapshot => (
-          setPeople(snapshot.docs.map(doc => doc.data()))
-        ));
-  
-        return () => {
-            //cleanup
-            unsubscribe();
-          }
-    }, []);
-  
-    return (
-      //BEM
-      <div>
-        <div className="tinderCards_cardContainer">
-          {people.map(person => (
-              <TinderCard
-                className="swipe"
-                key={person.name}
-                preventSwipe={['up','down']}
-              >
-                <div
-                  style={{ backgroundImage: `url(${person.url})`}}
-                className="card">
-                <h3>{person.name}</h3>
-              </div>
-            </TinderCard>
-          ))}
-        </div>
-      </div>
+  const [people, setPeople] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "exampleprofiles"),
+      (snapshot) => setPeople(snapshot.docs.map((doc) => doc.data()))
     );
-  }
+
+    return () => {
+      //cleanup
+      unsubscribe();
+    };
+  }, []);
+
+  return (
+    //BEM
+    <div>
+      <div className="tinderCards_cardContainer">
+        {people.map((person) => (
+          <TinderCard
+            className="swipe"
+            key={person.name}
+            preventSwipe={["up", "down"]}
+          >
+            <div
+              style={{ backgroundImage: `url(${person.url})` }}
+              className="card"
+            >
+              <h3>{person.name}</h3>
+            </div>
+          </TinderCard>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default Card;
-
 
 // import TinderCard from "react-tinder-card";
 // import {useEffect, useState} from "react";
@@ -53,9 +53,6 @@ export default Card;
 // function TinderCards() {
 
 // export default Card;
-
-
-
 
 // const [clickDirection, setClickDirection] = useState('');
 
