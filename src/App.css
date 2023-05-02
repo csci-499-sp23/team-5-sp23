@@ -6,6 +6,9 @@ https://coolors.co/9c7159-a47f6f-ab8d84-c3afa5-dbd0c5-747371-312e29-33271c-19151
 
 * {
   font-family: Verdana;
+  color: white;
+  background-color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h1 {

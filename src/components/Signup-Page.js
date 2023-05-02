@@ -31,7 +31,8 @@ function Signup() {
     event.preventDefault();
     try{
       await logoutAccount();
-      navigate(('/'))
+      navigate(('/await-Signout'))
+      
     }catch(err){
       console.error(err);
     }
