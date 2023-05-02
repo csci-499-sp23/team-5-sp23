@@ -5,6 +5,7 @@ import { storage, db } from "../firebase-config";
 import { ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { v4 } from "uuid";
+import Header from './Header';
 
 // const styles = {
 //     container: {
@@ -107,6 +108,7 @@ const Profile = () => {
 
   return (
     <div style={{ background: "white" }}>
+      <Header />
       <div>
         <h1>Profile</h1>
         <div>

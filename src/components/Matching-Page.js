@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import "./css/Cards.css";
 import { db } from "../firebase-config"; 
 import {onSnapshot, collection} from "firebase/firestore";
+import Header from './Header';
 //may have this wrong
 
 function Card() {
@@ -24,6 +25,7 @@ function Card() {
     return (
       //BEM
       <div>
+        <Header />
         <div className="tinderCards_cardContainer">
           {people.map(person => (
               <TinderCard

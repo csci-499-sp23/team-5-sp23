@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import logo from "./img/logo.png";
 
-const title = String("<insert dating app name here/>");
+const title = String("Persona");
 
 const ButtonGroup = ({ children }) => (
   <div style={{ display: 'flex' }}>
@@ -33,7 +33,7 @@ const Home = () => {
             border: '5px solid #AB8D84',
             fontSize: '15px',
             fontWeight: '600',
-            fontFamily: 'Verdana' }}>Join Now</Button>
+            fontFamily: 'Verdana' }}>Login</Button>
         </Link>
 
         <Link to="/Signup-Page">
@@ -44,7 +44,7 @@ const Home = () => {
             fontSize: '15px',
             fontWeight: '600',
             fontVariantCaps: 'all-petite-caps',
-            fontFamily: 'Verdana' }}>Login</Button>
+            fontFamily: 'Verdana' }}>Join Now</Button>
         </Link>
       </ButtonGroup>
     </div>
