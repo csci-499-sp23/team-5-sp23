@@ -1,75 +1,82 @@
-// import './css/matchupStyles.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import React, { useState } from "react";
+const API_KEY = "YOUR_TRAITIFY_API_KEY";
+const ASSESSMENT_ID = "YOUR_ASSESSMENT_ID";
 
-const Match = ({ match }) => {
-  return (
-    <div>
-      <h3>{match.name}</h3>
-      <p>{match.age} years old</p>
-      <p>Location: {match.location}</p>
-      <p>Interests: {match.interests.join(", ")}</p>
-    </div>
-  );
-};
+const PersonalityFunct = () => {
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [responses, setResponses] = useState({});
 
-const MatchList = ({ matches }) => {
-  return (
-    <div>
-      {matches.map((match) => (
-        <Match key={match.id} match={match} />
-      ))}
-    </div>
-  );
-};
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      const response = await axios.get(
+        `https://api.traitify.com/v1/assessments/${ASSESSMENT_ID}/questions`,
+        {
+          headers: {
+            Authorization: `Basic ${API_KEY}:x`,
+            Accept: "application/json",
+          },
+        }
+      );
+      setQuestions(response.data);
+    };
+    fetchQuestions();
+  }, []);
 
-const MatchingFunction = () => {
-  const [selectedInterests, setSelectedInterests] = useState([]);
-  const [matches, setMatches] = useState([]);
-
-  const handleInterestClick = (interest) => {
-    if (selectedInterests.includes(interest)) {
-      setSelectedInterests(selectedInterests.filter((i) => i !== interest));
-    } else {
-      setSelectedInterests([...selectedInterests, interest]);
-    }
+  const handleResponse = (questionId, response) => {
+    setResponses((prevResponses) => ({
+      ...prevResponses,
+      [questionId]: response,
+    }));
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  const findMatches = async () => {
-    try {
-      const response = await fetch("YOUR_API_ENDPOINT");
-      const data = await response.json();
-      const matchedUsers = data.filter((user) => {
-        const userInterests = user.interests;
-        return selectedInterests.every((interest) =>
-          userInterests.includes(interest)
-        );
-      });
-      setMatches(matchedUsers);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleSubmit = async () => {
+    const response = await axios.post(
+      `https://api.traitify.com/v1/assessments/${ASSESSMENT_ID}/personality`,
+      {
+        data: responses,
+      },
+      {
+        headers: {
+          Authorization: `Basic ${API_KEY}:x`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data);
+    // do something with the response, such as display the user's personality traits
   };
 
   return (
     <div>
-      <h2>Find your match</h2>
-      <div>
-        <h4>Select your interests:</h4>
-        <button onClick={() => handleInterestClick("music")}>Music</button>
-        <button onClick={() => handleInterestClick("sports")}>Sports</button>
-        <button onClick={() => handleInterestClick("travel")}>Travel</button>
-        <button onClick={() => handleInterestClick("hiking")}>Hiking</button>
-        <button onClick={() => handleInterestClick("reading")}>Reading</button>
-        <button onClick={() => handleInterestClick("cooking")}>Cooking</button>
-        <button onClick={() => handleInterestClick("art")}>Art</button>
-        <button onClick={() => handleInterestClick("movies")}>Movies</button>
-        <button onClick={() => handleInterestClick("yoga")}>Yoga</button>
-      </div>
-      <button onClick={findMatches}>Find Matches</button>
-      {matches.length > 0 && <MatchList matches={matches} />}
+      {questions.length > 0 ? (
+        <div>
+          <h2>{questions[currentQuestionIndex].text}</h2>
+          <ul>
+            {questions[currentQuestionIndex].options.map((option) => (
+              <li key={option.id}>
+                <button onClick={() => handleResponse(questions[currentQuestionIndex].id, option.id)}>
+                  {option.text}
+                </button>
+              </li>
+            ))}
+          </ul>
+          {currentQuestionIndex === questions.length - 1 ? (
+            <button onClick={handleSubmit}>Submit</button>
+          ) : (
+            <button onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}>Next</button>
+          )}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };
 
-export default MatchingFunction;
+export default PersonalityFunct;
+

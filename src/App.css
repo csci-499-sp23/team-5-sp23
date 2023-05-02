@@ -1,17 +1,34 @@
-/* This .css file is only for global styles. */
+/* This .css file is only for global styles. 
+
+Lanique-- Project Colors: 
+https://coolors.co/9c7159-a47f6f-ab8d84-c3afa5-dbd0c5-747371-312e29-33271c-191510
+*/
 
 * {
-  color: white;
-  background-color: white;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana;
 }
 
 h1 {
   font-family: Impact;
-  color: white;
 }
 
 h2 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: white;
+  font-family: Verdana;
+}
+
+h3 {
+  font-family: Verdana;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+p {
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
