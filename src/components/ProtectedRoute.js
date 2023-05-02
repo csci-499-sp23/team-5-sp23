@@ -5,10 +5,10 @@ import {UserAuth} from '../context/UserAuthContext';
 const ProtectedRoute = ({children}) => {
     
     const {user} = UserAuth();
-    console.log("This is user")
-    console.log(user)
+    //console.log("This is user")
+    //console.log(user)
     if(!user){
-        console.log("Return to home")
+        //console.log("Return to home")
         return <Navigate to='/' />
     }
     //console.log(user);
