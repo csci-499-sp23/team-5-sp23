@@ -37,6 +37,20 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "cors": [
+      {
+        "origin": [
+          "http://127.0.0.1:5000",
+          "https://csci499.web.app/",
+          "https://csci499.firebaseapp.com/"
+        ],
+        "method": [
+          "GET",
+          "POST"
+        ],
+        "maxAgeSeconds": 3600
+      }
     ]
   },
   "storage": {
