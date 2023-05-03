@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';// Link,
 // import { auth } from '../firebase-config';
 
 
-
 function Signup() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
