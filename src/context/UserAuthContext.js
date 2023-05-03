@@ -11,8 +11,7 @@ import { auth } from '../firebase-config';
 const userContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
-    const [user, setUser] = useState({})
-
+    const [user, setUser] = useState(Object)
     const createUser = (email, password) =>{
         return createUserWithEmailAndPassword(auth, email, password);
     };
@@ -22,13 +21,22 @@ export const AuthContextProvider = ({children}) => {
     };
 
     const logoutAccount = () =>{
-        return signOut(auth);
+        signOut(auth).then(() =>{
+            console.log("Signed_out!!!!")
+        });
+        console.log(user);
+        return
     };
+
 
     useEffect(() =>{
         const unsuscribe = onAuthStateChanged(auth, (currentUser) =>{
-            console.log(user);
+            
+            //console.log("This is the user")
             setUser(currentUser);
+            //console.log(user.email);
+            //console.log("This is the users email: ")
+            
         });
         return () => {
             unsuscribe();

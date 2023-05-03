@@ -40,6 +40,7 @@ function GoogleAPI() {
         console.log("Retrieved places:", allPlaces); //comments to make sure this runs properly
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
