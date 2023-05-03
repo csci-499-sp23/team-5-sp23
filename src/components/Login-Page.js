@@ -35,12 +35,14 @@ function LoginPage() {
     return (
         <>
             {/* <NavBar/> */}
-            <div id="loginBody">
+            
+            <div className="loginBody">
                 <Link to="/">
                     <img src={logo} alt="logo" className="logo" />
                 </Link>
 
-                <h1>Login Page</h1>
+                <h1>Welcome Back!</h1>
+                
                 <form onSubmit={handleSubmit}>
                     <label>
                         Username:

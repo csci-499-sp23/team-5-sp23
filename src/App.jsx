@@ -5,9 +5,9 @@ import Chat from './components/Chat-Page';
 import Profile from './components/Profile-Page';
 import Signup from './components/Signup-Page';
 import TOS from './components/Terms-Conditions-Page';
-import NavBar from './components/NavBar';
+import NavBar from './components/NavBar'; // remove when site navigation layout is completed.
 import Contact from './components/Contact-Page';
-import "./components/css/NavBar.css";
+import "./components/css/NavBar.css"; // remove when site navigation layout is completed.
 import GoogleAPI from './components/GoogleAPI';
 import AwaitSignout from './components/await-Signout'
 
