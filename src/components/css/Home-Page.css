@@ -27,8 +27,9 @@ html, body {
 }
 
 .homepageContent h1 {
-    font-size: 800%;
+    font-size: 1000%;
     margin-top: 20%;
+    margin-bottom: 2%;
     font-family: Impact;
     letter-spacing: 6.5px;
     color: #efefef;

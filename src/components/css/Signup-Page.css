@@ -1,0 +1,91 @@
+html, body {
+    min-height: 100%;
+  }
+
+.signupBody {
+    font-family: Verdana;
+    color: #312E29;
+    font-weight: bolder;
+    height: 100vh;
+    text-align: center;
+    background-color: #C3AFA5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .signupBody form{
+    display: block;
+    color: #312E29;
+    background-color: #DBD0C5;
+                /* offset-x | offset-y | blur-radius | color */
+    box-shadow: 15px 20px 10px #c4bbb2a0;
+    font-family: Verdana;
+    margin-top: 0px;
+    width: 50%;
+    height: 85%;
+    padding-bottom: 2%;
+    padding-top: 1%;
+  }
+  
+  .signupBody form input, textarea{
+    width: 80%;
+    margin: 12px auto;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: Verdana;
+    text-align: center;
+    color: #312E29;
+    background-color: #efefef;
+    
+  }
+  
+  .signupBody form button{
+    font-family: Verdana;
+    font-weight: bold;
+    height: 40px;
+    width: 30%;
+    text-align: center;
+    border-radius: 5px;
+    align-items: center;
+    border: none;
+    color: #312E29;
+    background-color: #efefef;
+    cursor: pointer;
+  }
+  
+  .signupBody h1 {
+    font-size: 800%;
+    font-family: Impact;
+    letter-spacing: 6.5px;
+    color: #efefef;
+    margin-top: 0px;
+    padding-top: 15%;
+  }
+  
+  /* logo  */
+  
+  .logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+  }
+  
+  .logo-container img {
+    width: 100px;
+    height: auto;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .logo {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    min-width: 50px;
+    min-height: 50px;
+    height: 100px;
+    width: 100px;
+  }
