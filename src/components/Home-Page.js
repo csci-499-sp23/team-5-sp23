@@ -1,10 +1,10 @@
 import React from "react";
-import "./css/Home-Page.css";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import logo from "./img/logo.png";
+import "./css/Home-Page.css";
 
-const title = String("PerSona");
+const title = String("Persona Dating");
 
 const ButtonGroup = ({ children }) => (
   <div style={{ display: "flex" }}>{children}</div>
@@ -19,42 +19,31 @@ const Home = () => {
         </Link>
       </div>
 
-      <div id="homeBody" />
+      <div id = "homeBody"/>
+      
       <h1>{title}</h1>
       <ButtonGroup>
         <Link to="/Login-Page">
-          <Button
-            className="buttonHome"
-            style={{
-              marginRight: "18px",
-              backgroundColor: "#AB8D84",
-              color: "#312E29",
-              fontVariantCaps: "all-petite-caps",
-              border: "5px solid #AB8D84",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontFamily: "Verdana",
-            }}
-          >
-            Login
-          </Button>
+          <Button className="buttonHome" style={{ 
+            marginRight: '23px', 
+            backgroundColor: "#AB8D84",
+            color: '#efefef',
+            fontVariantCaps: 'all-petite-caps',
+            border: '20px solid #AB8D84',
+            fontSize: '17px',
+            fontWeight: '600',
+            fontFamily: 'Verdana' }}>Join Now</Button>
         </Link>
 
-        <Link to="/Signup-Page">
-          <Button
-            className="buttonHome"
-            style={{
-              backgroundColor: "#AB8D84",
-              color: "#312E29",
-              border: "5px solid #AB8D84",
-              fontSize: "15px",
-              fontWeight: "600",
-              fontVariantCaps: "all-petite-caps",
-              fontFamily: "Verdana",
-            }}
-          >
-            Join Now
-          </Button>
+        <Link to="/Login-Page">
+        <Button className="buttonHome" style={{ 
+            backgroundColor: "#AB8D84",
+            color: '#efefef',
+            border: '20px solid #AB8D84',
+            fontSize: '17px',
+            fontWeight: '600',
+            fontVariantCaps: 'all-petite-caps',
+            fontFamily: 'Verdana' }}>Login</Button>
         </Link>
       </ButtonGroup>
     </div>

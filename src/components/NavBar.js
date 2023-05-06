@@ -1,4 +1,3 @@
-// Components/NavBar.js
 import { NavLink } from "react-router-dom";
 import "./css/NavBar.css";
 
@@ -9,7 +8,13 @@ const NavBar = () => {
  <nav className='container'>
   <div className='row'>
     <li>
+      <NavLink to="/Terms-Conditions-Page">Legal Stuff</NavLink>
+    </li>
+    <li>
       <NavLink to="/">Home</NavLink>
+    </li>
+    <li>
+      <NavLink to="/Signup-Page">Join Now</NavLink>
     </li>
     <li>
       <NavLink to="/Login-Page">Login</NavLink>
@@ -22,12 +27,6 @@ const NavBar = () => {
     </li>
     <li>
       <NavLink to="/Profile-Page-Creation">Create User Profile</NavLink>
-    </li>
-    <li>
-      <NavLink to="/Signup-Page">Join Now</NavLink>
-    </li>
-    <li>
-      <NavLink to="/Terms-Conditions-Page">Legal Stuff</NavLink>
     </li>
     <li>
       <NavLink to="/GoogleAPI">API Test</NavLink>

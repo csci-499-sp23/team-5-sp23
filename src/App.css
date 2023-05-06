@@ -2,18 +2,24 @@
 
 Lanique-- Project Colors: 
 https://coolors.co/9c7159-a47f6f-ab8d84-c3afa5-dbd0c5-747371-312e29-33271c-191510
+
+This file is never used, because never imported, this is for testing.
 */
 
 * {
   font-family: Verdana;
+  background-color: #DBD0C5;
+  color: #312E29;
 }
 
 h1 {
   font-family: Impact;
+  background-color: transparent;
 }
 
 h2 {
   font-family: Verdana;
+  background-color: transparent;
 }
 
 h3 {
@@ -22,13 +28,20 @@ h3 {
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  background-color: transparent;
 }
 
 p {
   background-color: transparent;
 }
 
+ul {
+  color: #312E29;
+  background-color: transparent;
+}
+
 a {
   text-decoration: none;
   color: inherit;
+  background-color: transparent;
 }

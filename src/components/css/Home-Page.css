@@ -27,194 +27,41 @@ html, body {
 }
 
 .homepageContent h1 {
-    font-size: 350%;
-    margin-left: 1%;
+    font-size: 800%;
     margin-top: 20%;
     font-family: Impact;
-    letter-spacing: 1.5px;
+    letter-spacing: 6.5px;
     color: #efefef;
-    vertical-align:top;
     position: relative;
     z-index: 1;
 }
 
 .buttonHome {
     background-color: #efefef;
-  }
+  } 
   
-  .buttonHome:hover {
+.buttonHome:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-  }
+ }
 
-  .logo-container {
+.logo-container {
     position: absolute;
     top: 0;
     left: 0;
     padding: 20px;
-  }
-  
-  .logo-container img {
+}
+
+.logo-container img {
     width: 100px;
     height: auto;
     position: relative;
     z-index: 1;
-  }
+}
 
-  .logo {
+.logo {
     position: absolute;
     top: 0;
     left: 0;
     height: 50px;
     width: 50px;
-  }
-  
-  
-
-/* old */
-
-.outercontainer {
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.container {
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.imageportioncontainer {
-    background-color: transparent;
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-}
-
-.row {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    border: 1px; 
-    justify-content: space-around;
-    flex: 1;
-    align-items: center;
-    width: 70%;
-}
-
-.middlerow {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    flex: 3;
-    justify-content: space-between;
-    align-items: center;
-    width: 70%;
-}
-
-.bottomrow {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    flex: 2;
-    justify-content: space-between;
-    align-items: center;
-    width: 70%;
-}
-
-.row2 {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    flex: 2;
-    justify-content: space-between;
-    align-items: center;
-    width: 30%;
-}
-
-.topimage {
-    background-color: transparent;
-    /* display: flex; */
-    object-fit:contain;
-    width: 400;
-    height: 356;
-    justify-content: center;
-}
-
-.bottomimage {
-    background-color: transparent;
-    object-fit:contain;
-    width: 300;
-    height: 267;
-    justify-content: center;
-}
-
-.logoimage {
-    background-color: transparent;
-    object-fit:contain;
-    width: 200px; 
-    height: 178px;
-    justify-content: center;
-}
-
-.buttonContainer {
-    background-color: transparent;
-    display: flex;
-    border-radius: 5;
-    padding: 8;
-    margin: 8;
-}
-
-.buttonContainertemp {
-    background-color: transparent;
-    display: flex;
-    background: linear-gradient(99.05deg, #BC3CD8 0.07%, #C54B8C 106.32%);
-    border-radius: 10px;
-    padding: 2;
-    margin: 2;
-}
-
-.selectedButton {
-    /* Home */
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 15.5098px;
-
-background: linear-gradient(99.05deg, #C824EC 0.07%, #DF308D 106.32%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
--webkit-text-fill-color: transparent;
-
-}
-
-.notSelectedButton {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12.5098px;
-
-    color: #FFFFFF;
-}
-
-.orbTitle {
-    font-family: 'Orbitron', sans-serif;
-    font-style: normal;
-    font-weight: 900;
-    font-size: 31.6914px;
-    line-height: 43px;
-    /* or 137% */
-
-    color: #FFFFFF;
 }

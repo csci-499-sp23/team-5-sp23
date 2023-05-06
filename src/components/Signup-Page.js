@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 //import { async } from '@firebase/util';
 import { UserAuth } from '../context/UserAuthContext';
-import { useNavigate } from 'react-router-dom';// Link,
+import { useNavigate } from 'react-router-dom';
+import "../components/css/Global-Styles.css";
 // Moving following to UserAuthContext.js
 // import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 // import { auth } from '../firebase-config';
-
 
 
 function Signup() {

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { UserAuth } from '../context/UserAuthContext';
+import logo from "./img/logo.png";
+import "./css/Login-Page.css";
+// import NavBar from './NavBar';
 
 function LoginPage() {
-
     const { signIn } = UserAuth();
-
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
 
     const navigate = useNavigate();
 
@@ -26,7 +26,6 @@ function LoginPage() {
         try{
             await signIn(username, password);
         }catch(err){
-           
             console.log(err);
         }
         console.log(`Logging in with username: ${username} and password: ${password}`);
@@ -34,22 +33,31 @@ function LoginPage() {
     };
 
     return (
-        <div>
-            <h1>Login Page</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
-                    <input type="text" value={username} onChange={handleUsernameChange} />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input type="password" value={password} onChange={handlePasswordChange} />
-                </label>
-                <br />
-                <button type="submit">Login</button>
-            </form>
-        </div>
+        <>
+            {/* <NavBar/> */}
+            
+            <div className="loginBody">
+                <Link to="/">
+                    <img src={logo} alt="logo" className="logo" />
+                </Link>
+
+                <h1>Welcome Back!</h1>
+                
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Username:
+                        <input type="text" value={username} onChange={handleUsernameChange} />
+                    </label>
+                    <br />
+                    <label>
+                        Password:
+                        <input type="password" value={password} onChange={handlePasswordChange} />
+                    </label>
+                    <br />
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </>
     );
 }
 
