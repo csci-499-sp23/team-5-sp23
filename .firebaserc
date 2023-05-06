@@ -1,5 +1,11 @@
 {
   "projects": {
     "default": "csci499"
+  },
+  "targets": {},
+  "etags": {
+    "csci499": {
+      "extensionInstances": {}
+    }
   }
 }
