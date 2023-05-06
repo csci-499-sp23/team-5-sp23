@@ -7,18 +7,16 @@ import "./css/Home-Page.css";
 const title = String("Persona");
 
 const ButtonGroup = ({ children }) => (
-  <div style={{ display: 'flex' }}>
-    {children}
-  </div>
+  <div style={{ display: "flex" }}>{children}</div>
 );
 
 const Home = () => {
   return (
     <div className="homepageContent">
       <div className="logo-container">
-      <Link to="/">
-        <img src={logo} alt="logo" className="logo" />
-      </Link>
+        <Link to="/">
+          <img src={logo} alt="logo" className="logo" />
+        </Link>
       </div>
 
       <div id = "homeBody"/>

@@ -21,11 +21,8 @@ export const AuthContextProvider = ({children}) => {
     };
 
     const logoutAccount = () =>{
-        signOut(auth).then(() =>{
-            console.log("Signed_out!!!!")
-        });
-        console.log(user);
-        return
+        return signOut(auth);
+        
     };
 
 
