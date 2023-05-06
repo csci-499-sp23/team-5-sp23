@@ -18,7 +18,7 @@ to build the project
 
 Michael Kim // https://github.com/mike787k 
 
-Lucas Gunkel // https://github.com/lujogu test
+Lucas Gunkel // https://github.com/lujogu
 
 Lanique Peterson // https://github.com/La-Nique 
 
