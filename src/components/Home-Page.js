@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import logo from "./img/logo.png";
 import "./css/Home-Page.css";
 
-const title = String("Persona Dating");
+const title = String("Persona");
 
 const ButtonGroup = ({ children }) => (
   <div style={{ display: "flex" }}>{children}</div>
@@ -23,7 +23,7 @@ const Home = () => {
       
       <h1>{title}</h1>
       <ButtonGroup>
-        <Link to="/Login-Page">
+        <Link to="/Signup-Page">
           <Button className="buttonHome" style={{ 
             marginRight: '23px', 
             backgroundColor: "#AB8D84",
@@ -32,7 +32,7 @@ const Home = () => {
             border: '20px solid #AB8D84',
             fontSize: '17px',
             fontWeight: '600',
-            fontFamily: 'Verdana' }}>Join Now</Button>
+            fontFamily: 'Verdana' }}>Signup</Button>
         </Link>
 
         <Link to="/Login-Page">

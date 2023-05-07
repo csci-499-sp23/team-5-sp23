@@ -9,15 +9,10 @@ html, body {
     height: 100vh;
     text-align: center;
     background-color: #C3AFA5;
-}
-
-.loginBody h1 {
-    font-size: 800%;
-    font-family: Impact;
-    letter-spacing: 6.5px;
-    color: #efefef;
-    margin-top: 0px;
-    padding-top: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .loginBody form{
@@ -26,10 +21,10 @@ html, body {
   background-color: #DBD0C5;
               /* offset-x | offset-y | blur-radius | color */
   box-shadow: 15px 20px 10px #c4bbb2a0;
-  max-width: 800px;
-  max-height: 800px;
   font-family: Verdana;
   margin-top: 0px;
+  width: 50%;
+  height: 30%;
 }
 
 .loginBody form input, textarea{
@@ -41,6 +36,7 @@ html, body {
   text-align: center;
   color: #312E29;
   background-color: #efefef;
+  
 }
 
 .loginBody form button{
@@ -56,6 +52,17 @@ html, body {
   background-color: #efefef;
   cursor: pointer;
 }
+
+.loginBody h1 {
+  font-size: 800%;
+  font-family: Impact;
+  letter-spacing: 6.5px;
+  color: #efefef;
+  margin-top: 0px;
+  padding-top: 4%;
+}
+
+/* logo  */
 
 .logo-container {
   position: absolute;
