@@ -8,6 +8,7 @@ import Signup from "./components/Signup-Page";
 import TOS from "./components/Terms-Conditions-Page";
 import NavBar from "./components/NavBar";
 import Contact from "./components/Contact-Page";
+import Personality from "./components/PersonalityPage";
 import GoogleAPI from "./components/GoogleAPI";
 
 import { Routes, Route, NavLink } from "react-router-dom";
@@ -47,6 +48,7 @@ export default function App() {
             }
           />
           <Route path="/Signup-Page" element={<Signup />} />
+          <Route path="/PersonalityPage" element={<Personality />} />
           <Route path="/Terms-Conditions-Page" element={<TOS />} />
           <Route path="/Contact-Page" element={<Contact />} />
           <Route
