@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar"; // remove when site navigation layout 
 import Contact from "./components/Contact-Page";
 import "./components/css/NavBar.css"; // remove when site navigation layout is completed.
 import GoogleAPI from "./components/GoogleAPI";
+import Personality from "./components/PersonalityPage";
 import AwaitSignout from "./components/await-Signout";
 
 import { Routes, Route, NavLink } from "react-router-dom";
@@ -47,6 +48,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/PersonalityPage" element={<Personality />} />
           <Route path="/Signup-Page" element={<Signup />} />
           <Route path="/Terms-Conditions-Page" element={<TOS />} />
           <Route path="/Contact-Page" element={<Contact />} />
