@@ -1,82 +1,105 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
-const API_KEY = "YOUR_TRAITIFY_API_KEY";
-const ASSESSMENT_ID = "YOUR_ASSESSMENT_ID";
+const questions = [
+  {
+    questionText: "You enjoy spending time alone.",
+    answerOptions: [
+      { answerText: "Strongly Disagree", value: 1 },
+      { answerText: "Disagree", value: 2 },
+      { answerText: "Neutral", value: 3 },
+      { answerText: "Agree", value: 4 },
+      { answerText: "Strongly Agree", value: 5 },
+    ],
+  },
+  {
+    questionText:
+      "You prefer to follow a planned and organized approach in your daily life.",
+    answerOptions: [
+      { answerText: "Strongly Disagree", value: 1 },
+      { answerText: "Disagree", value: 2 },
+      { answerText: "Neutral", value: 3 },
+      { answerText: "Agree", value: 4 },
+      { answerText: "Strongly Agree", value: 5 },
+    ],
+  },
+  {
+    questionText:
+      "You often rely on your intuition or gut feeling when making decisions.",
+    answerOptions: [
+      { answerText: "Strongly Disagree", value: 1 },
+      { answerText: "Disagree", value: 2 },
+      { answerText: "Neutral", value: 3 },
+      { answerText: "Agree", value: 4 },
+      { answerText: "Strongly Agree", value: 5 },
+    ],
+  },
+];
 
-const PersonalityFunct = () => {
-  const [questions, setQuestions] = useState([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [responses, setResponses] = useState({});
+const mbtiTypes = [
+  {
+    type: "Introvert",
+    description: "Prefers to focus on internal thoughts and feelings.",
+  },
+  {
+    type: "Extrovert",
+    description: "Draws energy from interacting with others.",
+  },
+];
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      const response = await axios.get(
-        `https://api.traitify.com/v1/assessments/${ASSESSMENT_ID}/questions`,
-        {
-          headers: {
-            Authorization: `Basic ${API_KEY}:x`,
-            Accept: "application/json",
-          },
-        }
-      );
-      setQuestions(response.data);
-    };
-    fetchQuestions();
-  }, []);
+const MBTIPersonalityTest = () => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
-  const handleResponse = (questionId, response) => {
-    setResponses((prevResponses) => ({
-      ...prevResponses,
-      [questionId]: response,
-    }));
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+  const handleAnswerOptionClick = (value) => {
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = value;
+    setAnswers(newAnswers);
+    setCurrentQuestion(currentQuestion + 1);
   };
 
-  const handleSubmit = async () => {
-    const response = await axios.post(
-      `https://api.traitify.com/v1/assessments/${ASSESSMENT_ID}/personality`,
-      {
-        data: responses,
-      },
-      {
-        headers: {
-          Authorization: `Basic ${API_KEY}:x`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(response.data);
-    // do something with the response, such as display the user's personality traits
+  const handleSubmit = () => {
+    // Here you can process the answers and calculate the user's MBTI personality type
+    // based on the scoring system of the test.
+    console.log("Answers:", answers);
+
+    // Calculate the total score
+    const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
+
+    // Determine the dominant preference based on total score
+    const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
+
+    // Display the result to the user
+    console.log("Your dominant preference is:", dominantPreference.type);
+    console.log("Description:", dominantPreference.description);
   };
 
   return (
-    <div>
-      {questions.length > 0 ? (
-        <div>
-          <h2>{questions[currentQuestionIndex].text}</h2>
-          <ul>
-            {questions[currentQuestionIndex].options.map((option) => (
-              <li key={option.id}>
-                <button onClick={() => handleResponse(questions[currentQuestionIndex].id, option.id)}>
-                  {option.text}
-                </button>
-              </li>
+    <div className="mbti-personality-test">
+      {currentQuestion < questions.length ? (
+        <>
+          <div className="question-text">
+            {questions[currentQuestion].questionText}
+          </div>
+          <div className="answer-options">
+            {questions[currentQuestion].answerOptions.map((option) => (
+              <button
+                key={option.value}
+                className="answer-option"
+                onClick={() => handleAnswerOptionClick(option.value)}
+              >
+                {option.answerText}
+              </button>
             ))}
-          </ul>
-          {currentQuestionIndex === questions.length - 1 ? (
-            <button onClick={handleSubmit}>Submit</button>
-          ) : (
-            <button onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}>Next</button>
-          )}
-        </div>
+          </div>
+          <button className="submit-button" onClick={handleSubmit}>
+            Submit
+          </button>
+        </>
       ) : (
-        <p>Loading...</p>
+        <div className="result-text">Survey Completed!</div>
       )}
     </div>
   );
 };
 
-export default PersonalityFunct;
-
+export default MBTIPersonalityTest;
