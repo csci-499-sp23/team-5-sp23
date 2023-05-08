@@ -37,12 +37,23 @@ const questions = [
 
 const mbtiTypes = [
   {
-    type: "Introvert",
-    description: "Prefers to focus on internal thoughts and feelings.",
+    type: "ISTJ",
+    description: "Practical and logical, with a focus on order and structure.",
   },
   {
-    type: "Extrovert",
-    description: "Draws energy from interacting with others.",
+    type: "ENFP",
+    description:
+      "Creative and enthusiastic, with a focus on possibilities and connections.",
+  },
+  {
+    type: "ISFJ",
+    description:
+      "Warm and responsible, with a focus on tradition and stability.",
+  },
+  {
+    type: "ENTP",
+    description:
+      "Innovative and adaptable, with a focus on new ideas and challenges.",
   },
 ];
 
