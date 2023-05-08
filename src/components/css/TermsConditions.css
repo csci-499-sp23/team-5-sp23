@@ -1,33 +1,37 @@
-
-.bodyTOS{
+.bodyTOS {
   margin: 0;
   padding: 0;
   min-height: 600px;
-  align-items: center;
   justify-content: center;
   display: flex;
 }
 
-.ScrollingBox{
+
+.bodyTOS h1 {
+  font-size: 600%;
+  font-family: Impact;
+  letter-spacing: 6.5px;
+  color: #efefef;
+}
+
+.box {
   max-height: 600px;
   max-width: 800px;
   padding: 60 30px;
-  font-family: "Cursive";
+  font-family: Verdana;
 }
 
-.TOSText{
+.anotherBox {
   padding: 0 20px;
   height: 300px;
-  font-family: "Cursive";
+  font-family: Verdana;
   font-size: 18px;
   justify-content: center;
 }
 
-.TOSBody{
-  max-width: 460px;
+.terms {
   padding: 0 20px;
-  font-family: "Cursive";
+  font-family: Verdana;
   justify-content: center;
+  padding-bottom: 5%;
 } 
-
-
