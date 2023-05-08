@@ -57,16 +57,16 @@ const mbtiTypes = [
   },
 ];
 
-// const MBTIPersonalityTest = () => {
-//   const [currentQuestion, setCurrentQuestion] = useState(0);
-//   const [answers, setAnswers] = useState([]);
+const MBTIPersonalityTest = () => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
-//   const handleAnswerOptionClick = (value) => {
-//     const newAnswers = [...answers];
-//     newAnswers[currentQuestion] = value;
-//     setAnswers(newAnswers);
-//     setCurrentQuestion(currentQuestion + 1);
-//   };
+  const handleAnswerOptionClick = (value) => {
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = value;
+    setAnswers(newAnswers);
+    setCurrentQuestion(currentQuestion + 1);
+  };
 
   const handleSubmit = () => {
     // Here you can process the answers and calculate the user's MBTI personality type
