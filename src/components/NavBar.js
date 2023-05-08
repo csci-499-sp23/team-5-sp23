@@ -8,7 +8,7 @@ const NavBar = () => {
  <nav className='container'>
   <div className='row'>
     <li>
-      <NavLink to="/Terms-Conditions-Page">Legal Stuff</NavLink>
+      <NavLink to="/Terms-Conditions-Page">TOS</NavLink>
     </li>
     <li>
       <NavLink to="/">Home</NavLink>
@@ -33,6 +33,9 @@ const NavBar = () => {
     </li>
     <li>
       <NavLink to="/Profile-Page">User Profile</NavLink>
+    </li>
+    <li>
+      <NavLink to="/PersonalityPage">MBTI/Personality Test</NavLink>
     </li>
   </div>
  </nav>
