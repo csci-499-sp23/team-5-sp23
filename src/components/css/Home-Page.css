@@ -66,3 +66,19 @@ html, body {
     height: 50px;
     width: 50px;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: Verdana;
+    color: #efefef;
+    z-index: 1;
+    margin-bottom: 2%;
+  } footer a {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+    size: 3%;
+}

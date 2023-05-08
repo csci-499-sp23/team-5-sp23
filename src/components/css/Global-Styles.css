@@ -1,3 +1,9 @@
+body{
+  background-color: #C3AFA5;
+  font-family: Verdana;
+  color: #312E29;
+}
+
 form{
   display: block;
   box-shadow: 1px 1px 2px 2px #000000;
