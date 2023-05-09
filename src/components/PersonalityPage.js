@@ -58,22 +58,20 @@ const mbtiTypes = [
   },
 ];
 
-const MBTIPersonalityTest = () => {
+function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
 
   const handleAnswerOptionClick = (value) => {
-    const newAnswers = [...answers];
-    newAnswers[currentQuestion] = value;
-    setAnswers(newAnswers);
-    setCurrentQuestion(currentQuestion + 1);
+    setAnswers([...answers, value]);
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      displayResults();
+    }
   };
 
-  const handleSubmit = () => {
-    // Here you can process the answers and calculate the user's MBTI personality type
-    // based on the scoring system of the test.
-    console.log("Answers:", answers);
-
+  const displayResults = () => {
     // Calculate the total score
     const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
 
@@ -81,37 +79,25 @@ const MBTIPersonalityTest = () => {
     const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
 
     // Display the result to the user
-    console.log("Your dominant preference is:", dominantPreference.type);
-    console.log("Description:", dominantPreference.description);
+    const result = `Your dominant preference is ${dominantPreference.type} - ${dominantPreference.description}.`;
+    alert(result);
   };
 
   return (
-    <div className="mbti-personality-test">
-      {currentQuestion < questions.length ? (
-        <>
-          <div className="question-text">
-            {questions[currentQuestion].questionText}
-          </div>
-          <div className="answer-options">
-            {questions[currentQuestion].answerOptions.map((option) => (
-              <button
-                key={option.value}
-                className="answer-option"
-                onClick={() => handleAnswerOptionClick(option.value)}
-              >
-                {option.answerText}
-              </button>
-            ))}
-          </div>
-          <button className="submit-button" onClick={handleSubmit}>
-            Submit
+    <div>
+      <h1>{questions[currentQuestion].questionText}</h1>
+      <div>
+        {questions[currentQuestion].answerOptions.map((answerOption) => (
+          <button
+            key={answerOption.answerText}
+            onClick={() => handleAnswerOptionClick(answerOption.value)}
+          >
+            {answerOption.answerText}
           </button>
-        </>
-      ) : (
-        <div className="result-text">Survey Completed!</div>
-      )}
+        ))}
+      </div>
     </div>
   );
-};
+}
 
-export default MBTIPersonalityTest;
+export default Quiz;
