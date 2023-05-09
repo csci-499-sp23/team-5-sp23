@@ -35,6 +35,8 @@ function Card() {
     const data = { uid };
     // Assume `uid` is the UID of the authenticated user
 
+    console.log("function called from matching page");
+
     const getUnswipedProfiles = httpsCallable(functions, 'getUnswipedProfiles');
     getUnswipedProfiles(data) // pass empty object as data argument
     .then((result) => {

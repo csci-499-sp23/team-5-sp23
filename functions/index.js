@@ -25,59 +25,93 @@ firestore.settings({
   ignoreUndefinedProperties: true
 });
 
-
 async function getEmailFromUid(uid) {
   const userRecord = await admin.auth().getUser(uid);
   const email = userRecord.email;
   return email;
 }
 
-function iterateQuery(querySnapshot, swipedIds){
-  const profiles = []
+async function getProfiles(querySnapshot, batchSize, lastVisible) {
+  const profiles = [];
+  let newLastVisible;
+
   querySnapshot.forEach((doc) => {
     const profile = doc.data();
     profile.id = doc.id;
-    if (!swipedIds || !swipedIds.includes(profile.id)) {
-      console.log('pushing profile:', profile);
-      profiles.push(profile);
-  }});
-  return { profiles };
+    profiles.push(profile);
+    newLastVisible = doc;
+  });
+
+  return {
+    profiles: profiles.slice(0, batchSize),
+    lastVisible: newLastVisible || lastVisible,
+  };
 }
 
 exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
-    throw new functions.https.HttpsError('unauthenticated', 'You must be authenticated to call this function');
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "You must be authenticated to call this function"
+    );
   }
 
   const useremail = await getEmailFromUid(data.uid);
   const profileRef = firestore.collection("profiles");
   const swipeRef = firestore.collection("swipes");
-  
-// Retrieve the swiped IDs of the user
-try {
-  // Retrieve the swiped IDs of the user
-  const swipedSnapshot = await swipeRef.where("swiper", "==", useremail).get();
-  const swipedIds = swipedSnapshot.docs.map((doc) => doc.data().swipee);
+  const batchSize = 2;
+  let lastVisible = data.lastVisible;
 
-  // Query the profiles collection for all profiles not in the swiped IDs array
-  const querySnapshot = await profileRef.where(admin.firestore.FieldPath.documentId(), "not-in", swipedIds || []).get();
+  try {
+    const swipedSnapshot = await swipeRef
+      .where("swiper", "==", useremail)
+      .get();
+    const swipedIds = swipedSnapshot.docs.map((doc) => doc.data().swipee);
 
-  return iterateQuery(querySnapshot, swipedIds);
-  // process the query results
-} catch (error) {
-  console.error("Error getting swipe data:", error);
+    let query = profileRef.where(
+      admin.firestore.FieldPath.documentId(),
+      "not-in",
+      swipedIds || []
+    );
 
-  // handle the error here, for example:
-  if (error.code === "not-found") {
-    // handle "document not found" error
-    console.log("have not made any swipes yet error");
+    if (lastVisible) {
+      query = query.startAfter(lastVisible);
+    }
 
-    return iterateQuery(profileRef, null);
-  } else {
-    // handle other errors
-    console.log("UNRESOLVED ERROR HAPPENING! AHHHHH!");
+    const querySnapshot = await query.limit(batchSize).get();
+    const result = await getProfiles(querySnapshot, batchSize, lastVisible);
+    lastVisible = result.lastVisible;
+
+    const response = {
+      profiles: result.profiles,
+      lastVisible,
+    };
+
+    return response;
+  } catch (error) {
+    console.error("Error getting swipe data:", error);
+
+    if (error.code === "not-found") {
+      console.log("User has not made any swipes yet.");
+
+      const querySnapshot = await profileRef.limit(batchSize).get();
+      const result = await getProfiles(querySnapshot, batchSize, null);
+      lastVisible = result.lastVisible;
+
+      const response = {
+        profiles: result.profiles,
+        lastVisible,
+      };
+
+      return response;
+    } else {
+      console.log("An unresolved error occurred.");
+      throw new functions.https.HttpsError(
+        "internal",
+        "An internal error occurred."
+      );
+    }
   }
-}
 });
 
 exports.githubRepoAPI = functions.runWith({secrets: ["AUTH_KEY"]}).https.onRequest((req, res) => {
