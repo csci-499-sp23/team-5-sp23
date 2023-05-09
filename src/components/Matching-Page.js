@@ -5,13 +5,16 @@ import "./css/Cards.css";
 import { db } from "../firebase-config"; 
 import {onSnapshot, collection, doc, getDoc, getDocs, where, query} from "firebase/firestore";
 import { UserAuth } from "../context/UserAuthContext";//may have this wrong
-import axios from "axios";
+import { functions } from "../firebase-config"; 
+import { httpsCallable } from "firebase/functions";
+import { storage, ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
+
 
 
 function Card() {
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
-  
+
   useEffect(() => {
     const getCurrentUserProfile = async () => {
       const docRef = doc(db, "profiles", user.email);
@@ -27,42 +30,42 @@ function Card() {
   }, [user.email]);
 
   useEffect(() => {
-    
-    const promise = axios
-          .get(
-            `http://localhost:5001/csci499/us-central1/getUnswipedProfiles`
-            // `https://us-central1-csci499.cloudfunctions.net/getUnswipedProfiles`
-          )
-          .then((result) => {
-            const profiles = result.data.profiles;
-          })
-          .catch((error) => console.error(error));
-    console.log(promise);
-    // // Get a list of potential matches for the current user
-    // const getPotentialMatches = async () => {
-    //   const currentUserID = user.uid;
-    //   const colRef = collection(db, "profiles");
-    //   const q = query(colRef, where("swipedOn", "array-contains", [currentUserID]));
+    // firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+    const uid = user.uid;
+    const data = { uid };
+    // Assume `uid` is the UID of the authenticated user
 
-    //   const querySnapshot = await getDocs(q);
-    //   const matches = [];
-    //   querySnapshot.forEach((doc) => {
-    //     const match = doc.data();
-    //       match.id = doc.id;
-    //       matches.push(match);
-    //   });
-    //   console.log(matches);
-    //   return matches;
-    // }   
-
-    // getPotentialMatches();
-  }, [user.uid]);
+    const getUnswipedProfiles = httpsCallable(functions, 'getUnswipedProfiles');
+    getUnswipedProfiles(data) // pass empty object as data argument
+    .then((result) => {
+      const profiles = result.data.profiles;
+      console.log(profiles);
+      // Display the profiles to the user
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, [user.uid]); //perhaps use a bool attached to the last card to determine
   
 
   useEffect(() => {
+  //   const storageRef = ref(storage, `${user.email}/`);
+  //   // Get the first image in the user's directory
+  //   list(storageRef, { maxResults: 1 }).then((res) => {
+  //     const image = res.items[0];
+  //     // Get the download URL for the image
+  //     return getDownloadURL(image).then((imageUrl) => {
+  //       const style = { backgroundImage: `url(${imageUrl})` };
+  //       return <div style={style}>First image</div>;
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     });
+  //   }).catch((error) => {
+  //     console.log(error);
+  // });
   
 
-      const unsubscribe = onSnapshot(collection(db, 'exampleprofiles'), snapshot => (
+      const unsubscribe = onSnapshot(collection(db, 'profiles'), snapshot => (
         setPeople(snapshot.docs.map(doc => doc.data()))
         ));
         

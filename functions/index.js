@@ -3,34 +3,82 @@ const cors = require('cors')({ origin: true });
 const fetch = require('node-fetch');
 const { Octokit } = require('@octokit/rest');
 
+
+// exports.createUserSwipeDoc = functions.auth.user().onCreate(async (user) => { // NEED TO IMPLEMENT ON EACH SWIPE!!!
+//   const swipeRef = admin.firestore().collection('swipes').doc();
+//   await swipeRef.set({ direction: "", swipee: "", swiper: "", timerstamp: ""});
+// });
+
+
 const admin = require("firebase-admin");
 
-admin.initializeApp(); //may be redundant because of config
+const serviceAccount = require("./csci499-firebase-adminsdk-x8g37-28651561e5.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://csci499-default-rtdb.firebaseio.com"
+});
 
 const firestore = admin.firestore();
-
-exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
-  const uid = context.auth.uid;
-  const profileRef = firestore.collection("profiles");
-  const swipeRef = firestore.collection("swipes").doc(uid);
-
-  const swipeDoc = await swipeRef.get();
-  const swipedIds = swipeDoc.exists ? swipeDoc.data().swipedOn : [];
-
-  const querySnapshot = await profileRef.get();
-  const profiles = [];
-  querySnapshot.forEach((doc) => {
-    const profile = doc.data();
-    profile.id = doc.id;
-    if (!swipedIds.includes(profile.id)) {
-      profiles.push(profile);
-    }
-  });
-
-  return { profiles };
+const { FieldPath } = firestore;
+firestore.settings({
+  ignoreUndefinedProperties: true
 });
 
 
+async function getEmailFromUid(uid) {
+  const userRecord = await admin.auth().getUser(uid);
+  const email = userRecord.email;
+  return email;
+}
+
+function iterateQuery(querySnapshot, swipedIds){
+  const profiles = []
+  querySnapshot.forEach((doc) => {
+    const profile = doc.data();
+    profile.id = doc.id;
+    if (!swipedIds || !swipedIds.includes(profile.id)) {
+      console.log('pushing profile:', profile);
+      profiles.push(profile);
+  }});
+  return { profiles };
+}
+
+exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'You must be authenticated to call this function');
+  }
+
+  const useremail = await getEmailFromUid(data.uid);
+  const profileRef = firestore.collection("profiles");
+  const swipeRef = firestore.collection("swipes");
+  
+// Retrieve the swiped IDs of the user
+try {
+  // Retrieve the swiped IDs of the user
+  const swipedSnapshot = await swipeRef.where("swiper", "==", useremail).get();
+  const swipedIds = swipedSnapshot.docs.map((doc) => doc.data().swipee);
+
+  // Query the profiles collection for all profiles not in the swiped IDs array
+  const querySnapshot = await profileRef.where(admin.firestore.FieldPath.documentId(), "not-in", swipedIds || []).get();
+
+  return iterateQuery(querySnapshot, swipedIds);
+  // process the query results
+} catch (error) {
+  console.error("Error getting swipe data:", error);
+
+  // handle the error here, for example:
+  if (error.code === "not-found") {
+    // handle "document not found" error
+    console.log("have not made any swipes yet error");
+
+    return iterateQuery(profileRef, null);
+  } else {
+    // handle other errors
+    console.log("UNRESOLVED ERROR HAPPENING! AHHHHH!");
+  }
+}
+});
 
 exports.githubRepoAPI = functions.runWith({secrets: ["AUTH_KEY"]}).https.onRequest((req, res) => {
   // const authkey = functions.config().authstorage.key;
