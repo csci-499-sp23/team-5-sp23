@@ -3,6 +3,34 @@ const cors = require('cors')({ origin: true });
 const fetch = require('node-fetch');
 const { Octokit } = require('@octokit/rest');
 
+const admin = require("firebase-admin");
+
+admin.initializeApp(); //may be redundant because of config
+
+const firestore = admin.firestore();
+
+exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
+  const uid = context.auth.uid;
+  const profileRef = firestore.collection("profiles");
+  const swipeRef = firestore.collection("swipes").doc(uid);
+
+  const swipeDoc = await swipeRef.get();
+  const swipedIds = swipeDoc.exists ? swipeDoc.data().swipedOn : [];
+
+  const querySnapshot = await profileRef.get();
+  const profiles = [];
+  querySnapshot.forEach((doc) => {
+    const profile = doc.data();
+    profile.id = doc.id;
+    if (!swipedIds.includes(profile.id)) {
+      profiles.push(profile);
+    }
+  });
+
+  return { profiles };
+});
+
+
 
 exports.githubRepoAPI = functions.runWith({secrets: ["AUTH_KEY"]}).https.onRequest((req, res) => {
   // const authkey = functions.config().authstorage.key;
