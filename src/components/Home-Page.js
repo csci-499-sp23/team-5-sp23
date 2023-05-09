@@ -15,7 +15,7 @@ const Home = () => {
     <div className="homepageContent">
       <div className="logo-container">
         <Link to="/">
-          <img src={logo} alt="logo" className="logo" />
+          <img src={logo} alt="persona logo" className="logo" />
         </Link>
       </div>
 
@@ -46,6 +46,13 @@ const Home = () => {
             fontFamily: 'Verdana' }}>Login</Button>
         </Link>
       </ButtonGroup>
+
+      <footer>
+      <Link to="/Terms-Conditions-Page">
+        Terms and Conditions
+      </Link>
+    </footer>
+
     </div>
   );
 };
