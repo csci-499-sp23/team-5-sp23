@@ -32,16 +32,18 @@ function Card() {
   useEffect(() => {
     // firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
     const uid = user.uid;
-    const data = { uid };
+    const userid = { uid };
     // Assume `uid` is the UID of the authenticated user
 
     console.log("function called from matching page");
 
     const getUnswipedProfiles = httpsCallable(functions, 'getUnswipedProfiles');
-    getUnswipedProfiles(data) // pass empty object as data argument
+    getUnswipedProfiles(userid)
     .then((result) => {
-      const profiles = result.data.profiles;
-      console.log(profiles);
+      const jsonString = result.data;
+      const profiles = JSON.parse(jsonString).profiles;
+
+      console.log("it worked!!!" + JSON.stringify(profiles));
       // Display the profiles to the user
     })
     .catch((error) => {
@@ -52,10 +54,8 @@ function Card() {
 
   useEffect(() => {
   //   const storageRef = ref(storage, `${user.email}/`);
-  //   // Get the first image in the user's directory
   //   list(storageRef, { maxResults: 1 }).then((res) => {
   //     const image = res.items[0];
-  //     // Get the download URL for the image
   //     return getDownloadURL(image).then((imageUrl) => {
   //       const style = { backgroundImage: `url(${imageUrl})` };
   //       return <div style={style}>First image</div>;

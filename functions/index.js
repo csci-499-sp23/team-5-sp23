@@ -9,7 +9,6 @@ const { Octokit } = require('@octokit/rest');
 //   await swipeRef.set({ direction: "", swipee: "", swiper: "", timerstamp: ""});
 // });
 
-
 const admin = require("firebase-admin");
 
 const serviceAccount = require("./csci499-firebase-adminsdk-x8g37-28651561e5.json");
@@ -40,8 +39,11 @@ async function getProfiles(querySnapshot, batchSize, lastVisible) {
     profile.id = doc.id;
     profiles.push(profile);
     newLastVisible = doc;
+    console.log("im a doc");
   });
 
+  console.log(profiles);
+  
   return {
     profiles: profiles.slice(0, batchSize),
     lastVisible: newLastVisible || lastVisible,
@@ -80,30 +82,36 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
 
     const querySnapshot = await query.limit(batchSize).get();
     const result = await getProfiles(querySnapshot, batchSize, lastVisible);
+    console.log("result in the main function: " + result);
     lastVisible = result.lastVisible;
-
+    
     const response = {
       profiles: result.profiles,
       lastVisible,
     };
-
-    return response;
+    console.log("response in the main function: " + response);
+    
+    const returntouser = JSON.stringify(response);
+    return returntouser;
   } catch (error) {
     console.error("Error getting swipe data:", error);
-
+    
     if (error.code === "not-found") {
       console.log("User has not made any swipes yet.");
-
+      
       const querySnapshot = await profileRef.limit(batchSize).get();
+      console.log("querysnap in catch: " + querySnapshot);
       const result = await getProfiles(querySnapshot, batchSize, null);
+      console.log("result in catch: (woule be called twice maybe take a lookout) " + result);
       lastVisible = result.lastVisible;
 
       const response = {
         profiles: result.profiles,
         lastVisible,
       };
-
-      return response;
+      console.log("catch response = " + response);
+      const returntouser = JSON.stringify(response);
+      return returntouser;
     } else {
       console.log("An unresolved error occurred.");
       throw new functions.https.HttpsError(
