@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./css/PersonalityPage.css";
 
 const questions = [
   {
