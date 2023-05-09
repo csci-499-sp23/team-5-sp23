@@ -42,6 +42,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    
     const getFirestoreInformation = async () => {
       //get Firestore document
       const docRef = doc(db, "profiles", user.email);

@@ -15,13 +15,14 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { createUser, logoutAccount } = UserAuth();
+  const { createUser, logoutAccount, updateUserName } = UserAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Submitted:', { firstName, lastName, email, password });
     try{
       await createUser(email, password);
+      await updateUserName(firstName +' ' +  lastName);
       navigate(('/Profile-Page'))
     }catch(err){
       console.error(err);

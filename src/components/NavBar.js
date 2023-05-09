@@ -23,7 +23,7 @@ const NavBar = () => {
       <NavLink to="/Matching-Page">Find Love</NavLink>
     </li>
     <li>
-      <NavLink to="/Chat-Page">Chat</NavLink>
+      <NavLink to="/ChatJS">Chat</NavLink>
     </li>
     <li>
       <NavLink to="/Profile-Page-Creation">Create User Profile</NavLink>
