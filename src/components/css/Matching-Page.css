@@ -1,0 +1,88 @@
+/* attempting to hide scroll to right...  */
+
+.container {
+  overflow: hidden;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.boxMatch {
+  margin: 0%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 600%;
+  font-family: Impact;
+  letter-spacing: 6.5px;
+  color: #efefef;
+  margin-bottom: 2%;
+}
+
+h2 {
+  font-size: 130%;
+  margin-top: 0%;
+  padding-top: 0%;
+  font-family: Verdana;
+  color: #312E29;
+}
+
+
+.card {
+  position: relative;
+  width: 600px;
+  padding: 20px;
+  margin-top: 5%;
+  max-width: 85vw;
+  height: 50vh;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: top;
+  box-shadow: 15px 20px 10px #c4bbb2a0;
+}
+
+.card-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-content img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.card > h3 {
+  position: absolute;
+  bottom: 10px;
+  color: #191510; 
+  font-family: Verdana;
+  font-variant: all-petite-caps;
+  background-color: #efefef;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+.tinderCards_cardContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+}
+
+.swipe {
+  position: absolute;
+  overflow-x: hidden;
+}
