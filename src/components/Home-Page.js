@@ -12,9 +12,9 @@ const ButtonGroup = ({ children }) => (
 
 const Home = () => {
   return (
-    <div className="homepageContent">
-      <div className="logo-container">
-        <Link to="/">
+    <div className = "homepageContent">
+      <div className = "logo-container">
+        <Link to = "/">
           <img src={logo} alt="persona logo" className="logo" />
         </Link>
       </div>
