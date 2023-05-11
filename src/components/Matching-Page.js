@@ -30,12 +30,10 @@ function Card() {
   }, [user.email]);
 
   useEffect(() => {
-    // firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
     const uid = user.uid;
     const userid = { uid };
-    // Assume `uid` is the UID of the authenticated user
-
-    console.log("function called from matching page");
+    const swipeeeuid = "JvuEQ0fE0IUiVoWgSq9jfVwq3yE3";
+    const inputforswipeleft = {uid, swipeeeuid}
 
     const getUnswipedProfiles = httpsCallable(functions, 'getUnswipedProfiles');
     getUnswipedProfiles(userid)
@@ -49,6 +47,26 @@ function Card() {
     .catch((error) => {
       console.error(error);
     });
+
+    // const swipeLeft = httpsCallable(functions, 'swipeLeft');
+    // swipeLeft(inputforswipeleft)
+    // .then((result) => {
+    //   const jsonString = result;
+    //   console.log("swipedLeft worked!!!" + result);
+    // })
+    // .catch((error) => {
+    //   console.error(error);
+    // });
+    
+    const swipeRight = httpsCallable(functions, 'swipeRight');
+    swipeRight(inputforswipeleft)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+    
   }, [user.uid]); //perhaps use a bool attached to the last card to determine
   
 
@@ -100,46 +118,3 @@ function Card() {
   }
 
 export default Card;
-
-
-
-
-// // Swipe left on a potential match
-// function swipeLeft(matchID) {
-//   const currentUserID = firebase.auth().currentUser.uid;
-//   return firebase.database().ref(`users/${matchID}/swipedOn`).update({
-//     [currentUserID]: false
-//   });
-// }
-
-// // Swipe right on a potential match
-// function swipeRight(matchID) {
-//   const currentUserID = firebase.auth().currentUser.uid;
-//   return firebase.database().ref(`users/${matchID}/swipedOn`).update({
-//     [currentUserID]: true
-//   }).then(() => {
-//     return firebase.database().ref(`users/${currentUserID}/swipedOn/${matchID}`).once('value').then(snapshot => {
-//       if (snapshot.val() === true) {
-//         // Match found!
-//         return firebase.database().ref('matches').push({
-//           user1: currentUserID,
-//           user2: matchID
-//         });
-//       }
-//     });
-//   });
-// }
-
-// // Get a list of the current user's matches
-// function getMatches() {
-//   const currentUserID = firebase.auth().currentUser.uid;
-//   return firebase.database().ref('matches').orderByChild('user1').equalTo(currentUserID).once('value').then(snapshot => {
-//     const matches = [];
-//     snapshot.forEach(childSnapshot => {
-//       const match = childSnapshot.val();
-//       match.id = childSnapshot.key;
-//       matches.push(match);
-//     });
-//     return matches;
-//   });
-// }

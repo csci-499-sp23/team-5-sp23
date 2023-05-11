@@ -3,12 +3,6 @@ const cors = require('cors')({ origin: true });
 const fetch = require('node-fetch');
 const { Octokit } = require('@octokit/rest');
 
-
-// exports.createUserSwipeDoc = functions.auth.user().onCreate(async (user) => { // NEED TO IMPLEMENT ON EACH SWIPE!!!
-//   const swipeRef = admin.firestore().collection('swipes').doc();
-//   await swipeRef.set({ direction: "", swipee: "", swiper: "", timerstamp: ""});
-// });
-
 const admin = require("firebase-admin");
 
 const serviceAccount = require("./csci499-firebase-adminsdk-x8g37-28651561e5.json");
@@ -39,16 +33,45 @@ async function getProfiles(querySnapshot, batchSize, lastVisible) {
     profile.id = doc.id;
     profiles.push(profile);
     newLastVisible = doc;
-    console.log("im a doc");
   });
-
-  console.log(profiles);
   
   return {
     profiles: profiles.slice(0, batchSize),
     lastVisible: newLastVisible || lastVisible,
   };
 }
+
+exports.swipeRight = functions.https.onCall(async (data) => {
+  const useremail = await getEmailFromUid(data.uid);
+  const userDocRef = firestore.collection("profiles").doc(useremail);
+  const userDoc = await userDocRef.get();
+
+  const swipeeemail = await getEmailFromUid(data.swipeeeuid); 
+  const swipeeDocRef = firestore.collection("profiles").doc(swipeeemail);
+  const swipeeDoc = await swipeeDocRef.get();
+  const swipeeMatches = swipeeDoc.data().matches || [];
+
+  const swipeRef = firestore.collection("swipes").doc();
+  const swipeData = { direction: "right", swipee: swipeeemail, swiper: useremail, timestamp: "N/A" };
+  await swipeRef.set(swipeData);
+
+  const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail]};
+  if (!swipeeMatches.includes(matchemail => matchemail === useremail)) {
+    await swipeeDocRef.update(swipeeMatchesUpdate);
+  }
+
+  const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail]};
+  if (!userMatchesUpdate.matches.includes(matchemail => matchemail === swipeeemail)) {
+    await userDocRef.update(userMatchesUpdate);
+  }
+});
+
+exports.swipeLeft = functions.https.onCall(async (data) => {
+  const useremail = await getEmailFromUid(data.uid);
+  const swipeeemail = await getEmailFromUid(data.swipeeeuid);
+  const swipeRef = firestore.collection("swipes").doc();
+  return await swipeRef.set({ direction: "left", swipee: swipeeemail, swiper: useremail, timestamp: "N/A"}); // DO TIMESTAMP
+});
 
 exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -82,14 +105,12 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
 
     const querySnapshot = await query.limit(batchSize).get();
     const result = await getProfiles(querySnapshot, batchSize, lastVisible);
-    console.log("result in the main function: " + result);
     lastVisible = result.lastVisible;
     
     const response = {
       profiles: result.profiles,
       lastVisible,
     };
-    console.log("response in the main function: " + response);
     
     const returntouser = JSON.stringify(response);
     return returntouser;
@@ -97,23 +118,18 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
     console.error("Error getting swipe data:", error);
     
     if (error.code === "not-found") {
-      console.log("User has not made any swipes yet.");
       
       const querySnapshot = await profileRef.limit(batchSize).get();
-      console.log("querysnap in catch: " + querySnapshot);
       const result = await getProfiles(querySnapshot, batchSize, null);
-      console.log("result in catch: (woule be called twice maybe take a lookout) " + result);
       lastVisible = result.lastVisible;
 
       const response = {
         profiles: result.profiles,
         lastVisible,
       };
-      console.log("catch response = " + response);
       const returntouser = JSON.stringify(response);
       return returntouser;
     } else {
-      console.log("An unresolved error occurred.");
       throw new functions.https.HttpsError(
         "internal",
         "An internal error occurred."
@@ -121,6 +137,14 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
     }
   }
 });
+
+// exports.getMatches = functions.https.onCall(async (data) => {
+//   const useremail = await getEmailFromUid(data.uid);
+//   const userDocRef = firestore.collection("users").doc(useremail);
+//   const userDoc = await userDocRef.get();
+//   return userDoc.data().matches;
+// });
+
 
 exports.githubRepoAPI = functions.runWith({secrets: ["AUTH_KEY"]}).https.onRequest((req, res) => {
   // const authkey = functions.config().authstorage.key;
