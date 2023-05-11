@@ -4,7 +4,7 @@ import "./css/Contact-Page.css";
 import { useState } from 'react';
 import { db } from "../firebase-config";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 
 // Technically, does not have to be linked to a user in db,
 // anyone on the web should be able to contact if they have questions
