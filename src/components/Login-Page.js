@@ -50,7 +50,6 @@ function LoginPage() {
                     Username: <br />
                     <input type="text" value={username} onChange={handleUsernameChange} />
                 </label>
-                <br />
                 <label>
                     Password: <br />
                     <input type="password" value={password} onChange={handlePasswordChange} />
