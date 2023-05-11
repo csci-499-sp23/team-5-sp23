@@ -18,3 +18,24 @@
     font-family: Verdana;
     color: #312E29;
 }
+
+.boxAPI ul {
+    font-size: 130%;
+    margin-top: 0%;
+    padding-top: 0%;
+    font-family: Verdana;
+    color: #312E29;
+    text-align: left;
+    max-width: 70%; /* maximum width */
+    margin: 0 auto; /* center horizontally */
+    list-style-position: inside; /* move the bullet point inside */
+    line-height: 1.5;
+  }
+  
+
+.anotherBoxAPI {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
