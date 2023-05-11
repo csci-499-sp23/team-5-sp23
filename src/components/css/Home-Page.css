@@ -76,6 +76,7 @@ footer {
     color: #efefef;
     z-index: 1;
     margin-bottom: 2%;
+    padding-left: 2%;
   } footer a {
     text-decoration: none;
     color: inherit;

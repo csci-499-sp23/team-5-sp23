@@ -1,0 +1,20 @@
+.boxAPI {
+    margin: 0%;
+    text-align: center;
+}
+
+.boxAPI h1 {
+    font-size: 600%;
+    font-family: Impact;
+    letter-spacing: 6.5px;
+    color: #efefef;
+    margin-bottom: 2%;
+}
+
+.boxAPI h2 {
+    font-size: 130%;
+    margin-top: 0%;
+    padding-top: 0%;
+    font-family: Verdana;
+    color: #312E29;
+}
