@@ -34,29 +34,33 @@ function LoginPage() {
 
     return (
         <>
-            {/* <NavBar/> */}
-            
-            <div className="loginBody">
-                <Link to="/">
-                    <img src={logo} alt="logo" className="logo" />
-                </Link>
+            {/* <NavBar/> */}  
+        <div className="loginBody">
 
-                <h1>Welcome Back!</h1>
-                
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Username:
-                        <input type="text" value={username} onChange={handleUsernameChange} />
-                    </label>
-                    <br />
-                    <label>
-                        Password:
-                        <input type="password" value={password} onChange={handlePasswordChange} />
-                    </label>
-                    <br />
-                    <button type="submit">Login</button>
-                </form>
-            </div>
+            <div className="logo-container">
+                <Link to="/">
+                    <img src={logo} alt="persona logo" className="logo" />
+                </Link>
+            </div>  
+
+            <h1>Welcome Back!</h1>
+            
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Username:
+                    <input type="text" value={username} onChange={handleUsernameChange} />
+                </label>
+                <br />
+                <label>
+                    Password:
+                    <input type="password" value={password} onChange={handlePasswordChange} />
+                </label>
+                <br />
+                <button type="submit">Login</button>
+            </form>
+            
+        </div>
+
         </>
     );
 }

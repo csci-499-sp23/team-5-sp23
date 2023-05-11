@@ -62,13 +62,29 @@ function GoogleAPI() {
 
       <h1>Date ideas near you:</h1>
 
-      <ul>
-        {places.map((place) => (
-          <li key={place.id}>
-            {place.name} ({place.types[0]})
+      <div className="anotherBoxAPI">
+        {/* Please do not erase, a visual was needed: */}
+        {/* <ul>
+          <li>
+            Destination (Destination Type)
           </li>
-        ))}
-      </ul>
+          <li>
+            Destinationnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnn  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn (Destination Type)
+          </li>
+          <li>
+            Destination (Destination Type)
+          </li>
+        </ul> */}
+
+        <ul>
+          {places.map((place) => (
+            <li key={place.id}>
+              {place.name} ({place.types[0]})
+            </li>
+          ))}
+        </ul>
+
+      </div>
 
     </div>
   );
