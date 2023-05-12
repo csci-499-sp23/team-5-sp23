@@ -47,12 +47,11 @@ function LoginPage() {
             
             <form onSubmit={handleSubmit}>
                 <label>
-                    Username:
+                    Username: <br />
                     <input type="text" value={username} onChange={handleUsernameChange} />
                 </label>
-                <br />
                 <label>
-                    Password:
+                    Password: <br />
                     <input type="password" value={password} onChange={handlePasswordChange} />
                 </label>
                 <br />

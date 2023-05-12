@@ -42,13 +42,14 @@ function Contact() {
 
         <form onSubmit={handleSubmit}>
           <label>
-            Full Name:
+            Full Name:<br />
             <input onChange = {handleInput} type="text" name="name" id="name" value={input} />
           </label>
           <label>
-            Email:
+            Email:<br />
             <input onChange = {handleInput} type="email" name="email" id="email" />
           </label>
+          
           <label>
             Phone Number:
             {/* to ensure compatibility, type must be "tel" since it is a phone number */}

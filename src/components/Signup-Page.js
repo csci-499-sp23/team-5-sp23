@@ -43,9 +43,12 @@ function Signup() {
 
   return (
     <div className="signupBody">
-      <Link to="/">
-        <img src={logo} alt="logo" className="logo" />
-      </Link>
+      
+      <div className="logo-container">
+          <Link to="/">
+            <img src={logo} alt="persona logo" className="logo" />
+          </Link>
+      </div>
 
       <h1>
         Ready to Find Love?
