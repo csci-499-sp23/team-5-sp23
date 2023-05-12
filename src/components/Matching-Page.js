@@ -14,8 +14,7 @@ function Card() {
   const { user } = UserAuth();
   const [profiles, setProfiles] = useState([]);
   const uid = user.uid;
-  // const swipeeemail = "nabeel@gmail.com";
-  // const inputforswipeleft = {uid, swipeeemail};
+  const [currentIndex, setCurrentIndex] = useState(2)
   
   const getCurrentUserProfile = async () => {
     const docRef = doc(db, "profiles", user.email);
@@ -31,35 +30,38 @@ function Card() {
   const swipeRight = httpsCallable(functions, 'swipeRight');
   const getMatches = httpsCallable(functions, 'getMatches');
   
-  const onSwipe = (direction, swipeeemail) => {
+  const onSwipe = (direction, swipeeemail, index) => {
+    if (currentIndex === 1) {getUnswipedProfiles(uid);}
     if (direction === "left") {
       swipeLeft({uid, swipeeemail});
+      setCurrentIndex(index - 1);
     }
     else {
       swipeRight({uid, swipeeemail});
+      setCurrentIndex(index - 1);
     }
   }
-      
-  useEffect(() => {
-    async function getUnswipedProfiles(uid) {
-      const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
-      const result = await getProfiles({ uid });
-      const profiles = JSON.parse(result.data).profiles;
-      
-      // Get download URLs for images in Storage and add to profiles
-      const promises = profiles.map(async (profile) => {
-        const storageRef = ref(storage, `${profile.id}/`);
-        const res = await listAll(storageRef);
-        const imageUrl = await getDownloadURL(res.items[0]);
-        return { ...profile, imageUrl };
-      });
-      
-      const updatedProfiles = await Promise.all(promises);
-      setProfiles(updatedProfiles);
-    }
+
+  async function getUnswipedProfiles(uid) {
+    const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
+    const result = await getProfiles({ uid });
+    const profiles = JSON.parse(result.data).profiles;
     
-    getUnswipedProfiles(uid);
-  }, []);
+    // Get download URLs for images in Storage and add to profiles
+    const promises = profiles.map(async (profile) => {
+      const storageRef = ref(storage, `${profile.id}/`);
+      const res = await listAll(storageRef);
+      const imageUrl = await getDownloadURL(res.items[0]);
+      return { ...profile, imageUrl };
+    });
+    
+    const updatedProfiles = await Promise.all(promises);
+    
+    // Merge the new profiles state with the previous one using the spread operator
+    setProfiles((prevProfiles) => [...prevProfiles, ...updatedProfiles]);
+  }
+
+  getUnswipedProfiles(uid);
   
   useEffect(() => {
     setPeople(profiles);
@@ -68,11 +70,11 @@ function Card() {
   return (
     <div>
       <div className="tinderCards_cardContainer">
-        {people.map((person) => (
+        {people.map((person, index) => (
           <TinderCard
             className="swipe"
             key={person.name}
-            onSwipe={(dir) => onSwipe(dir, person.id)}
+            onSwipe={(dir) => onSwipe(dir, person.id, index)}
             preventSwipe={["up", "down"]}
           >
             <div

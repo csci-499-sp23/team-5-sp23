@@ -97,7 +97,7 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   const useremail = await getEmailFromUid(data.uid);
   const profileRef = firestore.collection("profiles");
   const swipeRef = firestore.collection("swipes");
-  const batchSize = 2;
+  const batchSize = 3;
   let lastVisible = data.lastVisible;
 
   try {
