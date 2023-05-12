@@ -12,39 +12,17 @@ import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def nee
 function Card() {
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
-  const [profiles, setProfiles] = useState([]);
-  const uid = user.uid;
-  const [currentIndex, setCurrentIndex] = useState(2)
-  
-  const getCurrentUserProfile = async () => {
-    const docRef = doc(db, "profiles", user.email);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data(); // print the data to the console
-    } else {
-      console.log("No such document!");
-    }
-  };
+  const [currentIndex, setCurrentIndex] = useState(2);
+  const [lastDoc, setLastDoc] = useState(null);
   
   const swipeLeft = httpsCallable(functions, 'swipeLeft');
   const swipeRight = httpsCallable(functions, 'swipeRight');
-  const getMatches = httpsCallable(functions, 'getMatches');
-  
-  const onSwipe = (direction, swipeeemail, index) => {
-    if (currentIndex === 1) {getUnswipedProfiles(uid);}
-    if (direction === "left") {
-      swipeLeft({uid, swipeeemail});
-      setCurrentIndex(index - 1);
-    }
-    else {
-      swipeRight({uid, swipeeemail});
-      setCurrentIndex(index - 1);
-    }
-  }
 
-  async function getUnswipedProfiles(uid) {
+  async function getUnswipedProfiles(uid, lastDoc = null) {
+    const batchSize = 10;
+    const lastVisible = lastDoc;
     const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
-    const result = await getProfiles({ uid });
+    const result = await getProfiles({ uid, lastVisible, batchSize });
     const profiles = JSON.parse(result.data).profiles;
     
     // Get download URLs for images in Storage and add to profiles
@@ -57,15 +35,40 @@ function Card() {
     
     const updatedProfiles = await Promise.all(promises);
     
-    // Merge the new profiles state with the previous one using the spread operator
-    setProfiles((prevProfiles) => [...prevProfiles, ...updatedProfiles]);
+    return updatedProfiles;
   }
-
-  getUnswipedProfiles(uid);
   
+
+  const onSwipe = async (direction, swipeeemail, index) => {
+    console.log("current index = " + currentIndex);
+    if (currentIndex === people.length - 1) { // not sure if it counts forwards or backwards
+      const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
+      if (newProfiles.length > 0) {
+        setPeople((prevPeople) => [...prevPeople, ...newProfiles]);
+        setCurrentIndex(index - 1);
+        setLastDoc(newProfiles[newProfiles.length - 1].doc);
+      }
+    } else {
+      if (direction === "left") {
+        swipeLeft({uid: user.uid, swipeeemail});
+        setCurrentIndex(index - 1);
+      } else {
+        swipeRight({uid: user.uid, swipeeemail});
+        setCurrentIndex(index - 1);
+      }
+    }
+  };
+
   useEffect(() => {
-    setPeople(profiles);
-  }, [profiles]);
+    async function loadInitialProfiles() {
+      const newProfiles = await getUnswipedProfiles(user.uid);
+      if (newProfiles.length > 0) {
+        setPeople(newProfiles);
+        setLastDoc(newProfiles[newProfiles.length - 1].doc);
+      }
+    }
+    loadInitialProfiles();
+  }, [user.uid]);
 
   return (
     <div>

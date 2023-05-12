@@ -97,7 +97,7 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   const useremail = await getEmailFromUid(data.uid);
   const profileRef = firestore.collection("profiles");
   const swipeRef = firestore.collection("swipes");
-  const batchSize = 3;
+  // const batchSize = 3;
   let lastVisible = data.lastVisible;
 
   try {
@@ -117,8 +117,8 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
       query = query.startAfter(lastVisible);
     }
 
-    const querySnapshot = await query.limit(batchSize).get();
-    const result = await getProfiles(querySnapshot, batchSize, lastVisible);
+    const querySnapshot = await query.limit(data.batchSize).get();
+    const result = await getProfiles(querySnapshot, data.batchSize, lastVisible);
     lastVisible = result.lastVisible;
     
     const response = {
@@ -133,8 +133,8 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
     
     if (error.code === "not-found") {
       
-      const querySnapshot = await profileRef.limit(batchSize).get();
-      const result = await getProfiles(querySnapshot, batchSize, null);
+      const querySnapshot = await profileRef.limit(data.batchSize).get();
+      const result = await getProfiles(querySnapshot, data.atchSize, null);
       lastVisible = result.lastVisible;
 
       const response = {
