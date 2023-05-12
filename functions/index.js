@@ -41,37 +41,43 @@ async function getProfiles(querySnapshot, batchSize, lastVisible) {
   };
 }
 
-exports.swipeRight = functions.https.onCall(async (data) => {
-  const useremail = await getEmailFromUid(data.uid);
-  const userDocRef = firestore.collection("profiles").doc(useremail);
-  const userDoc = await userDocRef.get();
-
-  const swipeeemail = await getEmailFromUid(data.swipeeeuid); 
-  const swipeeDocRef = firestore.collection("profiles").doc(swipeeemail);
-  const swipeeDoc = await swipeeDocRef.get();
-  const swipeeMatches = swipeeDoc.data().matches || [];
-
-  const swipeRef = firestore.collection("swipes").doc();
-  const swipeData = { direction: "right", swipee: swipeeemail, swiper: useremail, timestamp: "N/A" };
-  await swipeRef.set(swipeData);
-
-  const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail]};
-  if (!swipeeMatches.includes(matchemail => matchemail === useremail)) {
-    await swipeeDocRef.update(swipeeMatchesUpdate);
-  }
-
-  const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail]};
-  if (!userMatchesUpdate.matches.includes(matchemail => matchemail === swipeeemail)) {
-    await userDocRef.update(userMatchesUpdate);
-  }
+exports.createUserSwipeDoc = functions.auth.user().onCreate(async (user) => {
+  const useremail = await getEmailFromUid(user.uid);
+  const swipeRef = admin.firestore().collection('swipes').doc();
+  await swipeRef.set({ direction: "left", swipee: useremail, swiper: useremail, timestamp: "N/A"});
 });
 
-exports.swipeLeft = functions.https.onCall(async (data) => {
-  const useremail = await getEmailFromUid(data.uid);
-  const swipeeemail = await getEmailFromUid(data.swipeeeuid);
-  const swipeRef = firestore.collection("swipes").doc();
-  return await swipeRef.set({ direction: "left", swipee: swipeeemail, swiper: useremail, timestamp: "N/A"}); // DO TIMESTAMP
-});
+// exports.swipeRight = functions.https.onCall(async (data) => {
+//   const useremail = await getEmailFromUid(data.uid);
+//   const userDocRef = firestore.collection("profiles").doc(useremail);
+//   const userDoc = await userDocRef.get();
+
+//   const swipeeemail = await getEmailFromUid(data.swipeeeuid); 
+//   const swipeeDocRef = firestore.collection("profiles").doc(swipeeemail);
+//   const swipeeDoc = await swipeeDocRef.get();
+//   const swipeeMatches = swipeeDoc.data().matches || [];
+
+//   const swipeRef = firestore.collection("swipes").doc();
+//   const swipeData = { direction: "right", swipee: swipeeemail, swiper: useremail, timestamp: "N/A" };
+//   await swipeRef.set(swipeData);
+
+//   const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail]};
+//   if (!swipeeMatches.includes(matchemail => matchemail === useremail)) {
+//     await swipeeDocRef.update(swipeeMatchesUpdate);
+//   }
+
+//   const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail]};
+//   if (!userMatchesUpdate.matches.includes(matchemail => matchemail === swipeeemail)) {
+//     await userDocRef.update(userMatchesUpdate);
+//   }
+// });
+
+// exports.swipeLeft = functions.https.onCall(async (data) => {
+//   const useremail = await getEmailFromUid(data.uid);
+//   const swipeeemail = await getEmailFromUid(data.swipeeeuid);
+//   const swipeRef = firestore.collection("swipes").doc();
+//   return await swipeRef.set({ direction: "left", swipee: swipeeemail, swiper: useremail, timestamp: "N/A"}); // DO TIMESTAMP
+// });
 
 exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -92,6 +98,7 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
       .where("swiper", "==", useremail)
       .get();
     const swipedIds = swipedSnapshot.docs.map((doc) => doc.data().swipee);
+    swipedIds.push(useremail);
 
     let query = profileRef.where(
       admin.firestore.FieldPath.documentId(),
@@ -140,11 +147,10 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
 
 // exports.getMatches = functions.https.onCall(async (data) => {
 //   const useremail = await getEmailFromUid(data.uid);
-//   const userDocRef = firestore.collection("users").doc(useremail);
+//   const userDocRef = firestore.collection("profiles").doc(useremail);
 //   const userDoc = await userDocRef.get();
 //   return userDoc.data().matches;
 // });
-
 
 exports.githubRepoAPI = functions.runWith({secrets: ["AUTH_KEY"]}).https.onRequest((req, res) => {
   // const authkey = functions.config().authstorage.key;
