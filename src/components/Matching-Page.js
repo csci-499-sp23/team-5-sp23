@@ -19,7 +19,7 @@ function Card() {
   const swipeRight = httpsCallable(functions, 'swipeRight');
 
   async function getUnswipedProfiles(uid, lastDoc = null) {
-    const batchSize = 10;
+    const batchSize = 3;
     const lastVisible = lastDoc;
     const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
     const result = await getProfiles({ uid, lastVisible, batchSize });
@@ -38,33 +38,34 @@ function Card() {
     return updatedProfiles;
   }
   
-
   const onSwipe = async (direction, swipeeemail, index) => {
     console.log("current index = " + currentIndex);
-    if (currentIndex === people.length - 1) { // not sure if it counts forwards or backwards
+    if (currentIndex === 0) { // not sure if it counts forwards or backwards
       const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
       if (newProfiles.length > 0) {
-        setPeople((prevPeople) => [...prevPeople, ...newProfiles]);
-        setCurrentIndex(index - 1);
-        setLastDoc(newProfiles[newProfiles.length - 1].doc);
+        setPeople(() => [...newProfiles]);
+        // setPeople((prevPeople) => [...newProfiles, ...prevPeople]);
+        setCurrentIndex(newProfiles.length - 1);
+        setLastDoc(newProfiles[0].doc);
+        // setLastDoc(newProfiles[newProfiles.length - 1].doc);
       }
     } else {
       if (direction === "left") {
         swipeLeft({uid: user.uid, swipeeemail});
-        setCurrentIndex(index - 1);
+        setCurrentIndex(currentIndex => currentIndex - 1);
       } else {
         swipeRight({uid: user.uid, swipeeemail});
-        setCurrentIndex(index - 1);
+        setCurrentIndex(currentIndex => currentIndex - 1);
       }
     }
   };
-
+  
   useEffect(() => {
     async function loadInitialProfiles() {
       const newProfiles = await getUnswipedProfiles(user.uid);
       if (newProfiles.length > 0) {
         setPeople(newProfiles);
-        setLastDoc(newProfiles[newProfiles.length - 1].doc);
+        setLastDoc(newProfiles[0].doc);
       }
     }
     loadInitialProfiles();
