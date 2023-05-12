@@ -71,10 +71,10 @@ exports.swipeRight = functions.https.onCall(async (data) => {
 
   // Update matches only if the swipee has swiped right on the user
   if (hasSwipedRight) {
-    const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail]};
+    const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail.trim()]};
     await swipeeDocRef.update(swipeeMatchesUpdate);
 
-    const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail]};
+    const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail.trim()]};
     await userDocRef.update(userMatchesUpdate);
   }
 });
