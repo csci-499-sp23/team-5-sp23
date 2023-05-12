@@ -1,48 +1,54 @@
 import React, { useState } from "react";
 
 const questions = [
-  "I prefer spending time alone to being with a group of people.",
-"I am very organized and like to plan everything in advance.",
-"I find it easy to express my emotions to others.",
-"I am a very logical person and rely on facts rather than feelings.",
-"I am often the life of the party and enjoy being the center of attention.",
-"I am very detail-oriented and notice small things that others might miss.",
-"I enjoy trying new things and taking risks.",
-"I am a very empathetic person and am able to understand how others are feeling.",
-"I prefer to have a few close friends rather than a large group of acquaintances.",
-"I am very competitive and like to win.",
-"I often daydream and enjoy using my imagination.",
-"I am very decisive and make decisions quickly.",
-"I prefer to stick to a routine and don't like surprises.",
-"I am very sensitive to criticism and take it to heart.",
-"I am a very outgoing person and enjoy meeting new people.",
-"I am a very analytical person and enjoy solving complex problems.",
-"I am very spontaneous and enjoy going with the flow.",
-"I am very goal-oriented and always have a clear idea of what I want to achieve.",
-"I am very patient and able to stay calm under pressure.",
-"I prefer to spend my free time alone rather than with others.",
+  "I enjoy spending time with people.",
+  "I prefer to work independently.",
+  "I prefer to focus on the present moment.",
+  "I often consider the consequences of my actions before making a decision.",
+  "I value logic over emotions.",
+  "I often daydream about the future.",
+  "I am more of a big picture person than a details person.",
+  "I am quick to adapt to new situations.",
+  "I am more of an optimist than a pessimist.",
+  "I enjoy trying new things.",
+  "I am more interested in the theory behind things than the practical application.",
+  "I enjoy spending time outdoors.",
+  "I am a good listener.",
+  "I am comfortable with change.",
+  "I often take charge in group situations.",
+  "I tend to stick to a routine.",
+  "I am more of a go with the flow person than a planner.",
+  "I prefer to express myself through writing rather than speaking.",
+  "I value tradition and stability.",
+  "I often reflect on my own thoughts and feelings.",
 ];
 
-const options = ["True", "False"];
-
-const mbtiTypes = [
-  "ISTJ",
-  "ISFJ",
-  "INFJ",
-  "INTJ",
-  "ISTP",
-  "ISFP",
-  "INFP",
-  "INTP",
-  "ESTP",
-  "ESFP",
-  "ENFP",
-  "ENTP",
-  "ESTJ",
-  "ESFJ",
-  "ENFJ",
-  "ENTJ",
+const options = [
+  "Strongly disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly agree",
 ];
+
+// const mbtiTypes = [
+//   "ISTJ",
+//   "ISFJ",
+//   "INFJ",
+//   "INTJ",
+//   "ISTP",
+//   "ISFP",
+//   "INFP",
+//   "INTP",
+//   "ESTP",
+//   "ESFP",
+//   "ENFP",
+//   "ENTP",
+//   "ESTJ",
+//   "ESFJ",
+//   "ENFJ",
+//   "ENTJ",
+// ];
 
 const MBTITest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -56,27 +62,80 @@ const MBTITest = () => {
   };
 
   const calculateMBTI = () => {
-    const result = new Array(8).fill(0); // Array to store the counts of E, I, S, N, T, F, J, P
+    const counts = new Map([
+      ["E", 0],
+      ["I", 0],
+      ["S", 0],
+      ["N", 0],
+      ["T", 0],
+      ["F", 0],
+      ["J", 0],
+      ["P", 0],
+    ]);
 
     for (let i = 0; i < questions.length; i++) {
       const userAnswer = userAnswers[i];
-      const typeIndex = i % 8; // The index for each pair of questions
+      const typeIndex = Math.floor(i / 2);
 
-      if (userAnswer === "True") {
-        result[typeIndex] += 1;
-      } else {
-        result[typeIndex + 1] += 1;
+      switch (typeIndex) {
+        case 0: // E vs I
+          counts.set(
+            userAnswer === "Strongly agree" || userAnswer === "Agree"
+              ? "E"
+              : "I",
+            counts.get(
+              userAnswer === "Strongly agree" || userAnswer === "Agree"
+                ? "E"
+                : "I"
+            ) + 1
+          );
+          break;
+        case 1: // S vs N
+          counts.set(
+            userAnswer === "Strongly agree" || userAnswer === "Agree"
+              ? "S"
+              : "N",
+            counts.get(
+              userAnswer === "Strongly agree" || userAnswer === "Agree"
+                ? "S"
+                : "N"
+            ) + 1
+          );
+          break;
+        case 2: // T vs F
+          counts.set(
+            userAnswer === "Strongly agree" || userAnswer === "Agree"
+              ? "T"
+              : "F",
+            counts.get(
+              userAnswer === "Strongly agree" || userAnswer === "Agree"
+                ? "T"
+                : "F"
+            ) + 1
+          );
+          break;
+        case 3: // J vs P
+          counts.set(
+            userAnswer === "Strongly agree" || userAnswer === "Agree"
+              ? "J"
+              : "P",
+            counts.get(
+              userAnswer === "Strongly agree" || userAnswer === "Agree"
+                ? "J"
+                : "P"
+            ) + 1
+          );
+          break;
+        default:
+          break;
       }
     }
 
     let mbtiResult = "";
-    for (let i = 0; i < result.length; i += 2) {
-      if (result[i] > result[i + 1]) {
-        mbtiResult += mbtiTypes[i / 2].charAt(0);
-      } else {
-        mbtiResult += mbtiTypes[i / 2].charAt(1);
-      }
-    }
+    mbtiResult += counts.get("E") > counts.get("I") ? "E" : "I";
+    mbtiResult += counts.get("S") > counts.get("N") ? "S" : "N";
+    mbtiResult += counts.get("T") > counts.get("F") ? "T" : "F";
+    mbtiResult += counts.get("J") > counts.get("P") ? "J" : "P";
 
     return mbtiResult;
   };
