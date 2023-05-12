@@ -10,16 +10,18 @@ import { httpsCallable } from "firebase/functions";
 import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
 
 function Card() {
+  const batchSize = 3;
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
-  const [currentIndex, setCurrentIndex] = useState(2);
+  const [currentIndex, setCurrentIndex] = useState(batchSize);
   const [lastDoc, setLastDoc] = useState(null);
+  const canSwipe = currentIndex >= 1;
   
   const swipeLeft = httpsCallable(functions, 'swipeLeft');
   const swipeRight = httpsCallable(functions, 'swipeRight');
 
   async function getUnswipedProfiles(uid, lastDoc = null) {
-    const batchSize = 3;
+    // const batchSize = 3;
     const lastVisible = lastDoc;
     const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
     const result = await getProfiles({ uid, lastVisible, batchSize });
@@ -38,9 +40,10 @@ function Card() {
     return updatedProfiles;
   }
   
-  const onSwipe = async (direction, swipeeemail, index) => {
+  
+  const onSwipe = async (direction, swipeeemail) => {
     console.log("current index = " + currentIndex);
-    if (currentIndex === 0) { // not sure if it counts forwards or backwards
+    if (!canSwipe) { // not sure if it counts forwards or backwards
       const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
       if (newProfiles.length > 0) {
         setPeople(() => [...newProfiles]);
@@ -70,6 +73,12 @@ function Card() {
     }
     loadInitialProfiles();
   }, [user.uid]);
+  
+  const swipe = async (dir) => {
+    if (canSwipe && currentIndex < people.length) {
+      await childRefs[currentIndex].current.swipe(dir) // Swipe the card!
+    }
+  }
 
   return (
     <div>
@@ -89,6 +98,10 @@ function Card() {
             </div>
           </TinderCard>
         ))}
+      </div>
+      <div className='newbuttons'>
+        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => swipe('left')}>Swipe left!</button>
+        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => swipe('right')}>Swipe right!</button>
       </div>
     </div>
   );
