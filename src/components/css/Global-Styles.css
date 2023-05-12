@@ -2,6 +2,10 @@ body{
   background-color: #C3AFA5;
   font-family: Verdana;
   color: #312E29;
+  overflow: hidden;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
 }
 
 form{

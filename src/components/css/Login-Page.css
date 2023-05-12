@@ -24,7 +24,8 @@ html, body {
   font-family: Verdana;
   margin-top: 0px;
   width: 50%;
-  height: 30%;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .loginBody form input, textarea{
