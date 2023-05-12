@@ -61,16 +61,24 @@ exports.swipeRight = functions.https.onCall(async (data) => {
   const swipeData = { direction: "right", swipee: swipeeemail, swiper: useremail, timestamp: "N/A" };
   await swipeRef.set(swipeData);
 
-  const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail]};
-  if (!swipeeMatches.includes(matchemail => matchemail === useremail)) { // must change into checking whether or not the swipee has swiped right on the user
-    await swipeeDocRef.update(swipeeMatchesUpdate);
-  }
+  // Check if the swipee has already swiped right on the user
+  const swipeeSwipes = await firestore.collection("swipes")
+    .where("swiper", "==", swipeeemail)
+    .where("swipee", "==", useremail)
+    .where("direction", "==", "right")
+    .get();
+  const hasSwipedRight = !swipeeSwipes.empty;
 
-  const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail]};
-  if (!userMatchesUpdate.matches.includes(matchemail => matchemail === swipeeemail)) {
+  // Update matches only if the swipee has swiped right on the user
+  if (hasSwipedRight) {
+    const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail]};
+    await swipeeDocRef.update(swipeeMatchesUpdate);
+
+    const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail]};
     await userDocRef.update(userMatchesUpdate);
   }
 });
+
 
 exports.swipeLeft = functions.https.onCall(async (data) => {
   const useremail = await getEmailFromUid(data.uid);
