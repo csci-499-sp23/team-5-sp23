@@ -27,7 +27,7 @@ const Profile = () => {
   const { user } = UserAuth();
   const setInformation = (data) => {
     // Set information into useStates:
-    data.name !== "" ? setName(data.name) : console.log("There is no name");
+    data.name !== "" ? setName(UpperCase(data.name)) : console.log("There is no name");
     data.location !== ""
       ? setLocation(data.location)
       : console.log("There is no location");
@@ -39,6 +39,13 @@ const Profile = () => {
       ? setInterests(data.interests)
       : console.log("There is no interests");
     setData(true);
+  };
+
+  //Changes lowerCase lettering of Name to Uppercase (name is stored as lowerCase)
+  const UpperCase = (str) => {
+    return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
   };
 
   useEffect(() => {

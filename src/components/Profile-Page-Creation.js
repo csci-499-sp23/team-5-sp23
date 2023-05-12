@@ -67,7 +67,7 @@ const Profile_Creation = () => {
     const submitProfileInformation = async () =>{
         const docRef = doc(db, 'profiles' , user.email);
         await setDoc(docRef, {
-            name: `${name}`,
+            name: `${name.toLowerCase()}`,
             location: `${location}`,
             birthdate: `${birthdate}`,
             bio: `${bio}`,

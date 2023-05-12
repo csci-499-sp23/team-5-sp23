@@ -19,10 +19,10 @@ function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitted:', { firstName, lastName, email, password });
+    //console.log('Submitted:', { firstName, lastName, email, password });
     try{
       await createUser(email, password);
-      await updateUserName(firstName +' ' +  lastName);
+      //await updateUserName(firstName +' ' +  lastName);
       navigate(('/Profile-Page'))
     }catch(err){
       console.error(err);

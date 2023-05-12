@@ -37,6 +37,9 @@ const NavBar = () => {
     <li>
       <NavLink to="/PersonalityPage">MBTI/Personality Test</NavLink>
     </li>
+    <li>
+      <NavLink to="/chatSectionTester">Chat Test</NavLink>
+    </li>
   </div>
  </nav>
  );
