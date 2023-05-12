@@ -1,344 +1,105 @@
 import React, { useState } from "react";
-import "./css/PersonalityPage.css";
 
 const questions = [
-  {
-    questionText:
-      "Do you enjoy spending time with a large group of people or prefer one-on-one interactions?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "When presented with a new project, do you tend to focus on the big picture or the details?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you prefer to make decisions based on logic or your personal values and beliefs?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Would you rather spend a quiet evening at home or go out and explore new places?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Are you more likely to trust your instincts or rely on the advice of others?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you prefer a strict routine or a more flexible approach to your daily life?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText: "Are you naturally more introverted or extroverted?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "When faced with a difficult problem, do you prefer to brainstorm solutions alone or with a group?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you prefer to plan everything in advance or take things as they come?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText: "Are you more likely to follow your heart or your head?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText: "Do you tend to see the big picture or focus on the details?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you prefer a career that involves working with people or working with things?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText: "Do you enjoy spending time alone or with others?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText: "Do you prefer to take risks or play it safe?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "When faced with a difficult decision, do you rely more on your intuition or analysis?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you prefer to focus on the present or plan for the future?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you enjoy exploring new ideas or sticking with tried-and-true methods?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText: "Are you naturally more spontaneous or methodical?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Do you prefer to work on one task at a time or multiple tasks simultaneously?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
-  {
-    questionText:
-      "Are you more likely to make decisions based on emotion or reason?",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
-  },
+  "I prefer spending time alone to being with a group of people.",
+"I am very organized and like to plan everything in advance.",
+"I find it easy to express my emotions to others.",
+"I am a very logical person and rely on facts rather than feelings.",
+"I am often the life of the party and enjoy being the center of attention.",
+"I am very detail-oriented and notice small things that others might miss.",
+"I enjoy trying new things and taking risks.",
+"I am a very empathetic person and am able to understand how others are feeling.",
+"I prefer to have a few close friends rather than a large group of acquaintances.",
+"I am very competitive and like to win.",
+"I often daydream and enjoy using my imagination.",
+"I am very decisive and make decisions quickly.",
+"I prefer to stick to a routine and don't like surprises.",
+"I am very sensitive to criticism and take it to heart.",
+"I am a very outgoing person and enjoy meeting new people.",
+"I am a very analytical person and enjoy solving complex problems.",
+"I am very spontaneous and enjoy going with the flow.",
+"I am very goal-oriented and always have a clear idea of what I want to achieve.",
+"I am very patient and able to stay calm under pressure.",
+"I prefer to spend my free time alone rather than with others.",
 ];
+
+const options = ["True", "False"];
 
 const mbtiTypes = [
-  {
-    type: "ISTJ",
-    description: "Practical and logical, with a focus on order and structure.",
-  },
-  {
-    type: "ISFJ",
-    description:
-      "Warm and responsible, with a focus on tradition and stability.",
-  },
-  {
-    type: "INFJ",
-    description:
-      "Insightful and compassionate, with a focus on understanding and harmony.",
-  },
-  {
-    type: "INTJ",
-    description:
-      "Strategic and analytical, with a focus on long-term vision and planning.",
-  },
-  {
-    type: "ISTP",
-    description: "Bold and practical, with a focus on action and results.",
-  },
-  {
-    type: "ISFP",
-    description:
-      "Creative and sensitive, with a focus on aesthetics and values.",
-  },
-  {
-    type: "INFP",
-    description:
-      "Idealistic and empathetic, with a focus on personal growth and meaning.",
-  },
-  {
-    type: "INTP",
-    description:
-      "Inventive and curious, with a focus on analysis and innovation.",
-  },
-  {
-    type: "ESTP",
-    description:
-      "Energetic and adaptable, with a focus on seizing opportunities.",
-  },
-  {
-    type: "ESFP",
-    description:
-      "Spontaneous and enthusiastic, with a focus on fun and excitement.",
-  },
-  {
-    type: "ENFP",
-    description:
-      "Creative and enthusiastic, with a focus on possibilities and connections.",
-  },
-  {
-    type: "ENTP",
-    description:
-      "Innovative and adaptable, with a focus on new ideas and challenges.",
-  },
-  {
-    type: "ESTJ",
-    description:
-      "Efficient and practical, with a focus on organization and control.",
-  },
-  {
-    type: "ESFJ",
-    description:
-      "Friendly and conscientious, with a focus on harmony and social connections.",
-  },
-  {
-    type: "ENFJ",
-    description:
-      "Charismatic and empathetic, with a focus on inspiring and leading others.",
-  },
-  {
-    type: "ENTJ",
-    description:
-      "Assertive and visionary, with a focus on strategic planning and leadership.",
-  },
+  "ISTJ",
+  "ISFJ",
+  "INFJ",
+  "INTJ",
+  "ISTP",
+  "ISFP",
+  "INFP",
+  "INTP",
+  "ESTP",
+  "ESFP",
+  "ENFP",
+  "ENTP",
+  "ESTJ",
+  "ESFJ",
+  "ENFJ",
+  "ENTJ",
 ];
 
-function Quiz() {
+const MBTITest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
 
-  const handleAnswerOptionClick = (value) => {
-    setAnswers([...answers, value]);
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      displayResults();
-    }
+  const handleAnswerSelection = (answerValue) => {
+    const updatedAnswers = [...userAnswers];
+    updatedAnswers[currentQuestion] = answerValue;
+    setUserAnswers(updatedAnswers);
+    setCurrentQuestion(currentQuestion + 1);
   };
 
-  const displayResults = () => {
-    // Calculate the total score
-    const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
+  const calculateMBTI = () => {
+    const result = new Array(8).fill(0); // Array to store the counts of E, I, S, N, T, F, J, P
 
-    // Determine the dominant preference based on total score
-    const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
+    for (let i = 0; i < questions.length; i++) {
+      const userAnswer = userAnswers[i];
+      const typeIndex = i % 8; // The index for each pair of questions
 
-    // Display the result to the user
-    const result = `Your dominant preference is ${dominantPreference.type} - ${dominantPreference.description}.`;
-    alert(result);
+      if (userAnswer === "True") {
+        result[typeIndex] += 1;
+      } else {
+        result[typeIndex + 1] += 1;
+      }
+    }
+
+    let mbtiResult = "";
+    for (let i = 0; i < result.length; i += 2) {
+      if (result[i] > result[i + 1]) {
+        mbtiResult += mbtiTypes[i / 2].charAt(0);
+      } else {
+        mbtiResult += mbtiTypes[i / 2].charAt(1);
+      }
+    }
+
+    return mbtiResult;
   };
 
   return (
     <div>
-      <h1>{questions[currentQuestion].questionText}</h1>
-      <div>
-        {questions[currentQuestion].answerOptions.map((answerOption) => (
-          <button
-            key={answerOption.answerText}
-            onClick={() => handleAnswerOptionClick(answerOption.value)}
-          >
-            {answerOption.answerText}
-          </button>
-        ))}
-      </div>
+      {currentQuestion < questions.length ? (
+        <div>
+          <h2>{questions[currentQuestion]}</h2>
+          {options.map((option) => (
+            <button key={option} onClick={() => handleAnswerSelection(option)}>
+              {option}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <h2>Your MBTI result is:</h2>
+          <p>{calculateMBTI()}</p>
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default Quiz;
+export default MBTITest;
