@@ -16,7 +16,7 @@
   text-align: center;
 }
 
-h1 {
+.boxMatch h1 {
   font-size: 600%;
   font-family: Impact;
   letter-spacing: 6.5px;
@@ -24,7 +24,7 @@ h1 {
   margin-bottom: 2%;
 }
 
-h2 {
+.boxMatch h2 {
   font-size: 130%;
   margin-top: 0%;
   padding-top: 0%;

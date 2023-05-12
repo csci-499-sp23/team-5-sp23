@@ -3,16 +3,16 @@ html, body {
 }
 
 .loginBody {
-    font-family: Verdana;
-    color: #312E29;
-    font-weight: bolder;
-    height: 100vh;
-    text-align: center;
-    background-color: #C3AFA5;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  font-family: Verdana;
+  color: #312E29;
+  font-weight: bolder;
+  min-height: 600px;
+  text-align: center;
+  background-color: #C3AFA5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .loginBody form{
@@ -24,7 +24,14 @@ html, body {
   font-family: Verdana;
   margin-top: 0px;
   width: 50%;
-  height: 30%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  margin-bottom: 4%;
+}
+
+.loginBody label {
+  display: block;
+  margin-top: 10px;
 }
 
 .loginBody form input, textarea{
@@ -35,8 +42,7 @@ html, body {
   font-family: Verdana;
   text-align: center;
   color: #312E29;
-  background-color: #efefef;
-  
+  background-color: #efefef;  
 }
 
 .loginBody form button{
@@ -59,31 +65,6 @@ html, body {
   letter-spacing: 6.5px;
   color: #efefef;
   margin-top: 0px;
-  padding-top: 4%;
-}
-
-/* logo  */
-
-.logo-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 20px;
-}
-
-.logo-container img {
-  width: 100px;
-  height: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.logo {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  min-width: 50px;
-  min-height: 50px;
-  height: 100px;
-  width: 100px;
+  padding-top: 3%;
+  margin-bottom: 3%;
 }

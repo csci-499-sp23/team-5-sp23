@@ -24,6 +24,7 @@ function Card() {
   return (
     //BEM
     <div className="container">
+
       <div className="boxMatch">
           <h1>Find Your Match</h1>
           <h2>Swipe right, if interested. Swipe left, if not.</h2>
@@ -50,6 +51,7 @@ function Card() {
           </TinderCard>
         ))}
       </div>
+      
     </div>
   );
 }
