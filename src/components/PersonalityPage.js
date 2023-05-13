@@ -357,7 +357,10 @@ const dateOptions = {
 
 function similarity(personality, dateOption) {
   const pChars = mbtiTypes[personality].weights;
-  const dChars = dateOption;
+  // const dChars = dateOption;
+  const { date, ...rest } = dateOption;
+  const dChars = rest;
+
   const dotProduct = Object.keys(pChars)
     .filter((k) => dChars[k])
     .reduce((acc, k) => acc + pChars[k] * dChars[k], 0);
@@ -393,15 +396,29 @@ function BestDateOption({ personality, dateOptions }) {
 
 BestDateOption.propTypes = {
   personality: PropTypes.string.isRequired,
-  dateOptions: PropTypes.object.isRequired
+  dateOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      E: PropTypes.number,
+      S: PropTypes.number,
+      T: PropTypes.number,
+      P: PropTypes.number,
+      I: PropTypes.number,
+      N: PropTypes.number,
+      F: PropTypes.number,
+      J: PropTypes.number,
+    }).isRequired,
+  ).isRequired,
 };
 
 
 function Quiz() {
+  // Define date options as an array
+  const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({ date, ...option }));
+  console.log(dateOptionsArray);
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
-
-  
 
   const handleAnswerOptionClick = (value) => {
     setAnswers([...answers, value]);
@@ -436,7 +453,7 @@ function Quiz() {
             {answerOption.answerText}
           </button>
         ))}
-        <BestDateOption personality="INTP" dateOptions={dateOptions} />
+        <BestDateOption personality="ESFP" dateOptions={dateOptionsArray} />
       </div>
     </div>
   );
