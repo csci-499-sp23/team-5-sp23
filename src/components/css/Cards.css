@@ -26,6 +26,13 @@
   position: absolute;
 }
 
+.newbuttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 66vh;
+}
+
+
 .newbuttons button {
   flex-shrink: 0;
   padding: 10px;
