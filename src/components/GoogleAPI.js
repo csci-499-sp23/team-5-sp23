@@ -4,41 +4,36 @@ import { Link } from "react-router-dom";
 import logo from "./img/logo.png";
 import "./css/GoogleAPI.css"
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import logo from "./img/logo.png";
-import "./css/GoogleAPI.css"
-
 function GoogleAPI() {
   const [places, setPlaces] = useState([]);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [types, setTypes] = useState(["restaurant", "cafe", "park"])
   const [typeIndex, setTypeIndex] = useState(0);
+
   navigator.geolocation.getCurrentPosition((position) => {
     setLatitude(position.coords.latitude);
     setLongitude(position.coords.longitude);
   });
 
-  useEffect(() => {
+  useEffect(() => { //MAKE A BUTTON WHICH CHANGES THE TYPE INDEX TO REFRESH, USE THE ARRAY POSITION 0 FOR DATE
     if (latitude && longitude) {
       const type = types[typeIndex];
-
+  
       const promise = axios
         .get(
           `https://us-central1-csci499.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${type}`
         )
         .then((response) => response.data)
         .catch((error) => console.error(error));
-      }
-
-      Promise.all(promises).then((results) => {
+  
+      promise.then((results) => {
         const allPlaces = results.flat();
         setPlaces(allPlaces);
       });
     }
-  }, [latitude, longitude]);
+  }, [latitude, longitude, typeIndex]);
+  
 
   return (
     <div className="boxAPI">
