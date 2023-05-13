@@ -10,7 +10,7 @@ import { httpsCallable } from "firebase/functions";
 import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
 
 function Card() {
-  const batchSize = 8;
+  const batchSize = 3;
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
   const [currentIndex, setCurrentIndex] = useState(batchSize);
@@ -18,7 +18,6 @@ function Card() {
   const canSwipe = currentIndex >= 0;
   const childRefs = useRef([]);
   const [currentPersonId, setCurrentPersonId] = useState(null);
-  const [buttonActive, setButtonActive] = useState(true);
 
   const swipeLeft = httpsCallable(functions, 'swipeLeft');
   const swipeRight = httpsCallable(functions, 'swipeRight');
@@ -40,12 +39,11 @@ function Card() {
     return updatedProfiles;
   }
 
-  async function onSwipeButtonClick(dir, swipeeemail) {
+  async function swipeAndChangeId(dir, swipeeemail) {
     if (!canSwipe) {
-      setButtonActive(false);
       return;
     }
-    
+  
     const swipeFn = dir === "left" ? swipeLeft : swipeRight;
     const currentIndexRef = { current: currentIndex };
     const currentRef = childRefs.current[currentIndexRef.current];
@@ -53,8 +51,11 @@ function Card() {
       await currentRef.swipe(dir);
       swipeFn({ uid: user.uid, swipeeemail });
       setCurrentIndex(currentIndex => currentIndex - 1);
+      if (people[currentIndex]) {
+        setCurrentPersonId(people[currentIndex].id);
+      }
     }
-    
+  
     if (!canSwipe) {
       const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
       if (newProfiles.length > 0) {
@@ -64,11 +65,19 @@ function Card() {
         setLastDoc(newProfiles[0].doc);
         childRefs.current = newRefs;
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
-        setButtonActive(true);
       }
     }
   }
-
+  
+  // function handleSwipe(ind, dir) {
+  //   const childRef = childRefs.current[ind];
+  //   if (childRef) {
+  //     childRef.swipe(dir).then(() => {
+  //       swipeAndChangeId(dir, swipeeemail);
+  //     });
+  //   }
+  // }
+  
   
   useEffect(() => {
     async function loadInitialProfiles() {
@@ -84,14 +93,7 @@ function Card() {
     loadInitialProfiles();
   }, [user.uid]);
   
-  function handleIdChange(ind) {
-    const nextPerson = people[ind - 1];
-  
-    // If there is a next person, update the current person ID to their ID
-    if (nextPerson) {
-      setCurrentPersonId(nextPerson.id);
-    }
-  }
+
   return (
     <div>
       <div className="tinderCards_cardContainer">
@@ -99,8 +101,7 @@ function Card() {
           <TinderCard
             className="swipe"
             key={person.name}
-            onCardLeftScreen={() => handleIdChange(index)}
-            preventSwipe={["up", "down", "left", "right"]}
+            preventSwipe={["up", "down"]}
             ref={el => (childRefs.current[index] = el)}
           >
             <div
@@ -111,11 +112,14 @@ function Card() {
             </div>
           </TinderCard>
         ))}
-        
       </div>
-      <div className='newbuttons'>
-        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => onSwipeButtonClick('left', currentPersonId)}>Swipe left!</button>
-        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => onSwipeButtonClick('right', currentPersonId)}>Swipe right!</button>
+      <div className="newbuttons">
+        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId(currentIndex, "left")}>
+          Swipe left!
+        </button>
+        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId(currentIndex, "right")}>
+          Swipe right!
+        </button>
       </div>
     </div>
   );
