@@ -4,44 +4,33 @@ import { Link } from "react-router-dom";
 import logo from "./img/logo.png";
 import "./css/GoogleAPI.css"
 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import logo from "./img/logo.png";
+import "./css/GoogleAPI.css"
+
 function GoogleAPI() {
   const [places, setPlaces] = useState([]);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [types, setTypes] = useState(["restaurant", "cafe", "park"])
+  const [typeIndex, setTypeIndex] = useState(0);
+  navigator.geolocation.getCurrentPosition((position) => {
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  });
 
-  // Call geolocation API every 10 seconds
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-      });
-    }, 10000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  // Fetch places when latitude and longitude change
-  useEffect(() => {
-    const category = {
-      romantic: ["restaurant", "cafe", "park", "museum"],
-      adventurous: ["zoo", "aquarium", "amusement_park"],
-      cultural: ["art_gallery", "library", "theatre"],
-      outdoor: ["beach", "hiking", "campground"],
-    };
-
     if (latitude && longitude) {
-      const promises = [];
+      const type = types[typeIndex];
 
-      for (const key in category) {
-        const types = category[key].join("|");
-        const promise = axios
-          .get(
-            // `http://localhost:5001/csci499/us-central1/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
-            `https://us-central1-csci499.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${types}`
-          )
-          .then((response) => response.data)
-          .catch((error) => console.error(error));
-        promises.push(promise);
+      const promise = axios
+        .get(
+          `https://us-central1-csci499.cloudfunctions.net/firebaseGoogleAPI?location=${latitude},${longitude}&radius=5000&type=${type}`
+        )
+        .then((response) => response.data)
+        .catch((error) => console.error(error));
       }
 
       Promise.all(promises).then((results) => {
