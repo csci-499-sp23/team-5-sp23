@@ -39,11 +39,17 @@ function Card() {
     return updatedProfiles;
   }
 
-  async function swipeAndChangeId(dir, swipeeemail) {
-    if (!canSwipe) {
-      return;
-    }
-  
+  let isSwiping = false;
+
+async function swipeAndChangeId(dir, swipeeemail) {
+  // If the function is already running, don't do anything
+  if (isSwiping || !canSwipe) {
+    return;
+  }
+
+  isSwiping = true;
+
+  try {
     const swipeFn = dir === "left" ? swipeLeft : swipeRight;
     const currentIndexRef = { current: currentIndex };
     const currentRef = childRefs.current[currentIndexRef.current];
@@ -67,7 +73,13 @@ function Card() {
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
       }
     }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isSwiping = false;
   }
+}
+
   
   // function handleSwipe(ind, dir) {
   //   const childRef = childRefs.current[ind];
@@ -114,10 +126,10 @@ function Card() {
         ))}
       </div>
       <div className="newbuttons">
-        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId(currentIndex, "left")}>
+        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
           Swipe left!
         </button>
-        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId(currentIndex, "right")}>
+        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
           Swipe right!
         </button>
       </div>
