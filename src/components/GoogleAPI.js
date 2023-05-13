@@ -16,7 +16,7 @@ function GoogleAPI() {
     setLongitude(position.coords.longitude);
   });
 
-  useEffect(() => { //MAKE A BUTTON WHICH CHANGES THE TYPE INDEX TO REFRESH, USE THE ARRAY POSITION 0 FOR DATE
+  useEffect(() => { //MAKE A BUTTON WHICH CHANGES THE TYPE INDEX TO REFRESH, USE THE ARRAY POSITION 0 FOR DATE, add a condition where there are no items and indicate to write again
     if (latitude && longitude) {
       const type = types[typeIndex];
   
