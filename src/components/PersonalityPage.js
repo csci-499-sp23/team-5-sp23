@@ -378,8 +378,6 @@ function BestDateOption({ personality, dateOptions }) {
     return best;
   }, { option: null, similarity: -1 });
 
-  console.log("did not return");
-
   return (
     <div>
       <h2>Best date option for {personality}:</h2>
@@ -395,59 +393,53 @@ function BestDateOption({ personality, dateOptions }) {
 
 BestDateOption.propTypes = {
   personality: PropTypes.string.isRequired,
-  dateOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string.isRequired,
-      characteristics: PropTypes.object.isRequired,
-    }).isRequired,
-  ).isRequired,
+  dateOptions: PropTypes.object.isRequired
 };
 
-export default BestDateOption;
 
-
-// function Quiz() {
-//   const [currentQuestion, setCurrentQuestion] = useState(0);
-//   const [answers, setAnswers] = useState([]);
+function Quiz() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
   
 
-//   const handleAnswerOptionClick = (value) => {
-//     setAnswers([...answers, value]);
-//     if (currentQuestion < questions.length - 1) {
-//       setCurrentQuestion(currentQuestion + 1);
-//     } else {
-//       displayResults();
-//     }
-//   };
+  const handleAnswerOptionClick = (value) => {
+    setAnswers([...answers, value]);
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      displayResults();
+    }
+  };
 
-//   const displayResults = () => {
-//     // Calculate the total score
-//     const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
+  const displayResults = () => {
+    // Calculate the total score
+    const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
 
-//     // Determine the dominant preference based on total score
-//     const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
+    // Determine the dominant preference based on total score
+    const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
 
-//     // Display the result to the user
-//     const result = `Your dominant preference is ${dominantPreference.type} - ${dominantPreference.description}.`;
-//     alert(result);
-//   };
+    // Display the result to the user
+    const result = `Your dominant preference is ${dominantPreference.type} - ${dominantPreference.description}.`;
+    alert(result);
+  };
 
-//   return (
-//     <div>
-//       <h1>{questions[currentQuestion].questionText}</h1>
-//       <div>
-//         {questions[currentQuestion].answerOptions.map((answerOption) => (
-//           <button
-//             key={answerOption.answerText}
-//             onClick={() => handleAnswerOptionClick(answerOption.value)}
-//           >
-//             {answerOption.answerText}
-//           </button>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
+  return (
+    <div>
+      <h1>{questions[currentQuestion].questionText}</h1>
+      <div>
+        {questions[currentQuestion].answerOptions.map((answerOption) => (
+          <button
+            key={answerOption.answerText}
+            onClick={() => handleAnswerOptionClick(answerOption.value)}
+          >
+            {answerOption.answerText}
+          </button>
+        ))}
+        <BestDateOption personality="INTP" dateOptions={dateOptions} />
+      </div>
+    </div>
+  );
+}
 
-// export default Quiz;
+export default Quiz;
