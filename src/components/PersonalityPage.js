@@ -1,164 +1,188 @@
 import React, { useState } from "react";
 
 const questions = [
-  "I enjoy spending time with people.",
-  "I prefer to work independently.",
-  "I prefer to focus on the present moment.",
-  "I often consider the consequences of my actions before making a decision.",
-  "I value logic over emotions.",
-  "I often daydream about the future.",
-  "I am more of a big picture person than a details person.",
-  "I am quick to adapt to new situations.",
-  "I am more of an optimist than a pessimist.",
-  "I enjoy trying new things.",
-  "I am more interested in the theory behind things than the practical application.",
-  "I enjoy spending time outdoors.",
-  "I am a good listener.",
-  "I am comfortable with change.",
-  "I often take charge in group situations.",
-  "I tend to stick to a routine.",
-  "I am more of a go with the flow person than a planner.",
-  "I prefer to express myself through writing rather than speaking.",
-  "I value tradition and stability.",
-  "I often reflect on my own thoughts and feelings.",
+  {
+    category: "romantic",
+    text: "Do you believe in love at first sight?",
+  },
+  {
+    category: "romantic",
+    text: "Would you rather receive a gift or a love letter?",
+  },
+  {
+    category: "romantic",
+    text: "Do you prefer grand romantic gestures or small meaningful ones?",
+  },
+  {
+    category: "romantic",
+    text: "Do you think physical touch is important in a romantic relationship?",
+  },
+  {
+    category: "romantic",
+    text: "Do you believe in soulmates?",
+  },
+  {
+    category: "adventurous",
+    text: "Do you enjoy traveling to new places?",
+  },
+  {
+    category: "adventurous",
+    text: "Do you enjoy trying new things?",
+  },
+  {
+    category: "adventurous",
+    text: "Are you comfortable with taking risks?",
+  },
+  {
+    category: "adventurous",
+    text: "Do you enjoy extreme sports?",
+  },
+  {
+    category: "adventurous",
+    text: "Do you enjoy being in nature?",
+  },
+  {
+    category: "cultural",
+    text: "Do you enjoy visiting museums or art galleries?",
+  },
+  {
+    category: "cultural",
+    text: "Do you enjoy learning about history and different cultures?",
+  },
+  {
+    category: "cultural",
+    text: "Do you enjoy attending cultural events or festivals?",
+  },
+  {
+    category: "cultural",
+    text: "Do you enjoy trying different types of cuisine?",
+  },
+  {
+    category: "cultural",
+    text: "Do you enjoy learning new languages?",
+  },
+  {
+    category: "outdoor",
+    text: "Do you enjoy spending time outdoors?",
+  },
+  {
+    category: "outdoor",
+    text: "Do you enjoy hiking or camping?",
+  },
+  {
+    category: "outdoor",
+    text: "Do you enjoy playing outdoor sports?",
+  },
+  {
+    category: "outdoor",
+    text: "Do you enjoy gardening or farming?",
+  },
+  {
+    category: "outdoor",
+    text: "Do you enjoy outdoor adventures such as zip lining or rock climbing?",
+  },
 ];
 
-const options = [
-  "Strongly disagree",
-  "Disagree",
-  "Neutral",
-  "Agree",
-  "Strongly agree",
-];
+function PersonalitySurvey() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [romantic, setRomantic] = useState(0);
+  const [adventurous, setAdventurous] = useState(0);
+  const [cultural, setCultural] = useState(0);
+  const [outdoor, setOutdoor] = useState(0);
+  const [personalityType, setPersonalityType] = useState("");
+  const [randomized, setRandomized] = useState(false);
 
-// const mbtiTypes = [
-//   "ISTJ",
-//   "ISFJ",
-//   "INFJ",
-//   "INTJ",
-//   "ISTP",
-//   "ISFP",
-//   "INFP",
-//   "INTP",
-//   "ESTP",
-//   "ESFP",
-//   "ENFP",
-//   "ENTP",
-//   "ESTJ",
-//   "ESFJ",
-//   "ENFJ",
-//   "ENTJ",
-// ];
+  const handleAnswer = (answer) => {
+    const currentCategory = questions[currentQuestionIndex].category;
 
-const MBTITest = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [userAnswers, setUserAnswers] = useState([]);
-
-  const handleAnswerSelection = (answerValue) => {
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestion] = answerValue;
-    setUserAnswers(updatedAnswers);
-    setCurrentQuestion(currentQuestion + 1);
-  };
-
-  const calculateMBTI = () => {
-    const counts = new Map([
-      ["E", 0],
-      ["I", 0],
-      ["S", 0],
-      ["N", 0],
-      ["T", 0],
-      ["F", 0],
-      ["J", 0],
-      ["P", 0],
-    ]);
-
-    for (let i = 0; i < questions.length; i++) {
-      const userAnswer = userAnswers[i];
-      const typeIndex = Math.floor(i / 2);
-
-      switch (typeIndex) {
-        case 0: // E vs I
-          counts.set(
-            userAnswer === "Strongly agree" || userAnswer === "Agree"
-              ? "E"
-              : "I",
-            counts.get(
-              userAnswer === "Strongly agree" || userAnswer === "Agree"
-                ? "E"
-                : "I"
-            ) + 1
-          );
+    if (answer) {
+      switch (currentCategory) {
+        case "romantic":
+          setRomantic(romantic + 1);
           break;
-        case 1: // S vs N
-          counts.set(
-            userAnswer === "Strongly agree" || userAnswer === "Agree"
-              ? "S"
-              : "N",
-            counts.get(
-              userAnswer === "Strongly agree" || userAnswer === "Agree"
-                ? "S"
-                : "N"
-            ) + 1
-          );
+        case "adventurous":
+          setAdventurous(adventurous + 1);
           break;
-        case 2: // T vs F
-          counts.set(
-            userAnswer === "Strongly agree" || userAnswer === "Agree"
-              ? "T"
-              : "F",
-            counts.get(
-              userAnswer === "Strongly agree" || userAnswer === "Agree"
-                ? "T"
-                : "F"
-            ) + 1
-          );
+        case "cultural":
+          setCultural(cultural + 1);
           break;
-        case 3: // J vs P
-          counts.set(
-            userAnswer === "Strongly agree" || userAnswer === "Agree"
-              ? "J"
-              : "P",
-            counts.get(
-              userAnswer === "Strongly agree" || userAnswer === "Agree"
-                ? "J"
-                : "P"
-            ) + 1
-          );
+        case "outdoor":
+          setOutdoor(outdoor + 1);
           break;
         default:
           break;
       }
     }
 
-    let mbtiResult = "";
-    mbtiResult += counts.get("E") > counts.get("I") ? "E" : "I";
-    mbtiResult += counts.get("S") > counts.get("N") ? "S" : "N";
-    mbtiResult += counts.get("T") > counts.get("F") ? "T" : "F";
-    mbtiResult += counts.get("J") > counts.get("P") ? "J" : "P";
+    const nextQuestionIndex = currentQuestionIndex + 1;
 
-    return mbtiResult;
+    if (nextQuestionIndex < questions.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+    } else {
+      // Survey is complete, determine personality type
+      let highestScore = Math.max(romantic, adventurous, cultural, outdoor);
+
+      if (highestScore === romantic) {
+        setPersonalityType("Romantic");
+      } else if (highestScore === adventurous) {
+        setPersonalityType("Adventurous");
+      } else if (highestScore === cultural) {
+        setPersonalityType("Cultural");
+      } else {
+        setPersonalityType("Outdoor");
+      }
+    }
   };
 
-  return (
-    <div>
-      {currentQuestion < questions.length ? (
-        <div>
-          <h2>{questions[currentQuestion]}</h2>
-          {options.map((option) => (
-            <button key={option} onClick={() => handleAnswerSelection(option)}>
-              {option}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div>
-          <h2>Your MBTI result is:</h2>
-          <p>{calculateMBTI()}</p>
-        </div>
-      )}
-    </div>
-  );
-};
+  const handleRandomize = () => {
+    const randomIndex = Math.floor(Math.random() * 4);
+    setPersonalityType(
+      ["Romantic", "Adventurous", "Cultural", "Outdoor"][randomIndex]
+    );
+    setRandomized(true);
+  };
 
-export default MBTITest;
+  const renderQuiz = () => {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    return (
+      <>
+        <h2>Personality Survey</h2>
+        <p>{currentQuestion.text}</p>
+        <div>
+          <button onClick={() => handleAnswer(true)}>Yes</button>
+          <button onClick={() => handleAnswer(false)}>No</button>
+        </div>
+        <button onClick={handleRandomize}>Randomize Result</button>
+      </>
+    );
+  };
+
+  const renderResult = () => {
+    return (
+      <>
+        <h2>Personality Survey Result</h2>
+        <p>Your personality type is: {personalityType}</p>
+        <button onClick={handleRandomize}>Randomize Again</button>
+      </>
+    );
+  };
+
+  // Render survey questions and handle answers
+  if (randomized) {
+    return renderResult();
+  } else if (personalityType) {
+    return renderResult();
+  } else if (currentQuestionIndex < questions.length) {
+    return renderQuiz();
+  } else {
+    return (
+      <div>
+        <h2>Personality Survey</h2>
+        <p>No questions found.</p>
+      </div>
+    );
+  }
+}
+
+export default PersonalitySurvey;
