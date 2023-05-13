@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const questions = [
   {
@@ -92,6 +93,12 @@ function PersonalitySurvey() {
   const [personalityType, setPersonalityType] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/Profile-Page");
+  };
+
   const handleAnswer = (answer) => {
     const currentCategory = questions[currentQuestionIndex].category;
 
@@ -162,6 +169,7 @@ function PersonalitySurvey() {
       <div>
         <h2>Personality Survey Result</h2>
         <p>Your personality type is: {personalityType}</p>
+        <button onClick={handleClick}>Finished!</button>
       </div>
     );
   }
