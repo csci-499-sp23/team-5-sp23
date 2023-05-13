@@ -1,6 +1,6 @@
 import "./css/matchupStyles.css";
 import TinderCard from "react-tinder-card";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import "./css/Cards.css";
 import { db, storage } from "../firebase-config"; 
 import {onSnapshot, collection, doc, getDoc, getDocs, where, query} from "firebase/firestore";
@@ -10,13 +10,13 @@ import { httpsCallable } from "firebase/functions";
 import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
 
 function Card() {
-  const batchSize = 10;
+  const batchSize = 8;
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
   const [currentIndex, setCurrentIndex] = useState(batchSize);
   const [lastDoc, setLastDoc] = useState(null);
   const canSwipe = currentIndex >= 0;
-  const [childRefs, setChildRefs] = useState([]);
+  const childRefs = useRef([]);
   const [currentPersonId, setCurrentPersonId] = useState(null);
   const [buttonActive, setButtonActive] = useState(true);
 
@@ -30,54 +30,46 @@ function Card() {
     const profiles = JSON.parse(result.data).profiles;
 
     // Get download URLs for images in Storage and add to profiles
-    const promises = profiles.map(async (profile) => {
+    const updatedProfiles = await Promise.all(profiles.map(async (profile) => {
       const storageRef = ref(storage, `${profile.id}/`);
       const res = await listAll(storageRef);
       const imageUrl = await getDownloadURL(res.items[0]);
       return { ...profile, imageUrl };
-    });
-
-    const updatedProfiles = await Promise.all(promises);
+    }));
 
     return updatedProfiles;
   }
 
-  async function onSwipeButtonClick(dir, swipeeemail, btnActive) {
+  async function onSwipeButtonClick(dir, swipeeemail) {
     if (!canSwipe) {
       setButtonActive(false);
-    }
-    if (dir === "left" && btnActive) {
-      if (childRefs[currentIndex]) {
-        await childRefs[currentIndex].current.swipe("left");
-        swipeLeft({ uid: user.uid, swipeeemail });
-        setCurrentIndex(currentIndex => currentIndex - 1);
-      }
-    } 
-    else if (dir === "right" && btnActive){
-      if (childRefs[currentIndex]) {
-        await childRefs[currentIndex].current.swipe("right");
-        swipeRight({ uid: user.uid, swipeeemail });
-        setCurrentIndex(currentIndex => currentIndex - 1);
-      }
-    }
-    else {
-      console.log("please wait until the card loads...");
       return;
     }
+    
+    const swipeFn = dir === "left" ? swipeLeft : swipeRight;
+    const currentIndexRef = { current: currentIndex };
+    const currentRef = childRefs.current[currentIndexRef.current];
+    if (currentRef) {
+      await currentRef.swipe(dir);
+      swipeFn({ uid: user.uid, swipeeemail });
+      setCurrentIndex(currentIndex => currentIndex - 1);
+    }
+    
     if (!canSwipe) {
       const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
       if (newProfiles.length > 0) {
         const newRefs = Array(newProfiles.length).fill(0).map(i => React.createRef());
-        setPeople([...newProfiles]);
+        setPeople(newProfiles);
         setCurrentIndex(newProfiles.length - 1);
         setLastDoc(newProfiles[0].doc);
-        setChildRefs([...newRefs]);
+        childRefs.current = newRefs;
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
         setButtonActive(true);
       }
-    } 
-  } 
+    }
+  }
 
+  
   useEffect(() => {
     async function loadInitialProfiles() {
       const newProfiles = await getUnswipedProfiles(user.uid);
@@ -85,13 +77,21 @@ function Card() {
         setPeople(newProfiles);
         setCurrentIndex(() => newProfiles.length - 1);
         setLastDoc(newProfiles[0].doc);
-        setChildRefs(Array(batchSize).fill(0).map(i => React.createRef()));
+        childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
       }
     }
     loadInitialProfiles();
   }, [user.uid]);
-
+  
+  function handleIdChange(ind) {
+    const nextPerson = people[ind - 1];
+  
+    // If there is a next person, update the current person ID to their ID
+    if (nextPerson) {
+      setCurrentPersonId(nextPerson.id);
+    }
+  }
   return (
     <div>
       <div className="tinderCards_cardContainer">
@@ -99,9 +99,9 @@ function Card() {
           <TinderCard
             className="swipe"
             key={person.name}
-            onCardLeftScreen={() => setCurrentPersonId(person.id)}
+            onCardLeftScreen={() => handleIdChange(index)}
             preventSwipe={["up", "down", "left", "right"]}
-            ref={childRefs[index]}
+            ref={el => (childRefs.current[index] = el)}
           >
             <div
               style={{ backgroundImage: `url(${person.imageUrl})` }}
@@ -114,8 +114,8 @@ function Card() {
         
       </div>
       <div className='newbuttons'>
-        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => onSwipeButtonClick('left', currentPersonId, buttonActive)}>Swipe left!</button>
-        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => onSwipeButtonClick('right', currentPersonId, buttonActive)}>Swipe right!</button>
+        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => onSwipeButtonClick('left', currentPersonId)}>Swipe left!</button>
+        <button style={{ backgroundColor: !canSwipe && '#c3c4d3' }} onClick={() => onSwipeButtonClick('right', currentPersonId)}>Swipe right!</button>
       </div>
     </div>
   );
