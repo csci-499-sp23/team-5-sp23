@@ -93,6 +93,16 @@ function PersonalitySurvey() {
   const [personalityType, setPersonalityType] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const resetSurvey = () => {
+    setCurrentQuestionIndex(0);
+    setRomantic(0);
+    setAdventurous(0);
+    setCultural(0);
+    setOutdoor(0);
+    setPersonalityType("");
+    setIsCompleted(false);
+  };
+
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -170,6 +180,7 @@ function PersonalitySurvey() {
         <h2>Personality Survey Result</h2>
         <p>Your personality type is: {personalityType}</p>
         <button onClick={handleClick}>Finished!</button>
+        <button onClick={resetSurvey}>Restart Survey</button>
       </div>
     );
   }
