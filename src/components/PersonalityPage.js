@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import "./css/PersonalityPage.css";
+import math from "math";
 
 const questions = [
   {
@@ -218,127 +220,234 @@ const questions = [
   },
 ];
 
-const mbtiTypes = [
+const mbtiTypes = {
+  "ISTJ": 
   {
-    type: "ISTJ",
     description: "Practical and logical, with a focus on order and structure.",
+    weights: {'I': 2, 'S': 2, 'T': 2, 'J': 2}
   },
+  "ISFJ":
   {
-    type: "ISFJ",
     description:
-      "Warm and responsible, with a focus on tradition and stability.",
+    "Warm and responsible, with a focus on tradition and stability.",
+    weights: {'I': 2, 'S': 2, 'F': 2, 'J': 2} 
   },
+  "INFJ":
   {
-    type: "INFJ",
     description:
-      "Insightful and compassionate, with a focus on understanding and harmony.",
+    "Insightful and compassionate, with a focus on understanding and harmony.",
+    weights: {'I': 2, 'N': 2, 'F': 2, 'J': 2} 
   },
+  "INTJ":
   {
-    type: "INTJ",
     description:
-      "Strategic and analytical, with a focus on long-term vision and planning.",
+    "Strategic and analytical, with a focus on long-term vision and planning.",
+    weights: {'I': 2, 'N': 2, 'T': 2, 'J': 2} 
   },
+  "ISTP":
   {
-    type: "ISTP",
     description: "Bold and practical, with a focus on action and results.",
+    weights: {'I': 2, 'S': 2, 'T': 2, 'P': 2} 
   },
+  "ISFP":
   {
-    type: "ISFP",
     description:
-      "Creative and sensitive, with a focus on aesthetics and values.",
+    "Creative and sensitive, with a focus on aesthetics and values.",
+    weights: {'I': 2, 'S': 2, 'F': 2, 'P': 2} 
   },
+  "INFP":
   {
-    type: "INFP",
     description:
-      "Idealistic and empathetic, with a focus on personal growth and meaning.",
+    "Idealistic and empathetic, with a focus on personal growth and meaning.",
+    weights: {'I': 2, 'N': 2, 'F': 2, 'P': 2} 
   },
+  "INTP":
   {
-    type: "INTP",
     description:
-      "Inventive and curious, with a focus on analysis and innovation.",
+    "Inventive and curious, with a focus on analysis and innovation.",
+    weights: {'I': 2, 'N': 2, 'T': 2, 'P': 2} 
   },
+  "ESTP":
   {
-    type: "ESTP",
     description:
-      "Energetic and adaptable, with a focus on seizing opportunities.",
+    "Energetic and adaptable, with a focus on seizing opportunities.",
+    weights: {'E': 2, 'S': 2, 'T': 2, 'P': 2} 
   },
+  "ESFP":
   {
-    type: "ESFP",
     description:
-      "Spontaneous and enthusiastic, with a focus on fun and excitement.",
+    "Spontaneous and enthusiastic, with a focus on fun and excitement.",
+    weights: {'E': 2, 'S': 2, 'F': 2, 'P': 2} 
   },
+  "ENFP":
   {
-    type: "ENFP",
     description:
-      "Creative and enthusiastic, with a focus on possibilities and connections.",
+    "Creative and enthusiastic, with a focus on possibilities and connections.",
+    weights: {'E': 2, 'N': 2, 'F': 2, 'P': 2} 
   },
+  "ENTP":
   {
-    type: "ENTP",
     description:
-      "Innovative and adaptable, with a focus on new ideas and challenges.",
+    "Innovative and adaptable, with a focus on new ideas and challenges.",
+    weights: {'E': 2, 'N': 2, 'T': 2, 'P': 2} 
   },
+  "ESTJ":
   {
-    type: "ESTJ",
     description:
-      "Efficient and practical, with a focus on organization and control.",
+    "Efficient and practical, with a focus on organization and control.",
+    weights: {'E': 2, 'S': 2, 'T': 2, 'J': 2} 
   },
+  "ESFJ":
   {
-    type: "ESFJ",
     description:
-      "Friendly and conscientious, with a focus on harmony and social connections.",
+    "Friendly and conscientious, with a focus on harmony and social connections.",
+    weights: {'E': 2, 'S': 2, 'F': 2, 'J': 2} 
   },
+  "ENFJ":
   {
-    type: "ENFJ",
     description:
-      "Charismatic and empathetic, with a focus on inspiring and leading others.",
+    "Charismatic and empathetic, with a focus on inspiring and leading others.",
+    weights: {'E': 2, 'N': 2, 'F': 2, 'J': 2} 
   },
+  "ENTJ":
   {
-    type: "ENTJ",
     description:
-      "Assertive and visionary, with a focus on strategic planning and leadership.",
+    "Assertive and visionary, with a focus on strategic planning and leadership.",
+    weights: {'E': 2, 'N': 2, 'T': 2, 'J': 2} 
   },
-];
+};
 
-function Quiz() {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
+const dateOptions = {
+  'amusement_park': {'E': 2, 'N': 1, 'F': 1, 'P': 0},
+  'aquarium': {'E': 1, 'S': 1, 'T': 1, 'P': 1},
+  'art_gallery': {'E': 2, 'N': 2, 'F': 2, 'P': 1},
+  'bakery': {'E': 1, 'S': 1, 'F': 1, 'P': 0},
+  'bar': {'E': 2, 'N': 1, 'F': 1, 'P': 2},
+  'bicycle_store': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'book_store': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'bowling_alley': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'cafe': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'campground': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'casino': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'church': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'clothing_store': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'department_store': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'florist': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'gym': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'hair_care': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'library': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'meal_delivery': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'meal_takeaway': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'mosque': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'movie_rental': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'movie_theater': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'museum': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'park': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'pet_store': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'restaurant': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'shoe_store': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'shopping_mall': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'spa': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'stadium': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'synagogue': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'tourist_attraction': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'university': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+  'zoo': {'E': 1, 'S': 1, 'F': 1, 'P': 2},
+}
 
-  const handleAnswerOptionClick = (value) => {
-    setAnswers([...answers, value]);
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      displayResults();
+function similarity(personality, dateOption) {
+  const pChars = mbtiTypes[personality].weights;
+  const dChars = dateOption;
+  const dotProduct = Object.keys(pChars)
+    .filter((k) => dChars[k])
+    .reduce((acc, k) => acc + pChars[k] * dChars[k], 0);
+  const pMagnitude = math.sqrt(Object.values(pChars).reduce((acc, v) => acc + v ** 2, 0));
+  const dMagnitude = math.sqrt(Object.values(dChars).reduce((acc, v) => acc + v ** 2, 0));
+  return dotProduct / (pMagnitude * dMagnitude);
+}
+
+function BestDateOption({ personality, dateOptions }) {
+  if (!dateOptions) {
+    return <div>No date options available.</div>;
+  }
+  const bestOption = dateOptions.reduce((best, option) => {
+    const optionSimilarity = similarity(personality, option);
+    if (optionSimilarity > best.similarity) {
+      return { option, similarity: optionSimilarity };
     }
-  };
+    return best;
+  }, { option: null, similarity: -1 });
 
-  const displayResults = () => {
-    // Calculate the total score
-    const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
-
-    // Determine the dominant preference based on total score
-    const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
-
-    // Display the result to the user
-    const result = `Your dominant preference is ${dominantPreference.type} - ${dominantPreference.description}.`;
-    alert(result);
-  };
+  console.log("did not return");
 
   return (
     <div>
-      <h1>{questions[currentQuestion].questionText}</h1>
-      <div>
-        {questions[currentQuestion].answerOptions.map((answerOption) => (
-          <button
-            key={answerOption.answerText}
-            onClick={() => handleAnswerOptionClick(answerOption.value)}
-          >
-            {answerOption.answerText}
-          </button>
-        ))}
-      </div>
+      <h2>Best date option for {personality}:</h2>
+      {bestOption.option && (
+        <div>
+          <h3>{bestOption.option.date}</h3>
+          <p>Similarity score: {bestOption.similarity.toFixed(2)}</p>
+        </div>
+      )}
     </div>
   );
 }
 
-export default Quiz;
+BestDateOption.propTypes = {
+  personality: PropTypes.string.isRequired,
+  dateOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      characteristics: PropTypes.object.isRequired,
+    }).isRequired,
+  ).isRequired,
+};
+
+export default BestDateOption;
+
+
+// function Quiz() {
+//   const [currentQuestion, setCurrentQuestion] = useState(0);
+//   const [answers, setAnswers] = useState([]);
+
+  
+
+//   const handleAnswerOptionClick = (value) => {
+//     setAnswers([...answers, value]);
+//     if (currentQuestion < questions.length - 1) {
+//       setCurrentQuestion(currentQuestion + 1);
+//     } else {
+//       displayResults();
+//     }
+//   };
+
+//   const displayResults = () => {
+//     // Calculate the total score
+//     const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
+
+//     // Determine the dominant preference based on total score
+//     const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
+
+//     // Display the result to the user
+//     const result = `Your dominant preference is ${dominantPreference.type} - ${dominantPreference.description}.`;
+//     alert(result);
+//   };
+
+//   return (
+//     <div>
+//       <h1>{questions[currentQuestion].questionText}</h1>
+//       <div>
+//         {questions[currentQuestion].answerOptions.map((answerOption) => (
+//           <button
+//             key={answerOption.answerText}
+//             onClick={() => handleAnswerOptionClick(answerOption.value)}
+//           >
+//             {answerOption.answerText}
+//           </button>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default Quiz;
