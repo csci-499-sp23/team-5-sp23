@@ -90,7 +90,7 @@ function PersonalitySurvey() {
   const [cultural, setCultural] = useState(0);
   const [outdoor, setOutdoor] = useState(0);
   const [personalityType, setPersonalityType] = useState("");
-  const [randomized, setRandomized] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const handleAnswer = (answer) => {
     const currentCategory = questions[currentQuestionIndex].category;
@@ -131,22 +131,23 @@ function PersonalitySurvey() {
       } else {
         setPersonalityType("Outdoor");
       }
+
+      setIsCompleted(true);
     }
   };
 
   const handleRandomize = () => {
-    const randomIndex = Math.floor(Math.random() * 4);
-    setPersonalityType(
-      ["Romantic", "Adventurous", "Cultural", "Outdoor"][randomIndex]
-    );
-    setRandomized(true);
+    const personalityTypes = ["Romantic", "Adventurous", "Cultural", "Outdoor"];
+    const randomIndex = Math.floor(Math.random() * personalityTypes.length);
+    setPersonalityType(personalityTypes[randomIndex]);
+    setIsCompleted(true);
   };
 
-  const renderQuiz = () => {
+  // Render survey questions and handle answers
+  if (!isCompleted) {
     const currentQuestion = questions[currentQuestionIndex];
-
     return (
-      <>
+      <div>
         <h2>Personality Survey</h2>
         <p>{currentQuestion.text}</p>
         <div>
@@ -154,32 +155,13 @@ function PersonalitySurvey() {
           <button onClick={() => handleAnswer(false)}>No</button>
         </div>
         <button onClick={handleRandomize}>Randomize Result</button>
-      </>
+      </div>
     );
-  };
-
-  const renderResult = () => {
-    return (
-      <>
-        <h2>Personality Survey Result</h2>
-        <p>Your personality type is: {personalityType}</p>
-        <button onClick={handleRandomize}>Randomize Again</button>
-      </>
-    );
-  };
-
-  // Render survey questions and handle answers
-  if (randomized) {
-    return renderResult();
-  } else if (personalityType) {
-    return renderResult();
-  } else if (currentQuestionIndex < questions.length) {
-    return renderQuiz();
   } else {
     return (
       <div>
-        <h2>Personality Survey</h2>
-        <p>No questions found.</p>
+        <h2>Personality Survey Result</h2>
+        <p>Your personality type is: {personalityType}</p>
       </div>
     );
   }
