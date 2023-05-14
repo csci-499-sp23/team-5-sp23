@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./css/PersonalityPage.css";
 
 const questions = [
   { question: "I enjoy spending time with others", type: "E" },
@@ -151,10 +153,26 @@ const MBTITest = () => {
     setShowResults(true);
   };
 
+  const handleRetake = () => {
+    setQuestionIndex(0);
+    setAnswers(Array(questions.length).fill(null));
+    setShowResults(false);
+  };
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/Profile-Page");
+  };
+
   return (
     <div>
       {showResults ? (
+        <div>
         <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
+        <button onClick={handleClick}>Finished!</button>
+        <button onClick={handleRetake}>Retake the Survey</button>
+        </div>
       ) : (
         <div>
           <p>{questions[questionIndex].question}</p>
