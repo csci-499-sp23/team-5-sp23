@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
-import { getFirestore } from "firebase/firestore"
+import { initializeFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
@@ -12,12 +12,14 @@ const firebaseConfig = {
   projectId: "csci499",
   storageBucket: "csci499.appspot.com",
   messagingSenderId: "1025285728412",
-  appId: "1:1025285728412:web:e38840f5cddd275290e559"
+  appId: "1:1025285728412:web:e38840f5cddd275290e559",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+export const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
 export const storage = getStorage(app);
 export const auth = getAuth(app);

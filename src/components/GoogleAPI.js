@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import logo from "./img/logo.png";
-import "./css/GoogleAPI.css"
 
 function GoogleAPI() {
   const [places, setPlaces] = useState([]);
@@ -52,40 +49,15 @@ function GoogleAPI() {
   }, [latitude, longitude]);
 
   return (
-    <div className="boxAPI">
-
-      <div className="logo-container">
-        <Link to="/">
-          <img src={logo} alt="persona logo" className="logo" />
-        </Link>
-      </div>
-
+    <div>
       <h1>Date ideas near you:</h1>
-
-      <div className="anotherBoxAPI">
-        {/* Please do not erase, a visual was needed: */}
-        {/* <ul>
-          <li>
-            Destination (Destination Type)
+      <ul>
+        {places.map((place) => (
+          <li key={place.id}>
+            {place.name} ({place.types[0]})
           </li>
-          <li>
-            Destinationnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnn  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn (Destination Type)
-          </li>
-          <li>
-            Destination (Destination Type)
-          </li>
-        </ul> */}
-
-        <ul>
-          {places.map((place) => (
-            <li key={place.id}>
-              {place.name} ({place.types[0]})
-            </li>
-          ))}
-        </ul>
-
-      </div>
-
+        ))}
+      </ul>
     </div>
   );
 }
