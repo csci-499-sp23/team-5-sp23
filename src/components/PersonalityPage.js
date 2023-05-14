@@ -1,190 +1,152 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./css/PersonalityPage.css";
 
 const questions = [
+  { question: "I enjoy spending time with others", type: "E" },
+  { question: "Do you enjoy being the center of attention?", type: "E" },
   {
-    category: "romantic", 
-    text: "Do you believe in love at first sight?",
+    question: "Do you like to meet new people and make new friends?",
+    type: "E",
+  },
+  { question: "I prefer to spend time alone", type: "I" },
+  {
+    question:
+      "Do you feel more energized when you spend time alone, rather than with other people?",
+    type: "I",
   },
   {
-    category: "romantic",
-    text: "Do you like receiving gifts and messages from a person that you like",
+    question:
+      "Do you prefer to have a small group of close friends, rather than a large group of acquaintances?",
+    type: "I",
+  },
+  { question: "I focus on the present rather than the future", type: "S" },
+  {
+    question:
+      "Do you rely more on your senses or your intuition when making decisions?",
+    type: "S",
   },
   {
-    category: "romantic",
-    text: "Do you like grand romantic gestures?",
+    question:
+      "Are you comfortable with routine and familiar surroundings, or do you prefer novelty and change?",
+    type: "S",
   },
   {
-    category: "romantic",
-    text: "Do you romanticize being in a relationship with someone that you like?",
+    question: "I am often guided by my intuition and gut feelings.",
+    type: "N",
+  },
+  { question: "I focus on the future rather than the present", type: "N" },
+  {
+    question:
+      "I like to explore new and untested ideas even if they are not yet proven.",
+    type: "N",
+  },
+  { question: "I make decisions based on logic and reason", type: "T" },
+  {
+    question:
+      "When making a decision, do you prioritize what makes the most logical sense over what feels right?",
+    type: "T",
   },
   {
-    category: "romantic",
-    text: "Do you believe in soulmates?",
+    question:
+      "Do you often find yourself analyzing and dissecting situations or problems in order to better understand them?",
+    type: "T",
   },
   {
-    category: "adventurous",
-    text: "Do you enjoy traveling to new places?",
+    question:
+      "When making decisions, do you consider how it will impact others and their feelings?",
+    type: "F",
   },
   {
-    category: "adventurous",
-    text: "Do you enjoy trying new things?",
+    question:
+      "Do you often put the needs and feelings of others before your own when making decisions?",
+    type: "F",
+  },
+  { question: "I make decisions based on feelings and emotions", type: "F" },
+  {
+    question:
+      "I like to make plans and stick to them, rather than changing them on a whim.",
+    type: "J",
   },
   {
-    category: "adventurous",
-    text: "Are you comfortable with taking risks?",
+    question:
+      "I feel more comfortable when things are settled and decided, rather than left open-ended.",
+    type: "J",
   },
+  { question: "I like to plan and organize my life", type: "J" },
   {
-    category: "adventurous",
-    text: "Do you enjoy extreme sports?",
+    question: "Do you find it difficult to stick to a schedule or routine?",
+    type: "P",
   },
+  { question: "I prefer to be spontaneous and adaptable", type: "P" },
   {
-    category: "adventurous",
-    text: "Do you enjoy being in nature?",
-  },
-  {
-    category: "cultural",
-    text: "Do you enjoy visiting museums and art galleries?",
-  },
-  {
-    category: "cultural",
-    text: "Do you enjoy learning about history and different cultures?",
-  },
-  {
-    category: "cultural",
-    text: "Do you enjoy attending cultural events and festivals?",
-  },
-  {
-    category: "cultural",
-    text: "Do you enjoy trying different types of cuisine?",
-  },
-  {
-    category: "cultural",
-    text: "Do you enjoy learning new languages?",
-  },
-  {
-    category: "outdoor",
-    text: "Do you enjoy going on walks?",
-  },
-  {
-    category: "outdoor",
-    text: "Do you enjoy hiking and camping?",
-  },
-  {
-    category: "outdoor",
-    text: "Do you enjoy playing outdoor sports?",
-  },
-  {
-    category: "outdoor",
-    text: "Do you enjoy gardening?",
-  },
-  {
-    category: "outdoor",
-    text: "Do you enjoy outdoor adventures such as zip lining or rock climbing?",
+    question:
+      "Do you enjoy exploring new places and trying new experiences on a whim, without much planning or preparation?",
+    type: "P",
   },
 ];
 
-function PersonalitySurvey() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [romantic, setRomantic] = useState(0);
-  const [adventurous, setAdventurous] = useState(0);
-  const [cultural, setCultural] = useState(0);
-  const [outdoor, setOutdoor] = useState(0);
-  const [personalityType, setPersonalityType] = useState("");
-  const [isCompleted, setIsCompleted] = useState(false);
+const options = [
+  "Strongly Disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly Agree",
+];
 
-  const resetSurvey = () => {
-    setCurrentQuestionIndex(0);
-    setRomantic(0);
-    setAdventurous(0);
-    setCultural(0);
-    setOutdoor(0);
-    setPersonalityType("");
-    setIsCompleted(false);
+const MBTITest = () => {
+  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+
+  const handleAnswerSelect = (questionIndex, answerIndex) => {
+    const newAnswers = [...answers];
+    newAnswers[questionIndex] = answerIndex;
+    setAnswers(newAnswers);
   };
 
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate("/Profile-Page");
-  };
-
-  const handleAnswer = (answer) => {
-    const currentCategory = questions[currentQuestionIndex].category;
-
-    if (answer) {
-      switch (currentCategory) {
-        case "romantic":
-          setRomantic(romantic + 1);
-          break;
-        case "adventurous":
-          setAdventurous(adventurous + 1);
-          break;
-        case "cultural":
-          setCultural(cultural + 1);
-          break;
-        case "outdoor":
-          setOutdoor(outdoor + 1);
-          break;
-        default:
-          break;
+  const getScore = (type) => {
+    return answers.reduce((score, answer, index) => {
+      const question = questions[index];
+      if (question.type === type) {
+        return score + (answer - 2);
       }
-    }
-
-    const nextQuestionIndex = currentQuestionIndex + 1;
-
-    if (nextQuestionIndex < questions.length) {
-      setCurrentQuestionIndex(nextQuestionIndex);
-    } else {
-      // Survey is complete, determine personality type
-      let highestScore = Math.max(romantic, adventurous, cultural, outdoor);
-
-      if (highestScore === romantic) {
-        setPersonalityType("Romantic");
-      } else if (highestScore === adventurous) {
-        setPersonalityType("Adventurous");
-      } else if (highestScore === cultural) {
-        setPersonalityType("Cultural");
-      } else {
-        setPersonalityType("Outdoor");
-      }
-
-      setIsCompleted(true);
-    }
+      return score;
+    }, 0);
   };
 
-  const handleRandomize = () => {
-    const personalityTypes = ["Romantic", "Adventurous", "Cultural", "Outdoor"];
-    const randomIndex = Math.floor(Math.random() * personalityTypes.length);
-    setPersonalityType(personalityTypes[randomIndex]);
-    setIsCompleted(true);
+  const getMBTI = () => {
+    const E = getScore("E") >= 0 ? "E" : "I";
+    const S = getScore("S") >= 0 ? "S" : "N";
+    const T = getScore("T") >= 0 ? "T" : "F";
+    const J = getScore("J") >= 0 ? "J" : "P";
+    return E + S + T + J;
   };
 
-  // Render survey questions and handle answers
-  if (!isCompleted) {
-    const currentQuestion = questions[currentQuestionIndex];
-    return (
-      <div>
-        <h2>Personality Survey</h2>
-        <p>{currentQuestion.text}</p>
-        <div>
-          <button onClick={() => handleAnswer(true)}>Yes</button>
-          <button onClick={() => handleAnswer(false)}>No</button>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const mbti = getMBTI();
+    alert(`Your MBTI is: ${mbti}`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {questions.map((question, index) => (
+        <div key={index}>
+          <p>{question.question}</p>
+          {options.map((option, optionIndex) => (
+            <label key={optionIndex}>
+              <input
+                type="radio"
+                name={`question${index}`}
+                value={optionIndex}
+                checked={answers[index] === optionIndex}
+                onChange={() => handleAnswerSelect(index, optionIndex)}
+              />
+              {option}
+            </label>
+          ))}
         </div>
-        <button onClick={handleRandomize}>Randomize Result</button>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <h2>Personality Survey Result</h2>
-        <p>Your personality type is: {personalityType}</p>
-        <button onClick={handleClick}>Finished!</button>
-        <button onClick={resetSurvey}>Restart Survey</button>
-      </div>
-    );
-  }
-}
+      ))}
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
 
-export default PersonalitySurvey;
+export default MBTITest;
