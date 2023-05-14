@@ -8,6 +8,8 @@ import { UserAuth } from "../context/UserAuthContext";//may have this wrong
 import { functions } from "../firebase-config"; 
 import { httpsCallable } from "firebase/functions";
 import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
+import PartnerProfile from "./Partner-Profile-Page";
+
 
 function Card() {
   const batchSize = 3;
@@ -79,17 +81,6 @@ async function swipeAndChangeId(dir, swipeeemail) {
     isSwiping = false;
   }
 }
-
-  
-  // function handleSwipe(ind, dir) {
-  //   const childRef = childRefs.current[ind];
-  //   if (childRef) {
-  //     childRef.swipe(dir).then(() => {
-  //       swipeAndChangeId(dir, swipeeemail);
-  //     });
-  //   }
-  // }
-  
   
   useEffect(() => {
     async function loadInitialProfiles() {
@@ -128,6 +119,9 @@ async function swipeAndChangeId(dir, swipeeemail) {
       <div className="newbuttons">
         <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
           Swipe left!
+        </button>
+        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => callProfilePage()}>
+          Check out {people[currentIndex].name}'s profile!
         </button>
         <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
           Swipe right!
