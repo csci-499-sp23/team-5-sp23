@@ -1,9 +1,21 @@
+/* hides all scrolling, but keeps enabled.  */
+
+* {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0 !important; /* Safari and Chrome */
+  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
 body{
   background-color: #C3AFA5;
   font-family: Verdana;
   color: #312E29;
 }
-
 
 /* logo  */
 
