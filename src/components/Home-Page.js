@@ -48,10 +48,10 @@ const Home = () => {
       </ButtonGroup>
 
       <footer>
-      <Link to="/Contact-Page">
+      {/* <Link to="/Contact-Page">
         Contact
       </Link>
-      |
+      | */}
       <Link to="/Terms-Conditions-Page">
         Terms
       </Link>
