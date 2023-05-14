@@ -98,17 +98,28 @@ const Profile_Creation = () => {
 
     <div className="upload">
       <input id="file-input" type="file" accept="image/*" onChange={handlePhotoUpload} />
+      
       <button id="browse-button">CLICK TO UPLOAD PHOTOS...</button>
     </div>
+      
+      <br /><br />
+      
       {photos.map((photo, index) => (
       <div key={index}>
       <img
         src={URL.createObjectURL(photo)}
-        style={{ maxHeight: 500, color: "transparent", padding: 15, backgroundColor: "transparent"}}
+        style={{ 
+          maxHeight: 500, 
+          maxWidth: 800,
+          color: "transparent", 
+          backgroundColor: "transparent",
+        }}
         alt={""}
       />
-      <br />
-      <Button onClick={() => handleRemovePhoto(index)}>Remove Current Photo</Button>
+      
+      <br /><br />
+      
+      <button onClick={() => handleRemovePhoto(index)}>REMOVE CURRENT PHOTO</button>
       </div>
       ))}
     

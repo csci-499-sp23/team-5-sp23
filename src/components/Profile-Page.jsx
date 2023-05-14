@@ -4,7 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { UserAuth } from "../context/UserAuthContext";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import ImageSlider from "./modules/ImageSlider";
-import "./css/Profile-Page-Creation.css";
+import "./css/Profile-Page.css";
 import logo from "./img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -104,21 +104,23 @@ const Profile = () => {
 
   return (
     <>
+    
       <div className="logo-container">
         <Link to="/">
             <img src={logo} alt="persona logo" className="logo" />
         </Link>
       </div>  
 
-      <button onClick={handleEditProfile}>Edit Profile</button>
+      
       {NoData ? (
-        <h1> Hi, we are getting your information.</h1>
+        <h1> Hi! One moment as we prepare your information...</h1>
       ) : (
         <>
+          <div className="displayProfile">
 
-          <div>
+            <h1>Your Profile</h1>
 
-            <h2>Images:</h2>
+            <h2>Photos:</h2>
             {hasImages ? (
               <div className="image_section">
                 <ImageSlider slides={paths} />
@@ -130,33 +132,25 @@ const Profile = () => {
               </h1>
 
             )}
-          </div>
-
-          <div>
+  
             <h2>Name:</h2>
             <p>{name}</p>
-          </div>
-
-          <div>
+              
             <h2>Birthdate:</h2>
             <p>{birthdate}</p>
-          </div>
-
-          <div>
+          
             <h2>Location:</h2>
             <p>{location}</p>
-          </div>
-
-          <div>
+                
             <h2>Bio:</h2>
             <p>{bio}</p>
-          </div>
-
-          <div>
+          
             <h2>Interests:</h2>
             <p>{interests}</p>
-          </div>
+          
+            <button onClick={handleEditProfile}>EDIT PROFILE</button>
 
+          </div>
         </>
       )}
 
