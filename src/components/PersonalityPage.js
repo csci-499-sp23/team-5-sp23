@@ -2,31 +2,29 @@ import React, { useState } from "react";
 
 const questions = [
   { question: "I enjoy spending time with others", type: "E" },
-  { question: "Do you enjoy being the center of attention?", type: "E" },
+  { question: "I enjoy being the center of attention", type: "E" },
   {
-    question: "Do you like to meet new people and make new friends?",
+    question: "I like to meet new people and make new friends",
     type: "E",
   },
   { question: "I prefer to spend time alone", type: "I" },
   {
     question:
-      "Do you feel more energized when you spend time alone, rather than with other people?",
+      "I feel more energized when I spend time alone, rather than with other people",
     type: "I",
   },
   {
     question:
-      "Do you prefer to have a small group of close friends, rather than a large group of acquaintances?",
+      "I prefer to have a small group of close friends, rather than a large group of acquaintances",
     type: "I",
   },
   { question: "I focus on the present rather than the future", type: "S" },
   {
-    question:
-      "Do you rely more on your senses or your intuition when making decisions?",
+    question: "I rely more on my senses than making decisions",
     type: "S",
   },
   {
-    question:
-      "Are you comfortable with routine and familiar surroundings, or do you prefer novelty and change?",
+    question: "I'm comfortable with routine and familiar surroundings",
     type: "S",
   },
   {
@@ -42,22 +40,22 @@ const questions = [
   { question: "I make decisions based on logic and reason", type: "T" },
   {
     question:
-      "When making a decision, do you prioritize what makes the most logical sense over what feels right?",
+      "When making a decision, I prioritize what makes the most logical sense over what feels right",
     type: "T",
   },
   {
     question:
-      "Do you often find yourself analyzing and dissecting situations or problems in order to better understand them?",
+      "I find myself analyzing and dissecting situations or problems in order to better understand them",
     type: "T",
   },
   {
     question:
-      "When making decisions, do you consider how it will impact others and their feelings?",
+      "When making decisions, I consider how it will impact others and their feelings",
     type: "F",
   },
   {
     question:
-      "Do you often put the needs and feelings of others before your own when making decisions?",
+      "I often put the needs and feelings of others before my own when making decisions",
     type: "F",
   },
   { question: "I make decisions based on feelings and emotions", type: "F" },
@@ -73,13 +71,13 @@ const questions = [
   },
   { question: "I like to plan and organize my life", type: "J" },
   {
-    question: "Do you find it difficult to stick to a schedule or routine?",
+    question: "I find it difficult to stick to a schedule",
     type: "P",
   },
   { question: "I prefer to be spontaneous and adaptable", type: "P" },
   {
     question:
-      "Do you enjoy exploring new places and trying new experiences on a whim, without much planning or preparation?",
+      "I enjoy exploring new places and trying new experiences on a whim, without much planning",
     type: "P",
   },
 ];
@@ -93,12 +91,21 @@ const options = [
 ];
 
 const MBTITest = () => {
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [mbtiType, setMBTIType] = useState(null);
+  const [showResults, setShowResults] = useState(false);
 
-  const handleAnswerSelect = (questionIndex, answerIndex) => {
+  const handleAnswerSelect = (answerIndex) => {
     const newAnswers = [...answers];
     newAnswers[questionIndex] = answerIndex;
     setAnswers(newAnswers);
+
+    if (questionIndex === questions.length - 1) {
+      setShowResults(true);
+    } else {
+      setQuestionIndex((prevIndex) => prevIndex + 1);
+    }
   };
 
   const getScore = (type) => {
@@ -119,33 +126,56 @@ const MBTITest = () => {
     return E + S + T + J;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const mbti = getMBTI();
-    alert(`Your MBTI is: ${mbti}`);
+  const handleRandomize = () => {
+    const mbtiTypes = [
+      "ESTJ",
+      "ESFJ",
+      "ISTJ",
+      "ISFJ",
+      "ESTP",
+      "ESFP",
+      "ISTP",
+      "ISFP",
+      "ENTJ",
+      "INTJ",
+      "ENTP",
+      "INTP",
+      "ENFJ",
+      "INFJ",
+      "ENFP",
+      "INFP",
+    ];
+    const randomIndex = Math.floor(Math.random() * mbtiTypes.length);
+    const randomMBTI = mbtiTypes[randomIndex];
+    setMBTIType(randomMBTI);
+    setShowResults(true);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {questions.map((question, index) => (
-        <div key={index}>
-          <p>{question.question}</p>
+    <div>
+      {showResults ? (
+        <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
+      ) : (
+        <div>
+          <p>{questions[questionIndex].question}</p>
           {options.map((option, optionIndex) => (
-            <label key={optionIndex}>
-              <input
-                type="radio"
-                name={`question${index}`}
-                value={optionIndex}
-                checked={answers[index] === optionIndex}
-                onChange={() => handleAnswerSelect(index, optionIndex)}
-              />
+            <button
+              key={optionIndex}
+              type="button"
+              onClick={() => handleAnswerSelect(optionIndex)}
+              style={{
+                backgroundColor:
+                  answers[questionIndex] === optionIndex ? "green" : "white",
+              }}
+            >
               {option}
-            </label>
+            </button>
           ))}
+          <br />
+          <button onClick={handleRandomize}>Randomize Result</button>
         </div>
-      ))}
-      <button type="submit">Submit</button>
-    </form>
+      )}
+    </div>
   );
 };
 
