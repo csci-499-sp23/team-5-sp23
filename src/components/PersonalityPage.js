@@ -9,15 +9,15 @@ const questions = [
   },
   {
     category: "romantic",
-    text: "Would you rather receive a gift or a love letter?",
+    text: "Do you like receiving gifts and messages from a person that you like",
   },
   {
     category: "romantic",
-    text: "Do you prefer grand romantic gestures or small meaningful ones?",
+    text: "Do you like grand romantic gestures?",
   },
   {
     category: "romantic",
-    text: "Do you think physical touch is important in a romantic relationship?",
+    text: "Do you romanticize being in a relationship with someone that you like?",
   },
   {
     category: "romantic",
@@ -45,7 +45,7 @@ const questions = [
   },
   {
     category: "cultural",
-    text: "Do you enjoy visiting museums or art galleries?",
+    text: "Do you enjoy visiting museums and art galleries?",
   },
   {
     category: "cultural",
@@ -53,7 +53,7 @@ const questions = [
   },
   {
     category: "cultural",
-    text: "Do you enjoy attending cultural events or festivals?",
+    text: "Do you enjoy attending cultural events and festivals?",
   },
   {
     category: "cultural",
@@ -65,11 +65,11 @@ const questions = [
   },
   {
     category: "outdoor",
-    text: "Do you enjoy spending time outdoors?",
+    text: "Do you enjoy going on walks?",
   },
   {
     category: "outdoor",
-    text: "Do you enjoy hiking or camping?",
+    text: "Do you enjoy hiking and camping?",
   },
   {
     category: "outdoor",
@@ -77,7 +77,7 @@ const questions = [
   },
   {
     category: "outdoor",
-    text: "Do you enjoy gardening or farming?",
+    text: "Do you enjoy gardening?",
   },
   {
     category: "outdoor",
