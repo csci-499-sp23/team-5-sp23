@@ -4,7 +4,7 @@ import "./css/PersonalityPage.css";
 
 const questions = [
   {
-    category: "romantic",
+    category: "romantic", 
     text: "Do you believe in love at first sight?",
   },
   {
