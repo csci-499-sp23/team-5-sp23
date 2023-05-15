@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./css/PersonalityPage.css";
+import "./css/Personality-Page.css";
 
 const questions = [
   {
@@ -165,23 +165,43 @@ function PersonalitySurvey() {
   if (!isCompleted) {
     const currentQuestion = questions[currentQuestionIndex];
     return (
-      <div>
-        <h2>Personality Survey</h2>
+      <div className="quizBody">
+
+        <h1>Personality Survey</h1>
+
         <p>{currentQuestion.text}</p>
-        <div>
-          <button onClick={() => handleAnswer(true)}>Yes</button>
-          <button onClick={() => handleAnswer(false)}>No</button>
+        
+        <div class="button-container">
+          <button onClick={() => handleAnswer(true)}>
+            Yes
+          </button>
+          <button onClick={() => handleAnswer(false)}>
+            No
+          </button>
         </div>
+
+
         <button onClick={handleRandomize}>Randomize Result</button>
+
+
       </div>
     );
   } else {
     return (
-      <div>
-        <h2>Personality Survey Result</h2>
-        <p>Your personality type is: {personalityType}</p>
-        <button onClick={handleClick}>Finished!</button>
-        <button onClick={resetSurvey}>Restart Survey</button>
+      <div className="quizBody">
+
+        <h1>Your Result!</h1>
+        <p>Your personality type is:
+          <br />
+          {personalityType}</p>
+        <button onClick={handleClick}>Save Your Result!</button>
+        <button onClick={resetSurvey} 
+        style={{
+          backgroundColor: '#efefef',
+          color: '#312E29',
+        }}>
+        Restart Survey</button>
+
       </div>
     );
   }
