@@ -219,52 +219,5 @@ const MBTITest = () => {
     </div>
   );
 };
-// =======
-  // Render survey questions and handle answers
-  if (!isCompleted) {
-    const currentQuestion = questions[currentQuestionIndex];
-    return (
-      <div className="quizBody">
-
-        <h1>Personality Survey</h1>
-
-        <p>{currentQuestion.text}</p>
-        
-        <div class="button-container">
-          <button onClick={() => handleAnswer(true)}>
-            Yes
-          </button>
-          <button onClick={() => handleAnswer(false)}>
-            No
-          </button>
-        </div>
-
-
-        <button onClick={handleRandomize}>Randomize Result</button>
-
-
-      </div>
-    );
-  } else {
-    return (
-      <div className="quizBody">
-
-        <h1>Your Result!</h1>
-        <p>Your personality type is:
-          <br />
-          {personalityType}</p>
-        <button onClick={handleClick}>Save Your Result!</button>
-        <button onClick={resetSurvey} 
-        style={{
-          backgroundColor: '#efefef',
-          color: '#312E29',
-        }}>
-        Restart Survey</button>
-
-      </div>
-    );
-  }
-}
-// >>>>>>> STYLING-QUIZ
 
 export default MBTITest;
