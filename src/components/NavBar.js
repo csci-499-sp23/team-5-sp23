@@ -7,9 +7,9 @@ const NavBar = () => {
  return (
  <nav className='container'>
   <div className='row'>
-    <li>
+    {/* <li>
       <NavLink to="/Contact-Page">Contact</NavLink>
-    </li>
+    </li> */}
     <li>
       <NavLink to="/Terms-Conditions-Page">Legal</NavLink>
     </li>
