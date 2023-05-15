@@ -134,7 +134,7 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
     if (error.code === "not-found") {
       
       const querySnapshot = await profileRef.limit(data.batchSize).get();
-      const result = await getProfiles(querySnapshot, data.atchSize, null);
+      const result = await getProfiles(querySnapshot, data.batchSize, null);
       lastVisible = result.lastVisible;
 
       const response = {

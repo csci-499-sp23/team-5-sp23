@@ -20,9 +20,7 @@ const PartnerProfile = () => {
 
   useEffect(() => {
     // retrieve data from local storage
-    console.log("triggered...");
     const storedPEmail = localStorage.getItem('pEmail');
-    console.log(storedPEmail);
     if (storedPEmail) {
       // parse the JSON string to get the data
       const pEmailData = JSON.parse(storedPEmail);

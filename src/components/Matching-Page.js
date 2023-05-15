@@ -14,11 +14,12 @@ import { useNavigate } from "react-router-dom";
 
 
 function Card() {
-  const batchSize = 15;
+  const batchSize = 5;
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
   const [currentIndex, setCurrentIndex] = useState(batchSize);
-  const [lastDoc, setLastDoc] = useState(null);
+  const [lastDoc, setLastDoc] = useState(null); 
+  // would need something like this and would snipe it and take it to the 
   const canSwipe = currentIndex >= 0;
   const childRefs = useRef([]);
   const [currentPersonId, setCurrentPersonId] = useState(null);
@@ -32,6 +33,7 @@ function Card() {
     const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
     const result = await getProfiles({ uid, lastVisible, batchSize });
     const profiles = JSON.parse(result.data).profiles;
+    console.log("getProfiles result = ",profiles);
 
     // Get download URLs for images in Storage and add to profiles
     const updatedProfiles = await Promise.all(profiles.map(async (profile) => {
@@ -47,7 +49,7 @@ function Card() {
   let isSwiping = false;
 
   function navToProfile() {
-    if (!isSwiping && currentIndex >= 0) {
+    if (!isSwiping && canSwipe) {
       navigate('/Partner-Profile');
     }
   }
@@ -63,23 +65,29 @@ async function swipeAndChangeId(dir, swipeeemail) {
     const swipeFn = dir === "left" ? swipeLeft : swipeRight;
     const currentIndexRef = { current: currentIndex };
     const currentRef = childRefs.current[currentIndexRef.current];
+    const tempindex = currentIndex - 1;
     if (currentRef) {
+      console.log("CURRENT REFERENCE IMMEDIATELY BEFORFE SWIPE: ",currentRef);
       await currentRef.swipe(dir);
       swipeFn({ uid: user.uid, swipeeemail });
       setCurrentIndex(currentIndex => currentIndex - 1);
-      if (people[currentIndex]) {
-        setCurrentPersonId(people[currentIndex].id);
+      if (people[tempindex]) {
+        console.log("THERE WERE PEOPLE AT THE DESIRED INDEX!!!");
+        setCurrentPersonId(people[currentIndex - 1].id);
+        localStorage.setItem('currentIndex', currentIndex - 1);
         localStorage.setItem('pEmail', JSON.stringify(people[currentIndex-1].id));
-        console.log("local storage item setted...",people[currentIndex-1].id);
       }
     }
-  
-    if (!canSwipe) {
+    if (tempindex < 0) { // if we ran out of cards
+      console.log("RAN OUT OF CARDS TO SWIPE THROUGH");
       const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
       if (newProfiles.length > 0) {
+        console.log("THERE ARE MORE PROFILES TO LOAD IN");
         const newRefs = Array(newProfiles.length).fill(0).map(i => React.createRef());
         setPeople(newProfiles);
         setCurrentIndex(newProfiles.length - 1);
+        localStorage.setItem('currentIndex', newProfiles.length - 1);
+        console.log("CURRENT INDEX IMMEDIATELY AFTER BEING SET: ",newProfiles.length - 1);
         setLastDoc(newProfiles[0].doc);
         childRefs.current = newRefs;
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
@@ -92,17 +100,41 @@ async function swipeAndChangeId(dir, swipeeemail) {
     isSwiping = false;
   }
 }
-  
+
   useEffect(() => {
     async function loadInitialProfiles() {
-      const newProfiles = await getUnswipedProfiles(user.uid);
+      const newProfiles = await getUnswipedProfiles(user.uid); // returns empty array when no more profiles
+      var gottenIndex = localStorage.getItem('currentIndex');
+
+      if(null === gottenIndex) // needs to differentiate between final card index and default orientation
+      {
+        gottenIndex = -1;
+      }
+
       if (newProfiles.length > 0) {
-        setPeople(newProfiles);
-        setCurrentIndex(() => newProfiles.length - 1);
-        setLastDoc(newProfiles[0].doc);
-        childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
-        setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
-        localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
+        if (gottenIndex >= 0) { // if the batch was not completely swiped through
+          console.log("USING LOCALLY STORED INDEX");
+          setPeople(newProfiles.slice(0, gottenIndex+1));//.reverse()
+
+          console.log("UPDATED / SLICED ARRAY = ",newProfiles.slice(0, gottenIndex+1)); //.reverse()
+          console.log("GOTTEN INDEX = ",gottenIndex);
+
+          setCurrentIndex(gottenIndex);
+          setLastDoc(newProfiles[newProfiles.length - 1].doc);
+          childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
+          setCurrentPersonId(newProfiles[gottenIndex].id);
+          console.log("PERSON ID = ", currentPersonId);
+          localStorage.setItem('pEmail', JSON.stringify(newProfiles[gottenIndex].id));
+        }
+        else {
+          console.log("NOT USING LOCALLY STORED INDEX");
+          setPeople(newProfiles);
+          setCurrentIndex(() => newProfiles.length - 1);
+          setLastDoc(newProfiles[0].doc); 
+          childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
+          setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
+          localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
+        }
       }
     }
     loadInitialProfiles();
@@ -129,14 +161,14 @@ async function swipeAndChangeId(dir, swipeeemail) {
         ))}
       </div>
       <div className="newbuttons">
-        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
+        <button style={{ backgroundColor: isSwiping && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
           Swipe left!
         </button>
-        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => navToProfile()}>
+        <button style={{ backgroundColor: isSwiping && (currentIndex < 0) && "#c3c4d3" }} onClick={() => navToProfile()}>
           Check out this user's profile!
           {/* Ideally adjust name */}
         </button>
-        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
+        <button style={{ backgroundColor: isSwiping && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
           Swipe right!
         </button>
       </div>
