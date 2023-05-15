@@ -243,6 +243,8 @@ const MBTITest = () => {
   );
 };
 
+// <<<<<<< STYLING-MBTI --- 
+
 
 // // =======
 //   // Render survey questions and handle answers <--- what?
@@ -291,5 +293,7 @@ const MBTITest = () => {
 //   }
 // }
 // // >>>>>>> STYLING-QUIZ
+// =======
+// >>>>>>> main
 
 export default MBTITest;
