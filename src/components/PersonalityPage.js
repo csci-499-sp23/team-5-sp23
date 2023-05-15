@@ -159,7 +159,6 @@ const MBTITest = () => {
     setShowResults(true);
   };
 
-// <<<<<<< main
   const handleRetake = () => {
     setQuestionIndex(0);
     setAnswers(Array(questions.length).fill(null));
@@ -189,15 +188,25 @@ const MBTITest = () => {
   };
 
   return (
-    <div>
+    <div className="quizBody">
+
+      <h1>Personality Survey</h1>
+
       {showResults ? (
-        <div>
+        <div style={{paddingBottom: "100px"}}>
           <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
-          <button onClick={handleClick}>Finished!</button>
+          <button onClick={handleClick}
+          style={{
+            backgroundColor: '#efefef',
+            color: '#312E29',
+          }}>
+            Save Result</button> <br/>
           <button onClick={handleRetake}>Retake the Survey</button>
         </div>
+
       ) : (
-        <div>
+
+        <div style={{paddingBottom: "100px"}}>
           <p>{questions[questionIndex].question}</p>
           {options.map((option, optionIndex) => (
             <button
@@ -205,66 +214,73 @@ const MBTITest = () => {
               type="button"
               onClick={() => handleAnswerSelect(optionIndex)}
               style={{
-                backgroundColor:
-                  answers[questionIndex] === optionIndex ? "green" : "white",
+                margin: "2px",
               }}
             >
               {option}
             </button>
           ))}
           <br />
-          <button onClick={handleRandomize}>Randomize Result</button>
+          <button onClick={handleRandomize}
+          style={{
+            backgroundColor: '#efefef',
+            color: '#312E29',
+          }}>
+            Randomize Result</button>
         </div>
       )}
     </div>
+    
   );
 };
-// =======
-  // Render survey questions and handle answers
-  if (!isCompleted) {
-    const currentQuestion = questions[currentQuestionIndex];
-    return (
-      <div className="quizBody">
 
-        <h1>Personality Survey</h1>
 
-        <p>{currentQuestion.text}</p>
+// // =======
+//   // Render survey questions and handle answers <--- what?
+//   if (!isCompleted) {
+//     const currentQuestion = questions[currentQuestionIndex];
+//     return (
+//       <div className="quizBody">
+
+//         <h1>Personality Survey</h1>
+
+//         <p>{currentQuestion.text}</p>
         
-        <div class="button-container">
-          <button onClick={() => handleAnswer(true)}>
-            Yes
-          </button>
-          <button onClick={() => handleAnswer(false)}>
-            No
-          </button>
-        </div>
+//         <div class="button-container">
+//           <button onClick={() => handleAnswer(true)}>
+//             Yes
+//           </button>
+//           <button onClick={() => handleAnswer(false)}>
+//             No
+//           </button>
+//         </div>
 
 
-        <button onClick={handleRandomize}>Randomize Result</button>
+//         <button onClick={handleRandomize}>Randomize Result</button>
 
 
-      </div>
-    );
-  } else {
-    return (
-      <div className="quizBody">
+//       </div>
+//     );
+//   } else {
+//     return (
+//       <div className="quizBody">
 
-        <h1>Your Result!</h1>
-        <p>Your personality type is:
-          <br />
-          {personalityType}</p>
-        <button onClick={handleClick}>Save Your Result!</button>
-        <button onClick={resetSurvey} 
-        style={{
-          backgroundColor: '#efefef',
-          color: '#312E29',
-        }}>
-        Restart Survey</button>
+//         <h1>Your Result!</h1>
+//         <p>Your personality type is:
+//           <br />
+//           {personalityType}</p>
+//         <button onClick={handleClick}>Save Your Result!</button>
+//         <button onClick={resetSurvey} 
+//         style={{
+//           backgroundColor: '#efefef',
+//           color: '#312E29',
+//         }}>
+//         Restart Survey</button>
 
-      </div>
-    );
-  }
-}
-// >>>>>>> STYLING-QUIZ
+//       </div>
+//     );
+//   }
+// }
+// // >>>>>>> STYLING-QUIZ
 
 export default MBTITest;
