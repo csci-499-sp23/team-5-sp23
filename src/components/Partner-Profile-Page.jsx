@@ -8,16 +8,28 @@ import "./css/Profile-Page.css";
 import logo from "./img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
-const PartnerProfile = (props) => {
-    const { pEmail } = props;
-    const [partnerEmail, setPartnerEmail] = useState(pEmail);
-    const [hasImages, setHasImages] = useState(false);
-    const [NoData, setData] = useState(true);
-    const [paths, setPaths] = useState([]);
-    const [pathsUpdated, setUpdated] = useState(false);
-    const [information, setInformation] = useState([]);
+const PartnerProfile = () => { 
+  const [partnerEmail, setPartnerEmail] = useState(undefined);
+  const [hasImages, setHasImages] = useState(false);
+  const [NoData, setData] = useState(true);
+  const [paths, setPaths] = useState([]);
+  const [pathsUpdated, setUpdated] = useState(false);
+  const [information, setInformation] = useState([]);
 
     //SET UP STATE HOOKS FOR PARTNER INFORMATION
+
+  useEffect(() => {
+    // retrieve data from local storage
+    console.log("triggered...");
+    const storedPEmail = localStorage.getItem('pEmail');
+    console.log(storedPEmail);
+    if (storedPEmail) {
+      // parse the JSON string to get the data
+      const pEmailData = JSON.parse(storedPEmail);
+      // set the state variable with the retrieved data
+      setPartnerEmail(pEmailData);
+    }
+  }, [partnerEmail]);
 
   useEffect(() => {
     const getFirestoreInformation = async () => {
@@ -108,19 +120,19 @@ const PartnerProfile = (props) => {
             )}
   
             <h2>Name:</h2>
-            <p>{}</p>
+            <p>{information.name}</p>
               
             <h2>Birthdate:</h2>
-            <p>{}</p>
+            <p>{information.birthdate}</p>
           
             <h2>Location:</h2>
-            <p>{}</p>
+            <p>{information.location}</p>
                 
             <h2>Bio:</h2>
-            <p>{}</p>
+            <p>{information.bio}</p>
           
             <h2>Interests:</h2>
-            <p>{}</p>
+            <p>{information.interests}</p>
           </div>
         </>
       )}

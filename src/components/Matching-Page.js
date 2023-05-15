@@ -9,10 +9,12 @@ import { functions } from "../firebase-config";
 import { httpsCallable } from "firebase/functions";
 import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
 import PartnerProfile from "./Partner-Profile-Page";
+import { PinDropSharp } from "@material-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 
 function Card() {
-  const batchSize = 3;
+  const batchSize = 15;
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
   const [currentIndex, setCurrentIndex] = useState(batchSize);
@@ -20,6 +22,7 @@ function Card() {
   const canSwipe = currentIndex >= 0;
   const childRefs = useRef([]);
   const [currentPersonId, setCurrentPersonId] = useState(null);
+  const navigate = useNavigate();
 
   const swipeLeft = httpsCallable(functions, 'swipeLeft');
   const swipeRight = httpsCallable(functions, 'swipeRight');
@@ -43,6 +46,11 @@ function Card() {
 
   let isSwiping = false;
 
+  function navToProfile() {
+    if (!isSwiping && currentIndex >= 0) {
+      navigate('/Partner-Profile');
+    }
+  }
 async function swipeAndChangeId(dir, swipeeemail) {
   // If the function is already running, don't do anything
   if (isSwiping || !canSwipe) {
@@ -61,6 +69,8 @@ async function swipeAndChangeId(dir, swipeeemail) {
       setCurrentIndex(currentIndex => currentIndex - 1);
       if (people[currentIndex]) {
         setCurrentPersonId(people[currentIndex].id);
+        localStorage.setItem('pEmail', JSON.stringify(people[currentIndex-1].id));
+        console.log("local storage item setted...",people[currentIndex-1].id);
       }
     }
   
@@ -73,6 +83,7 @@ async function swipeAndChangeId(dir, swipeeemail) {
         setLastDoc(newProfiles[0].doc);
         childRefs.current = newRefs;
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
+        localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
       }
     }
   } catch (error) {
@@ -91,6 +102,7 @@ async function swipeAndChangeId(dir, swipeeemail) {
         setLastDoc(newProfiles[0].doc);
         childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
         setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
+        localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
       }
     }
     loadInitialProfiles();
@@ -120,8 +132,9 @@ async function swipeAndChangeId(dir, swipeeemail) {
         <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
           Swipe left!
         </button>
-        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => callProfilePage()}>
-          Check out {people[currentIndex].name}'s profile!
+        <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => navToProfile()}>
+          Check out this user's profile!
+          {/* Ideally adjust name */}
         </button>
         <button style={{ backgroundColor: !canSwipe && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
           Swipe right!
