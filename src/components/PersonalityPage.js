@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
 import { UserAuth } from "../context/UserAuthContext";
-import "./css/PersonalityPage.css";
+import "./css/Personality-Page.css";
 
 const questions = [
   { question: "I enjoy spending time with others", type: "E" },
@@ -159,6 +159,7 @@ const MBTITest = () => {
     setShowResults(true);
   };
 
+// <<<<<<< main
   const handleRetake = () => {
     setQuestionIndex(0);
     setAnswers(Array(questions.length).fill(null));
