@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase-config";
+import { doc, updateDoc } from "firebase/firestore";
+import { UserAuth } from "../context/UserAuthContext";
 import "./css/PersonalityPage.css";
 
 const questions = [
@@ -93,10 +96,13 @@ const options = [
 ];
 
 const MBTITest = () => {
+  // const { currentUser } = useContext(UserAuth);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   const [mbtiType, setMBTIType] = useState(null);
   const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
+  const { user } = UserAuth();
 
   const handleAnswerSelect = (answerIndex) => {
     const newAnswers = [...answers];
@@ -159,19 +165,35 @@ const MBTITest = () => {
     setShowResults(false);
   };
 
-  const navigate = useNavigate();
+  const handleClick = async () => {
+    const mbtiTypee = mbtiType ? mbtiType : getMBTI();
+    try {
+      // debugger
+      const docRef = doc(db, "profiles", user.email);
+      // const docRef = await addDoc(collection(db, "mbtiResults"), {
+      //   mbtiType: mbtiTypee,
+      //   userId: auth.currentUser.uid,
+      //   timestamp: serverTimestamp(),
+      // });
+      // db.collection("profiles").doc(`${user.email}`).update({
+      //   mbtiType: mbtiTypee
+      // })
+      await updateDoc(docRef, { mbtiType: mbtiTypee });
 
-  const handleClick = () => {
-    navigate("/Profile-Page");
+      // console.log("Document written with ID: ", docRef.id);
+      navigate("/Profile-Page");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
     <div>
       {showResults ? (
         <div>
-        <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
-        <button onClick={handleClick}>Finished!</button>
-        <button onClick={handleRetake}>Retake the Survey</button>
+          <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
+          <button onClick={handleClick}>Finished!</button>
+          <button onClick={handleRetake}>Retake the Survey</button>
         </div>
       ) : (
         <div>

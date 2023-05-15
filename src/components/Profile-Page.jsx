@@ -20,6 +20,10 @@ const Profile = () => {
   const [interests, setInterests] = useState(
     "No interests set! Please edit your Profile!"
   );
+  const [mbtiType, setMbtiType] = useState(
+    "No MBTI type set! Please take the test!"
+  );
+
   const [hasImages, setHasImages] = useState(false);
   const [NoData, setData] = useState(true);
   const [paths, setPaths] = useState([]);
@@ -39,6 +43,9 @@ const Profile = () => {
     data.interests !== ""
       ? setInterests(data.interests)
       : console.log("There is no interests");
+    data.mbtiType !== ""
+      ? setMbtiType(data.mbtiType)
+      : console.log("There is no MBTI type");
     setData(true);
   };
 
@@ -104,20 +111,17 @@ const Profile = () => {
 
   return (
     <>
-    
       <div className="logo-container">
         <Link to="/">
-            <img src={logo} alt="persona logo" className="logo" />
+          <img src={logo} alt="persona logo" className="logo" />
         </Link>
-      </div>  
+      </div>
 
-      
       {NoData ? (
         <h1> Hi! One moment as we prepare your information...</h1>
       ) : (
         <>
           <div className="displayProfile">
-
             <h1>Your Profile</h1>
 
             <h2>Photos:</h2>
@@ -126,34 +130,33 @@ const Profile = () => {
                 <ImageSlider slides={paths} />
               </div>
             ) : (
-
               <h1>
                 You dont have any images! Please edit and upload some images!
               </h1>
-
             )}
-  
+
             <h2>Name:</h2>
             <p>{name}</p>
-              
+
             <h2>Birthdate:</h2>
             <p>{birthdate}</p>
-          
+
             <h2>Location:</h2>
             <p>{location}</p>
-                
+
             <h2>Bio:</h2>
             <p>{bio}</p>
-          
+
             <h2>Interests:</h2>
             <p>{interests}</p>
-          
-            <button onClick={handleEditProfile}>EDIT PROFILE</button>
 
+            <h2>MBTI Type:</h2>
+            <p>{mbtiType}</p>
+
+            <button onClick={handleEditProfile}>EDIT PROFILE</button>
           </div>
         </>
       )}
-
     </>
   );
 };
