@@ -14,7 +14,6 @@ import GoogleAPI from "./components/GoogleAPI";
 import ChatJS from "./components/Chat";
 
 import PartnerProfile from "./components/Partner-Profile-Page";
-import ChatJS from "./components/Chat";
 
 
 import { Routes, Route, NavLink } from "react-router-dom";
