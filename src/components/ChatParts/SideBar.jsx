@@ -1,6 +1,6 @@
 import SelectUser from "./SelectUser";
 //import Search from "./Search";
-import { Box, Container, Avatar } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 const SideBar = (props) => {
   const styles = {

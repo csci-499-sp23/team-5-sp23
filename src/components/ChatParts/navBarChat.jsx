@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 
 const NavBarChat = (props) => {
   const styles = {
@@ -19,9 +19,9 @@ const NavBarChat = (props) => {
       color: "#fff",
     },
   };
-  const unmatchHandler = () => {
-    console.log("unMatched");
-  };
+  // const unmatchHandler = () => {
+  //   console.log("unMatched");
+  // };
   return (
     <AppBar position="static" sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
