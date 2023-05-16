@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { db, storage } from "../firebase-config";
 import { doc, getDoc } from "firebase/firestore";
-import { UserAuth } from "../context/UserAuthContext";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import ImageSlider from "./modules/ImageSlider";
 import "./css/Profile-Page.css";
 import logo from "./img/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PartnerProfile = () => { 
   const [partnerEmail, setPartnerEmail] = useState(undefined);

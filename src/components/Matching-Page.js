@@ -2,14 +2,11 @@ import "./css/matchupStyles.css";
 import TinderCard from "react-tinder-card";
 import React, {useEffect, useState, useRef} from "react";
 import "./css/Cards.css";
-import { db, storage } from "../firebase-config"; 
-import {onSnapshot, collection, doc, getDoc, getDocs, where, query} from "firebase/firestore";
+import { storage } from "../firebase-config"; 
 import { UserAuth } from "../context/UserAuthContext";//may have this wrong
 import { functions } from "../firebase-config"; 
 import { httpsCallable } from "firebase/functions";
-import { ref, getDownloadURL, listAll, list } from "firebase/storage"; //def need to organize pictures at this rate
-import PartnerProfile from "./Partner-Profile-Page";
-import { PinDropSharp } from "@material-ui/icons";
+import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 // tinder card, includes functions for repopulation
@@ -137,7 +134,7 @@ async function swipeAndChangeId(dir, swipeeemail) {
           <TinderCard
             className="swipe"
             key={person.name}
-            preventSwipe={["up", "down"]}
+            preventSwipe={["up", "down", "left", "right"]}
             ref={el => (childRefs.current[index] = el)}
           >
             <div
