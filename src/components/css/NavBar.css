@@ -9,6 +9,8 @@ pretty annoying to debug, lol */
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    position: fixed;
+    top: 0;
     } .container ul {
         list-style-type: none;
         margin: 0;
@@ -31,4 +33,12 @@ pretty annoying to debug, lol */
     flex: 1;
     align-items: center;
     width: 70%;
+}
+
+.row li {
+    list-style: none;
+}
+
+#LogOutBtn{
+    cursor: pointer;
 }

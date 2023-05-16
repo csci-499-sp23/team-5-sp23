@@ -22,7 +22,7 @@ export default function App() {
       <AuthContextProvider>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           <Route path="/Login-Page" element={<Login />} />
           <Route
             path="/Matching-Page"
@@ -69,6 +69,7 @@ export default function App() {
             }
           />
           <Route path="/Partner-Profile" element={<PartnerProfile />} />
+          <Route path="/" element={<Home />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>

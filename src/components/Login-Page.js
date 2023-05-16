@@ -29,7 +29,7 @@ function LoginPage() {
             console.log(err);
         }
         console.log(`Logging in with username: ${username} and password: ${password}`);
-        navigate(('/Profile-Page'))
+        navigate(('/Matching-Page'))
     };
 
     return (

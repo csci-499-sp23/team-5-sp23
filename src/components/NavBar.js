@@ -1,29 +1,45 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/UserAuthContext";
 import "./css/NavBar.css";
 
 const NavBar = () => {
   const { user } = UserAuth();
+  const navigate = useNavigate();
+  const { logoutAccount } = UserAuth();
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    try {
+      await logoutAccount();
+      navigate("/await-Signout");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <nav className="container">
       <div className="row">
-        <li>
+        {/* <li>
           <NavLink to="/">Home</NavLink>
-        </li>
+        </li> */}
         {user ? (
           <>
+            <li>
+              <NavLink to="/Profile-Page">User Profile</NavLink>
+            </li>
             <li>
               <NavLink to="/Matching-Page">Matching</NavLink>
             </li>
             <li>
               <NavLink to="/Chat-Page">Chat</NavLink>
             </li>
-            <li>
-              <NavLink to="/Profile-Page">User Profile</NavLink>
+            <li id = "LogOutBtn"onClick={handleLogout}>
+              Log Out
             </li>
-            <li>
+            {/* <li>
               <NavLink to="/PersonalityPage">MBTI/Personality Test</NavLink>
-            </li>
+            </li> */}
           </>
         ) : (
           <>
