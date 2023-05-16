@@ -47,18 +47,18 @@ const Profile_Creation = () => {
     ]);
   };
 
-  const handleSave = () => {
-    // enter database code here to save profile information
-    console.log({
-      name,
-      location,
-      birthdate,
-      bio,
-      interests,
-      photos,
-      genderPref,
-    });
-  };
+  // const handleSave = () => {
+  //   // enter database code here to save profile information
+  //   console.log({
+  //     name,
+  //     location,
+  //     birthdate,
+  //     bio,
+  //     interests,
+  //     photos,
+  //     genderPref,
+  //   });
+  // };
 
   // Submit information functions:
   const sumbitPhotos = () => {
@@ -263,10 +263,10 @@ const Profile_Creation = () => {
 
         <div>
           <Button
-            onClick={handleSave}
+            onClick={()=>{navigate("/PersonalityPage")}}
             style={{ color: "#efefef", backgroundColor: "#312E29" }}
           >
-            Save to Profile
+            Retake MBTI Test!
           </Button>
         </div>
       </div>

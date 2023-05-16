@@ -4,8 +4,8 @@ import { db } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
 import { UserAuth } from "../context/UserAuthContext";
 import "./css/Personality-Page.css";
-import { Link } from "react-router-dom";
-import logo from "./img/logo.png";
+// import { Link } from "react-router-dom";
+// import logo from "./img/logo.png";
 import "./css/Matching-Page.css";
 
 const questions = [
@@ -194,11 +194,11 @@ const MBTITest = () => {
     <div className="quizBody">
       <h1>Personality Survey</h1>
 
-      <div className="logo-container">
+      {/* <div className="logo-container">
         <Link to="/">
           <img src={logo} alt="persona logo" className="logo" />
         </Link>
-      </div>
+      </div> */}
 
       {showResults ? (
         <div style={{ paddingBottom: "100px" }}>
