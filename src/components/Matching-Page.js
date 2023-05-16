@@ -7,6 +7,7 @@ import { functions } from "../firebase-config";
 import { httpsCallable } from "firebase/functions";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+import { Container } from "@mui/material";
 
 // tinder card, includes functions for repopulation
 //TODO: create delay function that's based on promises
@@ -20,6 +21,20 @@ function Card() {
   const childRefs = useRef([]);
   const [currentPersonId, setCurrentPersonId] = useState(null);
   const navigate = useNavigate();
+  const [images, setImages] = useState([]);
+
+  const styles = {
+    container: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      message: {
+        fontSize: "24px",
+        fontWeight: "bold",
+        color: "#666",
+      },
+    }
 
   const swipeLeft = httpsCallable(functions, 'swipeLeft');
   const swipeRight = httpsCallable(functions, 'swipeRight');
@@ -72,6 +87,7 @@ async function swipeAndChangeId(dir, swipeeemail) {
     if (tempindex < 0) { // if we ran out of cards
       setTimeout(async () => {
         const newProfiles = await getUnswipedProfiles(user.uid);
+        setImages(newProfiles);
         if (newProfiles.length > 0) {
           const newRefs = Array(newProfiles.length).fill(0).map(i => React.createRef());
           setPeople(newProfiles);
@@ -126,9 +142,19 @@ async function swipeAndChangeId(dir, swipeeemail) {
     loadInitialProfiles();
   }, [user.uid]); 
 
+  useEffect(() => {
+    console.log(images);
+  }, [images]);
+
   return (
     <div>
-      <div className="tinderCards_cardContainer">
+      (<>
+      {isFinished ? (
+        <Container sx={styles.container}>
+          <h1 style={styles.message}>Looks like there aren't any more profiles to swipe through...</h1>
+        </Container>
+      ) : (
+        <div><div className="tinderCards_cardContainer">
         {people.map((person, index) => (
           <TinderCard
             className="swipe"
@@ -156,7 +182,9 @@ async function swipeAndChangeId(dir, swipeeemail) {
         <button style={{ backgroundColor: isFinished && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
           Swipe right!
         </button>
-      </div>
+      </div></div>
+      )}
+    </>)
     </div>
   );
 }
