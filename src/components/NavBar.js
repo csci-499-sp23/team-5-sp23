@@ -34,7 +34,7 @@ const NavBar = () => {
               <NavLink to="/Matching-Page">Matching</NavLink>
             </li>
             <li>
-              <NavLink to="/Chat-Page">Chat</NavLink>
+              <NavLink to="/ChatJS">Chat</NavLink>
             </li>
             <li id = "LogOutBtn"onClick={handleLogout}>
               Log Out

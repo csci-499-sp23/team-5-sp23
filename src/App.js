@@ -1,7 +1,7 @@
 import Home from "./components/Home-Page";
 import Login from "./components/Login-Page";
 import Match from "./components/Matching-Page";
-import Chat from "./components/Chat-Page";
+// import Chat from "./components/Chat-Page";
 import Profile from "./components/Profile-Page";
 import ProfileMaker from "./components/Profile-Page-Creation";
 import Signup from "./components/Signup-Page";
@@ -11,6 +11,7 @@ import Contact from "./components/Contact-Page";
 import Personality from "./components/PersonalityPage";
 import GoogleAPI from "./components/GoogleAPI";
 import PartnerProfile from "./components/Partner-Profile-Page";
+import ChatJS from "./components/Chat";
 
 import { Routes, Route, NavLink } from "react-router-dom";
 import { AuthContextProvider } from "./context/UserAuthContext";
@@ -33,10 +34,10 @@ export default function App() {
             }
           />
           <Route
-            path="/Chat-Page"
+            path="/ChatJS"
             element={
               <ProtectedRoute>
-                <Chat />
+                <ChatJS />
               </ProtectedRoute>
             }
           />
