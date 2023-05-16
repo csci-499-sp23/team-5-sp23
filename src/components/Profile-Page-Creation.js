@@ -167,6 +167,7 @@ const Profile_Creation = () => {
           <TextField
             label="Gender Preference"
             value={genderPref}
+            placeholder="Male, Female, Other"
             variant="filled"
             onChange={handleGenderChange}
             InputLabelProps={{
