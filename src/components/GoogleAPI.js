@@ -4,17 +4,23 @@ import { Link } from "react-router-dom";
 import logo from "./img/logo.png";
 import "./css/GoogleAPI.css"
 
-function GoogleAPI() {
+function GoogleAPI({ onAPIResults }) {
   const [places, setPlaces] = useState([]);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [types, setTypes] = useState(["restaurant", "cafe", "park"])
-  const [typeIndex, setTypeIndex] = useState(0);
+  const [types, setTypes] = useState([])
+  const [typeIndex, setTypeIndex] = useState(-1);
 
   navigator.geolocation.getCurrentPosition((position) => {
     setLatitude(position.coords.latitude);
     setLongitude(position.coords.longitude);
   });
+
+  function handlePrompt (types) {
+    setTypes(types);
+    setTypeIndex((typeIndex + 1) % 3);
+  }
+
 
   useEffect(() => { //MAKE A BUTTON WHICH CHANGES THE TYPE INDEX TO REFRESH, USE THE ARRAY POSITION 0 FOR DATE, add a condition where there are no items and indicate to write again
     if (latitude && longitude) {
@@ -30,48 +36,13 @@ function GoogleAPI() {
       promise.then((results) => {
         const allPlaces = results.flat();
         setPlaces(allPlaces);
+        onAPIResults(allPlaces);
       });
     }
   }, [latitude, longitude, typeIndex]);
   
 
-  return (
-    <div className="boxAPI">
-
-      <div className="logo-container">
-        <Link to="/">
-          <img src={logo} alt="persona logo" className="logo" />
-        </Link>
-      </div>
-
-      <h1>Date ideas near you:</h1>
-
-      <div className="anotherBoxAPI">
-        {/* Please do not erase, a visual was needed: */}
-        {/* <ul>
-          <li>
-            Destination (Destination Type)
-          </li>
-          <li>
-            Destinationnnnnnnnnnnnnnnn nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn nnnnnnnnn  nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn (Destination Type)
-          </li>
-          <li>
-            Destination (Destination Type)
-          </li>
-        </ul> */}
-
-        <ul>
-          {places.map((place) => (
-            <li key={place.id}>
-              {place.name} ({place.types[0]})
-            </li>
-          ))}
-        </ul>
-
-      </div>
-
-    </div>
-  );
+  return (<GoogleAPI onAPIResults={onAPIResults} />);
 }
 
 export default GoogleAPI;
