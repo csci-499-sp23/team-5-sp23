@@ -1,7 +1,7 @@
 import Home from "./components/Home-Page";
 import Login from "./components/Login-Page";
 import Match from "./components/Matching-Page";
-import Chat from "./components/Chat-Page";
+// import Chat from "./components/Chat-Page";
 import Profile from "./components/Profile-Page";
 import ProfileMaker from "./components/Profile-Page-Creation";
 import Signup from "./components/Signup-Page";
@@ -16,7 +16,7 @@ import ChatJS from "./components/Chat";
 import PartnerProfile from "./components/Partner-Profile-Page";
 
 
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthContextProvider } from "./context/UserAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ChatSection from "./components/ChatParts/ChatSection";
@@ -27,7 +27,7 @@ export default function App() {
       <AuthContextProvider>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           <Route path="/Login-Page" element={<Login />} />
           <Route
             path="/Matching-Page"
@@ -38,10 +38,10 @@ export default function App() {
             }
           />
           <Route
-            path="/Chat-Page"
+            path="/ChatJS"
             element={
               <ProtectedRoute>
-                <Chat />
+                <ChatJS />
               </ProtectedRoute>
             }
           />
@@ -88,19 +88,10 @@ export default function App() {
           />
 
           <Route path="/Partner-Profile" element={<PartnerProfile />} />
+          <Route path="/" element={<Home />} />
 
-          <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>
-    </div>
-  );
-}
-
-function NoMatch() {
-  return (
-    <div>
-      <h2>Whoopsies. You are lost!</h2>
-      <NavLink to="/">click here to return to the home page :)</NavLink>
     </div>
   );
 }

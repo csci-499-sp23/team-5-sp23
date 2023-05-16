@@ -9,17 +9,40 @@ pretty annoying to debug, lol */
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    /* position: fixed; */
+    top: 0;
+    height: 100px;
+    background-color: rgb(196, 149, 160);
+    border-bottom: 1px solid black;
+    font-size: 2em;
+    font-family: Verdana;
+    font-weight: 500;
+    color: white;
     } .container ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
     } .container li {
+        flex-grow: 1;
+        text-align: center;
+        border-right: 2px solid black;
+        padding: 10px;
+        /* height: 100%; */
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+        width: 300px;
         float: left;
+
+        } .container li:first-child
+        {
+            border-left: 2px solid black;
+
     } .container li a {
         text-decoration: none;
         color: inherit;
         background-color: transparent;
-        color: #312E29;
+        color: #ffffff;
 }
 
 .row {
@@ -31,4 +54,14 @@ pretty annoying to debug, lol */
     flex: 1;
     align-items: center;
     width: 70%;
-}  
+
+}
+
+.row li {
+    list-style: none;
+}
+
+#LogOutBtn{
+    cursor: pointer;
+}
+

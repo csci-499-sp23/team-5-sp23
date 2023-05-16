@@ -107,7 +107,9 @@ const SelectUser = (props) => {
 
   return (
     <>
+
       <h1 style={{ marginLeft: '10px' }}>Chats</h1>
+
 
       <List>
         {userDisplay.map((user, index) => (

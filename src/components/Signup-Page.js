@@ -4,7 +4,9 @@ import React, { useState } from "react";
 // import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 // import { auth } from '../firebase-config';
 import { UserAuth } from "../context/UserAuthContext";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase-config";
 import "../components/css/Global-Styles.css";
 import "./css/Signup-Page.css";
 import logo from "./img/logo.png";
@@ -15,38 +17,53 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { createUser, logoutAccount } = UserAuth();
+  const { user, createUser } = UserAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     //console.log('Submitted:', { firstName, lastName, email, password });
     try {
       await createUser(email, password);
-      //await updateUserName(firstName +' ' +  lastName);
-      navigate("/Profile-Page");
+
+
+      const docRef = doc(db, "profiles", email);
+      await setDoc(docRef, {
+        name: `${firstName} ${lastName}`,
+      });
+
+      navigate("/PersonalityPage");
+
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleLogout = async (event) => {
-    event.preventDefault();
-    try {
-      await logoutAccount();
-      navigate("/await-Signout");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const handleLogout = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     await logoutAccount();
+  //     navigate("/await-Signout");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   // Check which user is signed in:
   // console.log(auth?.currentUser?.email)
 
+  if (user) {
+    return <Navigate to="/Matching-Page" />;
+  }
+
   return (
     <div className="signupBody">
-      <Link to="/">
-        <img src={logo} alt="logo" className="logo" />
-      </Link>
+
+      <div className="logo-container">
+        <Link to="/">
+          <img src={logo} alt="persona logo" className="logo" />
+        </Link>
+      </div>
+
 
       <h1>
         Ready to Find Love?
@@ -99,7 +116,7 @@ function Signup() {
         <button type="submit">Submit</button>
         <br />
         <br />
-        <button onClick={handleLogout}>Logout</button>
+        {/* <button onClick={handleLogout}>Logout</button> */}
       </form>
     </div>
   );

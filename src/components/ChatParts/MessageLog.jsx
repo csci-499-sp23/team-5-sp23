@@ -15,10 +15,10 @@ import {
 
 const styles = {
   inputContainer: {
+
     height: "12vh",
     width: '98%',
-    
-
+   
   },
   input: {
     backgroundColor: "#f5f5f5",
@@ -36,6 +36,7 @@ const styles = {
     },
   },
   container: {
+
     height: "92vh",
     display: "flex",
     alignItems: "center",
@@ -123,6 +124,7 @@ const MessagesLog = (props) => {
   return (
     <>
       {dataExist ? (
+
         < div style={{
           fontFamily: 'Verdana',
           color: '#312E29',
@@ -132,6 +134,7 @@ const MessagesLog = (props) => {
           backgroundColor: '#C3AFA5',
           borderRight: '10px solid gray' 
         }}>
+
           <NavBarChat name={userInfo.name} />
           <Box sx={{ overflowY: "auto", height: "79vh" }}>
             {data.map((val) => {
@@ -149,7 +152,9 @@ const MessagesLog = (props) => {
               onKeyDown={handleKeyPress}
             />
           </div>
+
         </div>
+
       ) : (
         <Container sx={styles.container}>
           <h1 style={styles.message}>Please Pick a Person to Chat With</h1>

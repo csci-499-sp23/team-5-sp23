@@ -12,27 +12,25 @@ const NavBarChat = (props) => {
     },
     title: {
       color: "#fff",
+
       fontFamily: 'Verdana',
+
       fontWeight: "bold",
     },
     icons: {
       color: "#fff",
     },
   };
-  // const unmatchHandler = () => {
-  //   console.log("unMatched");
-  // };
+
+  
   return (
     <AppBar position="static" sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
         <Typography variant="h6" component="div" sx={styles.title}>
           {props.name}
         </Typography>
-        <div>
-          {/* <IconButton sx={styles.icons} onClick={unmatchHandler}>
-            <p>UnMatch</p>
-          </IconButton> */}
-        </div>
+
+        
       </Toolbar>
     </AppBar>
   );

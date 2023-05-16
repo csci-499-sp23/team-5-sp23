@@ -1,30 +1,38 @@
 import React, { useState } from "react";
-import { TextField, Button,  Box } from "@mui/material";
+import { TextField, Button, Box } from "@mui/material";
 import { UserAuth } from "../context/UserAuthContext";
 import { storage, db } from "../firebase-config";
-import { ref, uploadBytes } from 'firebase/storage';
-import { doc, setDoc } from 'firebase/firestore';
-import { v4 } from 'uuid';
-import { useNavigate } from "react-router";
+
+import { ref, uploadBytes } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
+import { v4 } from "uuid";
+import { useNavigate } from "react-router-dom";
+// import logo from "./img/logo.png";
+import "./css/Profile-Page-Creation.css";
 
 
 const Profile_Creation = () => {
-    const [name, setName] = useState("");
-    const [location, setLocation] = useState("");
-    const [birthdate, setBirthdate] = useState("");
-    const [bio, setBio] = useState("");
-    const [interests, setInterests] = useState("");
-    const [photos, setPhotos] = useState([]);
-    
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [bio, setBio] = useState("");
+  const [interests, setInterests] = useState("");
+  const [photos, setPhotos] = useState([]);
+  const [genderPref, setGenderPref] = useState("");
 
-    const handleNameChange = (event) => setName(event.target.value);
-    const handleLocationChange = (event) => setLocation(event.target.value);
-    const handleBirthdateChange = (event) => setBirthdate(event.target.value);
-    const handleBioChange = (event) => setBio(event.target.value);
-    const handleInterestsChange = (event) => {setInterests(event.target.value); console.log(interests);};
-    
-    const {user} = UserAuth();
-    const navigate = useNavigate();
+  const handleNameChange = (event) => setName(event.target.value);
+  const handleLocationChange = (event) => setLocation(event.target.value);
+  const handleBirthdateChange = (event) => setBirthdate(event.target.value);
+  const handleBioChange = (event) => setBio(event.target.value);
+  const handleInterestsChange = (event) => {
+    setInterests(event.target.value);
+  };
+  const handleGenderChange = (event) => {
+    setGenderPref(event.target.value);
+  };
+
+  const { user } = UserAuth();
+  const navigate = useNavigate();
 
   const handlePhotoUpload = (event) => {
     console.log(event);
@@ -41,63 +49,97 @@ const Profile_Creation = () => {
     ]);
   };
 
-  const handleSave = () => {
-    // enter database code here to save profile information
-    console.log({
-      name,
-      location,
-      birthdate,
-      bio,
-      interests,
-      photos,
+  // const handleSave = () => {
+  //   // enter database code here to save profile information
+  //   console.log({
+  //     name,
+  //     location,
+  //     birthdate,
+  //     bio,
+  //     interests,
+  //     photos,
+  //     genderPref,
+  //   });
+  // };
+
+  // Submit information functions:
+  const sumbitPhotos = () => {
+    const email = user.email;
+    for (let i = 0; i < photos.length; i++) {
+      const imageRef = ref(storage, `${email}/${photos[i].name + v4()}`);
+      uploadBytes(imageRef, photos[i]).then(() => {
+        console.log("Photo has been uploaded: ", photos[i].name);
+      });
+    }
+  };
+  const submitProfileInformation = async () => {
+    const docRef = doc(db, "profiles", user.email);
+    await setDoc(docRef, {
+      name: `${name}`,
+      location: `${location}`,
+      birthdate: `${birthdate}`,
+      bio: `${bio}`,
+      interests: `${interests}`,
+      genderPref: `${genderPref}`,
     });
   };
 
-    // Submit information functions:
-    const sumbitPhotos = () => {
-        const email = user.email
-        for(let i = 0; i< photos.length; i++){
-            const imageRef = ref(storage, `${email}/${photos[i].name + v4()}`)
-            uploadBytes(imageRef, photos[i])
-                .then(()=>{
-                    console.log("Item has been uploaded: ", photos[i].name)
-                })
-        };
-    };
-    const submitProfileInformation = async () =>{
-        const docRef = doc(db, 'profiles' , user.email);
-        await setDoc(docRef, {
-            name: `${name.toLowerCase()}`,
-            location: `${location}`,
-            birthdate: `${birthdate}`,
-            bio: `${bio}`,
-            interests: `${interests}`
-        })
-    };
-    const submitProfile = (event) => {
-        event.preventDefault();
-        sumbitPhotos();
-        submitProfileInformation();
-        navigate(('/Profile-Page'))
-    };
+  const submitProfile = (event) => {
+    event.preventDefault();
+    sumbitPhotos();
+    submitProfileInformation();
+    navigate("/Profile-Page");
+  };
 
   return (
-    <div style={{ background: "white" }}>
-      <div>
-        <h1>Profile</h1>
-        <div>
-          <input type="file" accept="image/*" onChange={handlePhotoUpload} />
-          {photos.map((photo, index) => (
-            <div key={index}>
-              <img
-                src={URL.createObjectURL(photo)}
-                style={{ width: 500, height: 600 }}
-                alt=""
-              />
-              <button onClick={() => handleRemovePhoto(index)}>Remove</button>
-            </div>
-          ))}
+    <div className="profileContent">
+      {/* <div className="logo-container">
+        <Link to="/">
+          <img src={logo} alt="persona logo" className="logo" />
+        </Link>
+      </div> */}
+
+      <h1>Edit Your Profile</h1>
+
+      <div className="profileBody">
+        <div className="upload">
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoUpload}
+          />
+
+          <button id="browse-button">CLICK TO UPLOAD PHOTOS...</button>
         </div>
+
+        <br />
+        <br />
+
+        {photos.map((photo, index) => (
+          <div key={index}>
+            <img
+              src={URL.createObjectURL(photo)}
+              style={{
+                maxHeight: 500,
+                maxWidth: 800,
+                color: "transparent",
+                backgroundColor: "transparent",
+              }}
+              alt={""}
+            />
+
+            <br />
+            <br />
+
+            <button onClick={() => handleRemovePhoto(index)}>
+              REMOVE CURRENT PHOTO
+            </button>
+          </div>
+        ))}
+
+        <br />
+
         <Box
           component="form"
           sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
@@ -109,19 +151,41 @@ const Profile_Creation = () => {
             variant="filled"
             label="Name"
             color="secondary"
+            height="2.4em"
             InputLabelProps={{
               style: {
-                color: "white",
+                color: "#efefef",
               },
             }}
             InputProps={{
               style: {
-                color: "white",
+                color: "#312E29",
+                height: "4.6em",
               },
             }}
             value={name}
             onChange={handleNameChange}
           />
+
+          <TextField
+            label="Gender Preference"
+            value={genderPref}
+            placeholder="Male, Female, Other"
+            variant="filled"
+            onChange={handleGenderChange}
+            InputLabelProps={{
+              style: {
+                color: "#efefef",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "#312E29",
+                height: "4.6em",
+              },
+            }}
+          />
+
           <TextField
             label="Location"
             value={location}
@@ -129,12 +193,13 @@ const Profile_Creation = () => {
             onChange={handleLocationChange}
             InputLabelProps={{
               style: {
-                color: "white",
+                color: "#efefef",
               },
             }}
             InputProps={{
               style: {
-                color: "white",
+                color: "#312E29",
+                height: "4.6em",
               },
             }}
           />
@@ -146,12 +211,13 @@ const Profile_Creation = () => {
             onChange={handleBirthdateChange}
             InputLabelProps={{
               style: {
-                color: "white",
+                color: "#efefef",
               },
             }}
             InputProps={{
               style: {
-                color: "white",
+                color: "#312E29",
+                height: "4.6em",
               },
             }}
           />
@@ -164,12 +230,12 @@ const Profile_Creation = () => {
             onChange={handleBioChange}
             InputLabelProps={{
               style: {
-                color: "white",
+                color: "#efefef",
               },
             }}
             InputProps={{
               style: {
-                color: "white",
+                color: "#312E29",
               },
             }}
           />
@@ -182,44 +248,29 @@ const Profile_Creation = () => {
             onChange={handleInterestsChange}
             InputLabelProps={{
               style: {
-                color: "white",
+                color: "#efefef",
               },
             }}
             InputProps={{
               style: {
-                color: "white",
+                textAlign: "left",
+                color: "#312E29",
               },
             }}
           />
-          <button type="submit" onClick={submitProfile}>
-            Submit Profile
-          </button>
+          <br />
+          <Button type="submit" onClick={submitProfile}>
+            Submit Entries
+          </Button>
         </Box>
 
         <div>
           <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSave}
-            style={{ color: "white" }}
+            onClick={()=>{navigate("/PersonalityPage")}}
+            style={{ color: "#efefef", backgroundColor: "#312E29" }}
           >
-            Save
-          </Button>
-        </div>
-        <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            style={{ color: "white" }}
-          >
-            Dislike
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ color: "white" }}
-          >
-            Like
+            Retake MBTI Test!
+
           </Button>
         </div>
       </div>

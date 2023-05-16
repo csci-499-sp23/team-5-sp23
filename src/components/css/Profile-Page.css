@@ -1,0 +1,155 @@
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .logo {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+  }
+  
+  .displayProfile {
+    max-width: 800px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid black;
+  }
+  
+  .displayProfile h1,
+  .displayProfile h2,
+  .displayProfile p,
+  .displayProfile button,
+  .userprofile h2,
+  .userprofile p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .displayProfile h1 {
+    margin-top: 0;
+  }
+  
+  .displayProfile h2 {
+    margin-bottom: 20px;
+  }
+  
+  .image_section {
+    width: 600px;
+    height: 500px;
+    margin: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image_section img {
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .image_section .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .image_section .arrow.left {
+    left: 0;
+  }
+  
+  .image_section .arrow.right {
+    right: 0;
+  }
+  
+  .displayProfile p {
+    margin: 0;
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  .slide {
+    position: relative;
+    /* height: 100%;
+    width: 100%; */
+  }
+  .slide img{
+    width: 600px;
+  }
+  
+  .displayProfile button {
+    margin-top: 35px;
+    margin-bottom: 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 20px;
+    background-color: #f1f7ff;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .displayProfile button:hover {
+    background-color: #dee0e3;
+  }
+  
+  .userprofile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 30px;
+  }
+  
+  .userprofile img {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .userprofile h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  .userprofile p {
+    margin: 0;
+    text-align: left;
+    padding-left: 10px;
+  }
+  
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .displayProfile{
+    background-color: #e0bda9;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 50px;
+  }
+
+
