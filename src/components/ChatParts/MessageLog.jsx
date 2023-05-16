@@ -4,6 +4,9 @@ import NavBarChat from "./navBarChat";
 import Messages from "./Messages";
 import { UserAuth } from "../../context/UserAuthContext";
 import { db } from "../../firebase-config";
+import { HandleClicks } from "../modules/DateComputation";
+import GoogleAPI from "../GoogleAPI";
+
 import {
   doc,
   getDoc,
@@ -53,6 +56,7 @@ const MessagesLog = (props) => {
   const [value, setValue] = useState("");
   const { user } = UserAuth();
   const [session, setSession] = useState([]);
+  const [types, setTypes] = useState([]);
 
   /* Fetch chats and set to Data */
   useEffect(() => {
@@ -70,7 +74,18 @@ const MessagesLog = (props) => {
     setInfo(props.userInfo);
   }, [props.userInfo]);
 
+  /* Get places information */
+
   useEffect(() => {
+    HandleClicks(user.email)
+      .then((value) => {
+        setTypes(value);
+        console.log(value);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    HandleClicks(user.email);
     console.log(user.email);
     if (userInfo.name) {
       const GetMetaData = async () => {
@@ -78,7 +93,7 @@ const MessagesLog = (props) => {
           user.email.localeCompare(userInfo.email) === 1
             ? user.email + userInfo.email
             : userInfo.email + user.email;
-    
+
         //Check if chat document exists
         const docRef = doc(db, "messages", DocumentID);
         const docSnap = await getDoc(docRef);
@@ -91,8 +106,6 @@ const MessagesLog = (props) => {
       setDataExist(true);
     }
   }, [userInfo, user.email]);
-
-  
 
   const handleKeyPress = async (event) => {
     if (event.key === "Enter") {
@@ -123,9 +136,16 @@ const MessagesLog = (props) => {
         <>
           <NavBarChat name={userInfo.name} />
           <Box sx={{ overflowY: "auto", height: "79vh" }}>
-            {data.map((val) => {
-              return <Messages data={val} />;
-            })}
+            <Container sx={{ height: "15vh" }}>
+              <>
+                <GoogleAPI data={types} />
+              </>
+            </Container>
+            <Container sx={{ height: "64vh" }}>
+              {data.map((val) => {
+                return <Messages data={val} />;
+              })}
+            </Container>
           </Box>
           <div style={styles.inputContainer}>
             <TextField
