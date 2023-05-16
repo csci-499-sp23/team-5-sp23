@@ -28,3 +28,4 @@ yarn-error.log*
 .DS_Store
 yarn.lock
 /.env
+functions/csci499-firebase-adminsdk-x8g37-28651561e5.json
