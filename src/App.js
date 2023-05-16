@@ -95,12 +95,4 @@ export default function App() {
     </div>
   );
 }
-
-function NoMatch() {
-  return (
-    <div>
-      <h2>Whoopsies. You are lost!</h2>
-      <NavLink to="/">click here to return to the home page :)</NavLink>
-    </div>
-  );
 }
