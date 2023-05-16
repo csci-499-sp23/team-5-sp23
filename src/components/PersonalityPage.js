@@ -1,116 +1,299 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { db } from "../firebase-config";
+import { doc, updateDoc } from "firebase/firestore";
+import { UserAuth } from "../context/UserAuthContext";
+import "./css/Personality-Page.css";
+import { Link } from "react-router-dom";
+import logo from "./img/logo.png";
+import "./css/Matching-Page.css";
 
 const questions = [
+  { question: "I enjoy spending time with others", type: "E" },
+  { question: "I enjoy being the center of attention", type: "E" },
   {
-    questionText: "You enjoy spending time alone.",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
+    question: "I like to meet new people and make new friends",
+    type: "E",
+  },
+  { question: "I prefer to spend time alone", type: "I" },
+  {
+    question:
+      "I feel more energized when I spend time alone, rather than with other people",
+    type: "I",
   },
   {
-    questionText:
-      "You prefer to follow a planned and organized approach in your daily life.",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
+    question:
+      "I prefer to have a small group of close friends, rather than a large group of acquaintances",
+    type: "I",
+  },
+  { question: "I focus on the present rather than the future", type: "S" },
+  {
+    question: "I rely more on my senses than making decisions",
+    type: "S",
   },
   {
-    questionText:
-      "You often rely on your intuition or gut feeling when making decisions.",
-    answerOptions: [
-      { answerText: "Strongly Disagree", value: 1 },
-      { answerText: "Disagree", value: 2 },
-      { answerText: "Neutral", value: 3 },
-      { answerText: "Agree", value: 4 },
-      { answerText: "Strongly Agree", value: 5 },
-    ],
+    question: "I'm comfortable with routine and familiar surroundings",
+    type: "S",
+  },
+  {
+    question: "I am often guided by my intuition and gut feelings.",
+    type: "N",
+  },
+  { question: "I focus on the future rather than the present", type: "N" },
+  {
+    question:
+      "I like to explore new and untested ideas even if they are not yet proven.",
+    type: "N",
+  },
+  { question: "I make decisions based on logic and reason", type: "T" },
+  {
+    question:
+      "When making a decision, I prioritize what makes the most logical sense over what feels right",
+    type: "T",
+  },
+  {
+    question:
+      "I find myself analyzing and dissecting situations or problems in order to better understand them",
+    type: "T",
+  },
+  {
+    question:
+      "When making decisions, I consider how it will impact others and their feelings",
+    type: "F",
+  },
+  {
+    question:
+      "I often put the needs and feelings of others before my own when making decisions",
+    type: "F",
+  },
+  { question: "I make decisions based on feelings and emotions", type: "F" },
+  {
+    question:
+      "I like to make plans and stick to them, rather than changing them on a whim.",
+    type: "J",
+  },
+  {
+    question:
+      "I feel more comfortable when things are settled and decided, rather than left open-ended.",
+    type: "J",
+  },
+  { question: "I like to plan and organize my life", type: "J" },
+  {
+    question: "I find it difficult to stick to a schedule",
+    type: "P",
+  },
+  { question: "I prefer to be spontaneous and adaptable", type: "P" },
+  {
+    question:
+      "I enjoy exploring new places and trying new experiences on a whim, without much planning",
+    type: "P",
   },
 ];
 
-const mbtiTypes = [
-  {
-    type: "ISTJ",
-    description: "Practical and logical, with a focus on order and structure.",
-  },
-  {
-    type: "ENFP",
-    description:
-      "Creative and enthusiastic, with a focus on possibilities and connections.",
-  },
-  {
-    type: "ISFJ",
-    description:
-      "Warm and responsible, with a focus on tradition and stability.",
-  },
-  {
-    type: "ENTP",
-    description:
-      "Innovative and adaptable, with a focus on new ideas and challenges.",
-  },
+const options = [
+  "Strongly Disagree",
+  "Disagree",
+  "Neutral",
+  "Agree",
+  "Strongly Agree",
 ];
 
-const MBTIPersonalityTest = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
+const MBTITest = () => {
+  // const { currentUser } = useContext(UserAuth);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [mbtiType, setMBTIType] = useState(null);
+  const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
+  const { user } = UserAuth();
 
-  const handleAnswerOptionClick = (value) => {
+  const handleAnswerSelect = (answerIndex) => {
     const newAnswers = [...answers];
-    newAnswers[currentQuestion] = value;
+    newAnswers[questionIndex] = answerIndex;
     setAnswers(newAnswers);
-    setCurrentQuestion(currentQuestion + 1);
+
+    if (questionIndex === questions.length - 1) {
+      setShowResults(true);
+    } else {
+      setQuestionIndex((prevIndex) => prevIndex + 1);
+    }
   };
 
-  const handleSubmit = () => {
-    // Here you can process the answers and calculate the user's MBTI personality type
-    // based on the scoring system of the test.
-    console.log("Answers:", answers);
+  const getScore = (type) => {
+    return answers.reduce((score, answer, index) => {
+      const question = questions[index];
+      if (question.type === type) {
+        return score + (answer - 2);
+      }
+      return score;
+    }, 0);
+  };
 
-    // Calculate the total score
-    const totalScore = answers.reduce((sum, answer) => sum + answer, 0);
+  const getMBTI = () => {
+    const E = getScore("E") >= 0 ? "E" : "I";
+    const S = getScore("S") >= 0 ? "S" : "N";
+    const T = getScore("T") >= 0 ? "T" : "F";
+    const J = getScore("J") >= 0 ? "J" : "P";
+    return E + S + T + J;
+  };
 
-    // Determine the dominant preference based on total score
-    const dominantPreference = totalScore >= 8 ? mbtiTypes[1] : mbtiTypes[0];
+  const handleRandomize = () => {
+    const mbtiTypes = [
+      "ESTJ",
+      "ESFJ",
+      "ISTJ",
+      "ISFJ",
+      "ESTP",
+      "ESFP",
+      "ISTP",
+      "ISFP",
+      "ENTJ",
+      "INTJ",
+      "ENTP",
+      "INTP",
+      "ENFJ",
+      "INFJ",
+      "ENFP",
+      "INFP",
+    ];
+    const randomIndex = Math.floor(Math.random() * mbtiTypes.length);
+    const randomMBTI = mbtiTypes[randomIndex];
+    setMBTIType(randomMBTI);
+    setShowResults(true);
+  };
 
-    // Display the result to the user
-    console.log("Your dominant preference is:", dominantPreference.type);
-    console.log("Description:", dominantPreference.description);
+  const handleRetake = () => {
+    setQuestionIndex(0);
+    setAnswers(Array(questions.length).fill(null));
+    setShowResults(false);
+  };
+
+  const handleClick = async () => {
+    const mbtiTypee = mbtiType ? mbtiType : getMBTI();
+    try {
+      // debugger
+      const docRef = doc(db, "profiles", user.email);
+      // const docRef = await addDoc(collection(db, "mbtiResults"), {
+      //   mbtiType: mbtiTypee,
+      //   userId: auth.currentUser.uid,
+      //   timestamp: serverTimestamp(),
+      // });
+      // db.collection("profiles").doc(`${user.email}`).update({
+      //   mbtiType: mbtiTypee
+      // })
+      await updateDoc(docRef, { mbtiType: mbtiTypee });
+
+      // console.log("Document written with ID: ", docRef.id);
+      navigate("/Profile-Page");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
-    <div className="mbti-personality-test">
-      {currentQuestion < questions.length ? (
-        <>
-          <div className="question-text">
-            {questions[currentQuestion].questionText}
-          </div>
-          <div className="answer-options">
-            {questions[currentQuestion].answerOptions.map((option) => (
-              <button
-                key={option.value}
-                className="answer-option"
-                onClick={() => handleAnswerOptionClick(option.value)}
-              >
-                {option.answerText}
-              </button>
-            ))}
-          </div>
-          <button className="submit-button" onClick={handleSubmit}>
-            Submit
-          </button>
-        </>
+    <div className="quizBody">
+
+      <h1>Personality Survey</h1>
+
+      <div className="logo-container">
+        <Link to="/">
+          <img src={logo} alt="persona logo" className="logo" />
+        </Link>
+      </div>
+
+      {showResults ? (
+        <div style={{paddingBottom: "100px"}}>
+          <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
+          <button onClick={handleClick}
+          style={{
+            backgroundColor: '#efefef',
+            color: '#312E29',
+          }}>
+            Save Result</button> <br/>
+          <button onClick={handleRetake}>Retake the Survey</button>
+        </div>
+
       ) : (
-        <div className="result-text">Survey Completed!</div>
+
+        <div style={{paddingBottom: "100px"}}>
+          <p>{questions[questionIndex].question}</p>
+          {options.map((option, optionIndex) => (
+            <button
+              key={optionIndex}
+              type="button"
+              onClick={() => handleAnswerSelect(optionIndex)}
+              style={{
+                margin: "2px",
+              }}
+            >
+              {option}
+            </button>
+          ))}
+          <br />
+          <button onClick={handleRandomize}
+          style={{
+            backgroundColor: '#efefef',
+            color: '#312E29',
+          }}>
+            Randomize Result</button>
+        </div>
       )}
     </div>
+    
   );
 };
 
-export default MBTIPersonalityTest;
+// <<<<<<< STYLING-MBTI --- 
+
+
+// // =======
+//   // Render survey questions and handle answers <--- what?
+//   if (!isCompleted) {
+//     const currentQuestion = questions[currentQuestionIndex];
+//     return (
+//       <div className="quizBody">
+
+//         <h1>Personality Survey</h1>
+
+//         <p>{currentQuestion.text}</p>
+        
+//         <div class="button-container">
+//           <button onClick={() => handleAnswer(true)}>
+//             Yes
+//           </button>
+//           <button onClick={() => handleAnswer(false)}>
+//             No
+//           </button>
+//         </div>
+
+
+//         <button onClick={handleRandomize}>Randomize Result</button>
+
+
+//       </div>
+//     );
+//   } else {
+//     return (
+//       <div className="quizBody">
+
+//         <h1>Your Result!</h1>
+//         <p>Your personality type is:
+//           <br />
+//           {personalityType}</p>
+//         <button onClick={handleClick}>Save Your Result!</button>
+//         <button onClick={resetSurvey} 
+//         style={{
+//           backgroundColor: '#efefef',
+//           color: '#312E29',
+//         }}>
+//         Restart Survey</button>
+
+//       </div>
+//     );
+//   }
+// }
+// // >>>>>>> STYLING-QUIZ
+// =======
+// >>>>>>> main
+
+export default MBTITest;
