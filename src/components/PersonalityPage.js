@@ -24,7 +24,6 @@ function Quiz() {
     setPlaces(val);
   };
 
-
   return (
     <div>
       <h1>TEST FOR THE API BACKEND</h1>
