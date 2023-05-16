@@ -24,20 +24,20 @@ async function getEmailFromUid(uid) {
   return email;
 }
 
-async function getProfiles(querySnapshot, batchSize, lastVisible) {
+async function getProfiles(querySnapshot, batchSize) { // last Visible
   const profiles = [];
-  let newLastVisible;
+  // let newLastVisible;
 
   querySnapshot.forEach((doc) => {
     const profile = doc.data();
     profile.id = doc.id;
     profiles.push(profile);
-    newLastVisible = doc;
+    // newLastVisible = doc;
   });
   
   return {
     profiles: profiles.slice(0, batchSize),
-    lastVisible: newLastVisible || lastVisible,
+    // lastVisible: newLastVisible || lastVisible,
   };
 }
 
@@ -98,7 +98,7 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   const profileRef = firestore.collection("profiles");
   const swipeRef = firestore.collection("swipes");
   // const batchSize = 3;
-  let lastVisible = data.lastVisible;
+  // let lastVisible = data.lastVisible;
 
   try {
     const swipedSnapshot = await swipeRef
@@ -113,17 +113,17 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
       swipedIds || []
     );
 
-    if (lastVisible) {
-      query = query.startAfter(lastVisible);
-    }
+    // if (lastVisible) {
+    //   query = query.startAfter(lastVisible);
+    // }
 
     const querySnapshot = await query.limit(data.batchSize).get();
-    const result = await getProfiles(querySnapshot, data.batchSize, lastVisible);
-    lastVisible = result.lastVisible;
+    const result = await getProfiles(querySnapshot, data.batchSize); // BATCHSIZE
+    // lastVisible = result.lastVisible;
     
     const response = {
       profiles: result.profiles,
-      lastVisible,
+      // lastVisible,
     };
     
     const returntouser = JSON.stringify(response);
@@ -135,11 +135,11 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
       
       const querySnapshot = await profileRef.limit(data.batchSize).get();
       const result = await getProfiles(querySnapshot, data.batchSize, null);
-      lastVisible = result.lastVisible;
+      // lastVisible = result.lastVisible;
 
       const response = {
         profiles: result.profiles,
-        lastVisible,
+        // lastVisible,
       };
       const returntouser = JSON.stringify(response);
       return returntouser;

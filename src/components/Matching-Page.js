@@ -12,14 +12,14 @@ import PartnerProfile from "./Partner-Profile-Page";
 import { PinDropSharp } from "@material-ui/icons";
 import { useNavigate } from "react-router-dom";
 
-
+// tinder card, includes functions for repopulation
+//TODO: create delay function that's based on promises
 function Card() {
-  const batchSize = 5;
+  const batchSize = 15;
   const [people, setPeople] = useState([]);
   const { user } = UserAuth();
   const [currentIndex, setCurrentIndex] = useState(batchSize);
-  const [lastDoc, setLastDoc] = useState(null); 
-  // would need something like this and would snipe it and take it to the 
+  const [isFinished, setIsFinished] = useState(false); 
   const canSwipe = currentIndex >= 0;
   const childRefs = useRef([]);
   const [currentPersonId, setCurrentPersonId] = useState(null);
@@ -28,14 +28,11 @@ function Card() {
   const swipeLeft = httpsCallable(functions, 'swipeLeft');
   const swipeRight = httpsCallable(functions, 'swipeRight');
 
-  async function getUnswipedProfiles(uid, lastDoc = null) {
-    const lastVisible = lastDoc;
+  async function getUnswipedProfiles(uid) {
     const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
-    const result = await getProfiles({ uid, lastVisible, batchSize });
+    const result = await getProfiles({ uid, batchSize });
     const profiles = JSON.parse(result.data).profiles;
-    console.log("getProfiles result = ",profiles);
 
-    // Get download URLs for images in Storage and add to profiles
     const updatedProfiles = await Promise.all(profiles.map(async (profile) => {
       const storageRef = ref(storage, `${profile.id}/`);
       const res = await listAll(storageRef);
@@ -67,70 +64,63 @@ async function swipeAndChangeId(dir, swipeeemail) {
     const currentRef = childRefs.current[currentIndexRef.current];
     const tempindex = currentIndex - 1;
     if (currentRef) {
-      console.log("CURRENT REFERENCE IMMEDIATELY BEFORFE SWIPE: ",currentRef);
       await currentRef.swipe(dir);
       swipeFn({ uid: user.uid, swipeeemail });
       setCurrentIndex(currentIndex => currentIndex - 1);
       if (people[tempindex]) {
-        console.log("THERE WERE PEOPLE AT THE DESIRED INDEX!!!");
         setCurrentPersonId(people[currentIndex - 1].id);
         localStorage.setItem('currentIndex', currentIndex - 1);
         localStorage.setItem('pEmail', JSON.stringify(people[currentIndex-1].id));
       }
     }
     if (tempindex < 0) { // if we ran out of cards
-      console.log("RAN OUT OF CARDS TO SWIPE THROUGH");
-      const newProfiles = await getUnswipedProfiles(user.uid, lastDoc);
-      if (newProfiles.length > 0) {
-        console.log("THERE ARE MORE PROFILES TO LOAD IN");
-        const newRefs = Array(newProfiles.length).fill(0).map(i => React.createRef());
-        setPeople(newProfiles);
-        setCurrentIndex(newProfiles.length - 1);
-        localStorage.setItem('currentIndex', newProfiles.length - 1);
-        console.log("CURRENT INDEX IMMEDIATELY AFTER BEING SET: ",newProfiles.length - 1);
-        setLastDoc(newProfiles[0].doc);
-        childRefs.current = newRefs;
-        setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
-        localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
+      setTimeout(async () => {
+        const newProfiles = await getUnswipedProfiles(user.uid);
+        if (newProfiles.length > 0) {
+          const newRefs = Array(newProfiles.length).fill(0).map(i => React.createRef());
+          setPeople(newProfiles);
+          localStorage.setItem('currentIndex', newProfiles.length - 1);
+          setCurrentIndex(newProfiles.length - 1);
+          childRefs.current = newRefs;
+          setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
+          localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
+          }
+          else {
+            setIsFinished(true);
+          }
+      }, 1000);
       }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isSwiping = false;
     }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    isSwiping = false;
   }
-}
 
   useEffect(() => {
     async function loadInitialProfiles() {
       const newProfiles = await getUnswipedProfiles(user.uid); // returns empty array when no more profiles
-      var gottenIndex = localStorage.getItem('currentIndex');
-
+      var gottenIndex = parseInt(localStorage.getItem('currentIndex'));
+      let tempnewprof = Array.from(newProfiles).slice(0, gottenIndex+1);
+      
       if(null === gottenIndex) // needs to differentiate between final card index and default orientation
       {
         gottenIndex = -1;
       }
-
+      
       if (newProfiles.length > 0) {
         if (gottenIndex >= 0) { // if the batch was not completely swiped through
-          console.log("USING LOCALLY STORED INDEX");
-          setPeople(newProfiles.slice(0, gottenIndex+1));//.reverse()
-
-          console.log("UPDATED / SLICED ARRAY = ",newProfiles.slice(0, gottenIndex+1)); //.reverse()
-          console.log("GOTTEN INDEX = ",gottenIndex);
-
+          setPeople(tempnewprof);//.reverse()
           setCurrentIndex(gottenIndex);
-          setLastDoc(newProfiles[newProfiles.length - 1].doc);
+          // setLastDoc(newProfiles[newProfiles.length - 1].doc);
           childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
           setCurrentPersonId(newProfiles[gottenIndex].id);
-          console.log("PERSON ID = ", currentPersonId);
           localStorage.setItem('pEmail', JSON.stringify(newProfiles[gottenIndex].id));
         }
         else {
-          console.log("NOT USING LOCALLY STORED INDEX");
           setPeople(newProfiles);
           setCurrentIndex(() => newProfiles.length - 1);
-          setLastDoc(newProfiles[0].doc); 
+          // setLastDoc(newProfiles[0].doc); 
           childRefs.current = Array(batchSize).fill(0).map(i => React.createRef());
           setCurrentPersonId(newProfiles[newProfiles.length - 1].id);
           localStorage.setItem('pEmail', JSON.stringify(newProfiles[newProfiles.length - 1].id));
@@ -138,8 +128,7 @@ async function swipeAndChangeId(dir, swipeeemail) {
       }
     }
     loadInitialProfiles();
-  }, [user.uid]);
-  
+  }, [user.uid]); 
 
   return (
     <div>
@@ -161,14 +150,14 @@ async function swipeAndChangeId(dir, swipeeemail) {
         ))}
       </div>
       <div className="newbuttons">
-        <button style={{ backgroundColor: isSwiping && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
+        <button style={{ backgroundColor: isFinished && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("left", currentPersonId)}>
           Swipe left!
         </button>
-        <button style={{ backgroundColor: isSwiping && (currentIndex < 0) && "#c3c4d3" }} onClick={() => navToProfile()}>
+        <button style={{ backgroundColor: isFinished && (currentIndex < 0) && "#c3c4d3" }} onClick={() => navToProfile()}>
           Check out this user's profile!
           {/* Ideally adjust name */}
         </button>
-        <button style={{ backgroundColor: isSwiping && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
+        <button style={{ backgroundColor: isFinished && (currentIndex < 0) && "#c3c4d3" }} onClick={() => swipeAndChangeId("right", currentPersonId)}>
           Swipe right!
         </button>
       </div>
