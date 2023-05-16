@@ -54,6 +54,7 @@ pretty annoying to debug, lol */
     flex: 1;
     align-items: center;
     width: 70%;
+
 }
 
 .row li {
@@ -63,3 +64,4 @@ pretty annoying to debug, lol */
 #LogOutBtn{
     cursor: pointer;
 }
+

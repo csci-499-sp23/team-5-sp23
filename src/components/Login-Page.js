@@ -22,6 +22,7 @@ function LoginPage() {
     setPassword(event.target.value);
   };
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -74,6 +75,7 @@ function LoginPage() {
       </div>
     </>
   );
+
 }
 
 export default LoginPage;

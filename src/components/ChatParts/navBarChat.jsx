@@ -12,6 +12,9 @@ const NavBarChat = (props) => {
     },
     title: {
       color: "#fff",
+
+      fontFamily: 'Verdana',
+
       fontWeight: "bold",
     },
     icons: {
@@ -19,12 +22,15 @@ const NavBarChat = (props) => {
     },
   };
 
+  
   return (
     <AppBar position="static" sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
         <Typography variant="h6" component="div" sx={styles.title}>
           {props.name}
         </Typography>
+
+        
       </Toolbar>
     </AppBar>
   );

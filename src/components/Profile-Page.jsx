@@ -30,9 +30,15 @@ const Profile = () => {
   const [pathsUpdated, setUpdated] = useState(false);
   const navigate = useNavigate();
   const { user } = UserAuth();
+
+
+
   const setInformation = (data) => {
     // Set information into useStates:
-    data.name !== "" ? setName(data.name) : console.log("There is no name");
+    console.log(data.name);
+    data.name !== "" ? setName(data.name.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    })) : console.log("There is no name");
     data.location !== ""
       ? setLocation(data.location)
       : console.log("There is no location");

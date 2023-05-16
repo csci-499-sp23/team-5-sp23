@@ -1,44 +1,26 @@
-/* hides all scrolling, but keeps enabled.  */
-
-* {
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;
+form{
+  display: block;
+  box-shadow: 1px 1px 2px 2px #000000;
+  margin: 300px auto;
+  max-width: 800px;
+  max-height: 800px;
+  padding: 10px 20px;
 }
 
-*::-webkit-scrollbar {
-  width: 0 !important; /* Safari and Chrome */
-  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+form input, textarea{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px auto;
+  padding: 10px;
 }
 
-body{
-  background-color: #C3AFA5;
-  font-family: Verdana;
-  color: #312E29;
+form button{
+  height: 30px;
+  width: 60px;
+  align-items: center;
+  border: none;
+  background-color: #3a0137;
+  cursor: pointer;
 }
 
-/* logo  */
-
-.logo-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 20px;
-}
-
-.logo-container img {
-  width: 100px;
-  height: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.logo {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  min-width: 50px;
-  min-height: 50px;
-  height: 100px;
-  width: 100px;
-}

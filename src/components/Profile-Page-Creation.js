@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
 import { UserAuth } from "../context/UserAuthContext";
 import { storage, db } from "../firebase-config";
+
 import { ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 // import logo from "./img/logo.png";
 import "./css/Profile-Page-Creation.css";
+
 
 const Profile_Creation = () => {
   const [name, setName] = useState("");
@@ -81,6 +83,7 @@ const Profile_Creation = () => {
       genderPref: `${genderPref}`,
     });
   };
+
   const submitProfile = (event) => {
     event.preventDefault();
     sumbitPhotos();
@@ -267,6 +270,7 @@ const Profile_Creation = () => {
             style={{ color: "#efefef", backgroundColor: "#312E29" }}
           >
             Retake MBTI Test!
+
           </Button>
         </div>
       </div>
@@ -275,3 +279,5 @@ const Profile_Creation = () => {
 };
 
 export default Profile_Creation;
+
+// button text is not coming out white...

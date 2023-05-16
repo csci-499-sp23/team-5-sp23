@@ -21,9 +21,10 @@ function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitted:", { firstName, lastName, email, password });
+    //console.log('Submitted:', { firstName, lastName, email, password });
     try {
       await createUser(email, password);
+
 
       const docRef = doc(db, "profiles", email);
       await setDoc(docRef, {
@@ -31,6 +32,7 @@ function Signup() {
       });
 
       navigate("/PersonalityPage");
+
     } catch (err) {
       console.error(err);
     }
@@ -55,11 +57,13 @@ function Signup() {
 
   return (
     <div className="signupBody">
+
       <div className="logo-container">
         <Link to="/">
           <img src={logo} alt="persona logo" className="logo" />
         </Link>
       </div>
+
 
       <h1>
         Ready to Find Love?
