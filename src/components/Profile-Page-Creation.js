@@ -3,7 +3,7 @@ import { TextField, Button, Box } from "@mui/material";
 import { UserAuth } from "../context/UserAuthContext";
 import { storage, db } from "../firebase-config";
 import { ref, uploadBytes } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 // import logo from "./img/logo.png";
@@ -51,13 +51,13 @@ const Profile_Creation = () => {
   const sumbitPhotos = () => {
     const email = user.email;
     for (let i = 0; i < photos.length; i++) {
-      let imageRef = "";
-      if (i === 0) {
+      let imageRef = '';
+      if(i === 0){
         imageRef = ref(storage, `${email}/profile-image`);
-      } else {
+      }else{
         imageRef = ref(storage, `${email}/${photos[i].name + v4()}`);
       }
-
+      
       uploadBytes(imageRef, photos[i]).then(() => {
         console.log("Photo has been uploaded: ", photos[i].name);
       });
@@ -65,36 +65,44 @@ const Profile_Creation = () => {
   };
   const submitProfileInformation = async () => {
     const docRef = doc(db, "profiles", user.email);
-    await setDoc(docRef, {
-      name: `${name}`,
-      location: `${location}`,
-      birthdate: `${birthdate}`,
-      bio: `${bio}`,
-      interests: `${interests}`,
-      genderPref: `${genderPref}`,
-    });
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      await updateDoc(docRef, {
+        name: `${name}`,
+        location: `${location}`,
+        birthdate: `${birthdate}`,
+        bio: `${bio}`,
+        interests: `${interests}`,
+        genderPref: `${genderPref}`,
+      });
+    } else {
+      await setDoc(docRef, {
+        name: `${name}`,
+        location: `${location}`,
+        birthdate: `${birthdate}`,
+        bio: `${bio}`,
+        interests: `${interests}`,
+        genderPref: `${genderPref}`,
+      });
+    }
+    
+  
   };
   const submitProfile = (event) => {
     event.preventDefault();
-    if (
-      name === "" ||
-      location === "" ||
-      birthdate === "" ||
-      bio === "" ||
-      interests === "" ||
-      genderPref === "" ||
-      photos.empty
-    ) {
+    if(name === "" || location === "" || birthdate === "" || bio === "" || interests === "" || genderPref === "" || photos.empty){
       console.log("Fill everything up!");
       return;
     }
     sumbitPhotos();
     submitProfileInformation();
-    navigate("/Profile-Page");
+    navigate("/Matching-Page");
   };
 
   return (
     <div className="profileContent">
+      
+
       <h1>Edit Your Profile</h1>
 
       <div className="profileBody">
@@ -268,9 +276,7 @@ const Profile_Creation = () => {
 
         <div>
           <Button
-            onClick={() => {
-              navigate("/PersonalityPage");
-            }}
+            onClick={()=>{navigate("/PersonalityPage")}}
             style={{ color: "#efefef", backgroundColor: "#312E29" }}
           >
             Retake MBTI Test!
