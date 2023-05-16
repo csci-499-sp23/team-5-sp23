@@ -3,7 +3,7 @@ import { TextField, Button, Box } from "@mui/material";
 import { UserAuth } from "../context/UserAuthContext";
 import { storage, db } from "../firebase-config";
 import { ref, uploadBytes } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 // import logo from "./img/logo.png";
@@ -72,14 +72,24 @@ const Profile_Creation = () => {
   };
   const submitProfileInformation = async () => {
     const docRef = doc(db, "profiles", user.email);
-    await setDoc(docRef, {
-      name: `${name}`,
-      location: `${location}`,
-      birthdate: `${birthdate}`,
-      bio: `${bio}`,
-      interests: `${interests}`,
-      genderPref: `${genderPref}`,
+    let updates = {};
+    let states = [
+      { title: "name", value: name },
+      { title: "location", value: location },
+      { title: "birthdate", value: birthdate },
+      { title: "bio", value: bio },
+      { title: "interests", value: interests },
+      { title: "genderPref", value: genderPref },
+    ];
+
+    states.forEach((state) => {
+      // debugger
+      if (state.value !== "") {
+        updates[state.title] = state.value;
+      }
     });
+
+    await updateDoc(docRef, updates);
   };
   const submitProfile = (event) => {
     event.preventDefault();
@@ -263,7 +273,9 @@ const Profile_Creation = () => {
 
         <div>
           <Button
-            onClick={()=>{navigate("/PersonalityPage")}}
+            onClick={() => {
+              navigate("/PersonalityPage");
+            }}
             style={{ color: "#efefef", backgroundColor: "#312E29" }}
           >
             Retake MBTI Test!
