@@ -96,7 +96,7 @@ const Profile_Creation = () => {
     }
     sumbitPhotos();
     submitProfileInformation();
-    navigate("/Profile-Page");
+    navigate("/Matching-Page");
   };
 
   return (

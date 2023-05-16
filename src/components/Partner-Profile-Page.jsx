@@ -4,8 +4,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import ImageSlider from "./modules/ImageSlider";
 import "./css/Profile-Page.css";
-import logo from "./img/logo.png";
-import { Link } from "react-router-dom";
+// import logo from "./img/logo.png";
+// import { Link } from "react-router-dom";
 
 const PartnerProfile = () => { 
   const [partnerEmail, setPartnerEmail] = useState(undefined);
@@ -88,11 +88,11 @@ const PartnerProfile = () => {
   return (
     <>
     
-      <div className="logo-container">
+      {/* <div className="logo-container">
         <Link to="/">
             <img src={logo} alt="persona logo" className="logo" />
         </Link>
-      </div>  
+      </div>   */}
 
       
       {NoData ? (
