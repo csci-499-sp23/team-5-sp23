@@ -16,7 +16,7 @@ import ChatJS from "./components/Chat";
 import PartnerProfile from "./components/Partner-Profile-Page";
 
 
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthContextProvider } from "./context/UserAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ChatSection from "./components/ChatParts/ChatSection";
