@@ -17,7 +17,8 @@ const Profile_Creation = () => {
   const [interests, setInterests] = useState("");
   const [photos, setPhotos] = useState([]);
   const [genderPref, setGenderPref] = useState("");
-
+  const [gender, setGender] = useState("");
+  
   const handleNameChange = (event) => setName(event.target.value);
   const handleLocationChange = (event) => setLocation(event.target.value);
   const handleBirthdateChange = (event) => setBirthdate(event.target.value);
@@ -26,7 +27,10 @@ const Profile_Creation = () => {
     setInterests(event.target.value);
   };
   const handleGenderChange = (event) => {
-    setGenderPref(event.target.value);
+    setGenderPref(event.target.value.toLowerCase());
+  };
+  const handleYourGenderChange = (event) => {
+    setGender(event.target.value.toLowerCase());
   };
 
   const { user } = UserAuth();
@@ -74,6 +78,7 @@ const Profile_Creation = () => {
         bio: `${bio}`,
         interests: `${interests}`,
         genderPref: `${genderPref}`,
+        gender: `${gender}`,
       });
     } else {
       await setDoc(docRef, {
@@ -83,20 +88,14 @@ const Profile_Creation = () => {
         bio: `${bio}`,
         interests: `${interests}`,
         genderPref: `${genderPref}`,
+        gender: `${gender}`,
       });
     }
   };
   const submitProfile = (event) => {
     event.preventDefault();
-    if (
-      name === "" ||
-      location === "" ||
-      birthdate === "" ||
-      bio === "" ||
-      interests === "" ||
-      genderPref === "" ||
-      photos.empty
-    ) {
+    if(name === "" || location === "" || birthdate === "" || bio === "" || interests === "" || genderPref === "" || gender === "" || photos.empty){
+
       console.log("Fill everything up!");
       return;
     }
@@ -176,6 +175,26 @@ const Profile_Creation = () => {
             onChange={handleNameChange}
           />
 
+          <TextField
+            label="Your Gender"
+            required
+            value={gender}
+            placeholder="Male, Female, Other"
+            variant="filled"
+            onChange={handleYourGenderChange}
+            InputLabelProps={{
+              style: {
+                color: "#efefef",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "#312E29",
+                height: "4.6em",
+              },
+            }}
+          />
+          
           <TextField
             label="Gender Preference"
             required
