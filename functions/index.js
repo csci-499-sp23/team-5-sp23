@@ -1,7 +1,7 @@
-const functions = require('firebase-functions');
-const cors = require('cors')({ origin: true });
-const fetch = require('node-fetch');
-const { Octokit } = require('@octokit/rest');
+const functions = require("firebase-functions");
+const cors = require("cors")({ origin: true });
+const fetch = require("node-fetch");
+const { Octokit } = require("@octokit/rest");
 
 const admin = require("firebase-admin");
 
@@ -9,13 +9,13 @@ const serviceAccount = require("./csci499-firebase-adminsdk-x8g37-28651561e5.jso
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://csci499-default-rtdb.firebaseio.com"
+  databaseURL: "https://csci499-default-rtdb.firebaseio.com",
 });
 
 const firestore = admin.firestore();
 const { FieldPath } = firestore;
 firestore.settings({
-  ignoreUndefinedProperties: true
+  ignoreUndefinedProperties: true,
 });
 
 async function getEmailFromUid(uid) {
@@ -24,7 +24,8 @@ async function getEmailFromUid(uid) {
   return email;
 }
 
-async function getProfiles(querySnapshot, batchSize) { // last Visible
+async function getProfiles(querySnapshot, batchSize) {
+  // last Visible
   const profiles = [];
   // let newLastVisible;
 
@@ -34,57 +35,76 @@ async function getProfiles(querySnapshot, batchSize) { // last Visible
     profiles.push(profile);
     // newLastVisible = doc;
   });
-  
+
   return {
     profiles: profiles.slice(0, batchSize),
     // lastVisible: newLastVisible || lastVisible,
   };
 }
 
-// exports.createUserSwipeDoc = functions.auth.user().onCreate(async (user) => {
-//   const useremail = await getEmailFromUid(user.uid);
-//   const swipeRef = admin.firestore().collection('swipes').doc();
-//   await swipeRef.set({ direction: "left", swipee: useremail, swiper: useremail, timestamp: "N/A"});
-// });
+exports.createUserSwipeDoc = functions.auth.user().onCreate(async (user) => {
+  const useremail = await getEmailFromUid(user.uid);
+  const swipeRef = admin.firestore().collection("swipes").doc();
+  await swipeRef.set({
+    direction: "left",
+    swipee: useremail,
+    swiper: useremail,
+    timestamp: "N/A",
+  });
+});
 
-// exports.swipeRight = functions.https.onCall(async (data) => {
-//   const useremail = await getEmailFromUid(data.uid);
-//   const userDocRef = firestore.collection("profiles").doc(useremail);
-//   const userDoc = await userDocRef.get();
+exports.swipeRight = functions.https.onCall(async (data) => {
+  const useremail = await getEmailFromUid(data.uid);
+  const userDocRef = firestore.collection("profiles").doc(useremail);
+  const userDoc = await userDocRef.get();
 
-//   const swipeeemail = data.swipeeemail; 
-//   const swipeeDocRef = firestore.collection("profiles").doc(swipeeemail);
-//   const swipeeDoc = await swipeeDocRef.get();
-//   const swipeeMatches = swipeeDoc.data().matches || [];
+  const swipeeemail = data.swipeeemail;
+  const swipeeDocRef = firestore.collection("profiles").doc(swipeeemail);
+  const swipeeDoc = await swipeeDocRef.get();
+  const swipeeMatches = swipeeDoc.data().matches || [];
 
-//   const swipeRef = firestore.collection("swipes").doc();
-//   const swipeData = { direction: "right", swipee: swipeeemail, swiper: useremail, timestamp: "N/A" };
-//   await swipeRef.set(swipeData);
+  const swipeRef = firestore.collection("swipes").doc();
+  const swipeData = {
+    direction: "right",
+    swipee: swipeeemail,
+    swiper: useremail,
+    timestamp: "N/A",
+  };
+  await swipeRef.set(swipeData);
 
-//   // Check if the swipee has already swiped right on the user
-//   const swipeeSwipes = await firestore.collection("swipes")
-//     .where("swiper", "==", swipeeemail)
-//     .where("swipee", "==", useremail)
-//     .where("direction", "==", "right")
-//     .get();
-//   const hasSwipedRight = !swipeeSwipes.empty;
+  // Check if the swipee has already swiped right on the user
+  const swipeeSwipes = await firestore
+    .collection("swipes")
+    .where("swiper", "==", swipeeemail)
+    .where("swipee", "==", useremail)
+    .where("direction", "==", "right")
+    .get();
+  const hasSwipedRight = !swipeeSwipes.empty;
 
-//   // Update matches only if the swipee has swiped right on the user
-//   if (hasSwipedRight) {
-//     const swipeeMatchesUpdate = {matches: [...swipeeMatches, useremail.trim()]};
-//     await swipeeDocRef.update(swipeeMatchesUpdate);
+  // Update matches only if the swipee has swiped right on the user
+  if (hasSwipedRight) {
+    const swipeeMatchesUpdate = {
+      matches: [...swipeeMatches, useremail.trim()],
+    };
+    await swipeeDocRef.update(swipeeMatchesUpdate);
 
-//     const userMatchesUpdate = {matches: [...userDoc.data().matches || [], swipeeemail.trim()]};
-//     await userDocRef.update(userMatchesUpdate);
-//   }
-// });
+    const userMatchesUpdate = {
+      matches: [...(userDoc.data().matches || []), swipeeemail.trim()],
+    };
+    await userDocRef.update(userMatchesUpdate);
+  }
+});
 
-
-// exports.swipeLeft = functions.https.onCall(async (data) => {
-//   const useremail = await getEmailFromUid(data.uid);
-//   const swipeRef = firestore.collection("swipes").doc();
-//   return await swipeRef.set({ direction: "left", swipee: data.swipeeemail, swiper: useremail, timestamp: "N/A"}); // DO TIMESTAMP
-// });
+exports.swipeLeft = functions.https.onCall(async (data) => {
+  const useremail = await getEmailFromUid(data.uid);
+  const swipeRef = firestore.collection("swipes").doc();
+  return await swipeRef.set({
+    direction: "left",
+    swipee: data.swipeeemail,
+    swiper: useremail,
+    timestamp: "N/A",
+  }); // DO TIMESTAMP
+});
 
 exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
@@ -102,7 +122,14 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   const userDoc = await userDocRef.get();
   const genderPref = userDoc.data().genderPref;
   console.log(genderPref);
-  const genderPrefChoices = ["Male", "male", "Female", "female", "Other", "other"];
+  const genderPrefChoices = [
+    "Male",
+    "male",
+    "Female",
+    "female",
+    "Other",
+    "other",
+  ];
   const isOutOfScope = !genderPrefChoices.includes(genderPref);
 
   // const batchSize = 3;
@@ -115,20 +142,14 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
     const swipedIds = swipedSnapshot.docs.map((doc) => doc.data().swipee);
     swipedIds.push(useremail);
 
-    let query = profileRef
-    .where(
+    let query = profileRef.where(
       admin.firestore.FieldPath.documentId(),
       "not-in",
       swipedIds || []
     );
-    
-    if (!isOutOfScope){
-      query = query
-      .where(
-        "gender",
-        "==",
-        genderPref
-      );
+
+    if (!isOutOfScope) {
+      query = query.where("gender", "==", genderPref);
     }
 
     // if (lastVisible) {
@@ -138,19 +159,18 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
     const querySnapshot = await query.limit(data.batchSize).get();
     const result = await getProfiles(querySnapshot, data.batchSize); // BATCHSIZE
     // lastVisible = result.lastVisible;
-    
+
     const response = {
       profiles: result.profiles,
       // lastVisible,
     };
-    
+
     const returntouser = JSON.stringify(response);
     return returntouser;
   } catch (error) {
     console.error("Error getting swipe data:", error);
-    
+
     if (error.code === "not-found") {
-      
       const querySnapshot = await profileRef.limit(data.batchSize).get();
       const result = await getProfiles(querySnapshot, data.batchSize, null);
       // lastVisible = result.lastVisible;
@@ -170,42 +190,48 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   }
 });
 
-// exports.getMatches = functions.https.onCall(async (data) => {
-//   const useremail = await getEmailFromUid(data.uid);
-//   const userDocRef = firestore.collection("profiles").doc(useremail);
-//   const userDoc = await userDocRef.get();
-//   return userDoc.data().matches;
-// });
+exports.getMatches = functions.https.onCall(async (data) => {
+  const useremail = await getEmailFromUid(data.uid);
+  const userDocRef = firestore.collection("profiles").doc(useremail);
+  const userDoc = await userDocRef.get();
+  return userDoc.data().matches;
+});
 
-// exports.githubRepoAPI = functions.runWith({secrets: ["AUTH_KEY"]}).https.onRequest((req, res) => {
-//   // const authkey = functions.config().authstorage.key;
-//   const octokit = new Octokit({ auth: process.env.AUTH_KEY });
+exports.githubRepoAPI = functions
+  .runWith({ secrets: ["AUTH_KEY"] })
+  .https.onRequest((req, res) => {
+    // const authkey = functions.config().authstorage.key;
+    const octokit = new Octokit({ auth: process.env.AUTH_KEY });
 
-//   cors(req, res, () => {
-//     res.set('Access-Control-Allow-Origin', '*');
+    cors(req, res, () => {
+      res.set("Access-Control-Allow-Origin", "*");
 
-//     const org = 'csci-499-sp23';
-//     const repo = 'team-5-sp23';
+      const org = "csci-499-sp23";
+      const repo = "team-5-sp23";
 
-//     octokit.repos.get({ owner: org, repo: repo })
-//       .then((response) => res.send(response.data))
-//       .catch((error) => console.error(error));
-//   });
-// });
+      octokit.repos
+        .get({ owner: org, repo: repo })
+        .then((response) => res.send(response.data))
+        .catch((error) => console.error(error));
+    });
+  });
 
-// exports.firebaseGoogleAPI = functions.runWith({secrets: ["GOOGLE_API_KEY"]}).https.onRequest((req, res) => {
-//   cors(req, res, () => {
-//     res.set('Access-Control-Allow-Origin', '*');
+exports.firebaseGoogleAPI = functions
+  .runWith({ secrets: ["GOOGLE_API_KEY"] })
+  .https.onRequest((req, res) => {
+    cors(req, res, () => {
+      res.set("Access-Control-Allow-Origin", "*");
 
-//     const latitude = req.query.location.split(",")[0];
-//     const longitude = req.query.location.split(",")[1];
-//     const type = req.query.type;
-//     const apiKey = process.env.GOOGLE_API_KEY;
-   
+      const latitude = req.query.location.split(",")[0];
+      const longitude = req.query.location.split(",")[1];
+      const type = req.query.type;
+      const apiKey = process.env.GOOGLE_API_KEY;
 
-//     fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${type}&key=${apiKey}`)
-//       .then((response) => response.json())
-//       .then((data) => res.send(data.results))
-//       .catch((error) => console.error(error));
-//   });
-// });
+      fetch(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=5000&type=${type}&key=${apiKey}`
+      )
+        .then((response) => response.json())
+        .then((data) => res.send(data.results))
+        .catch((error) => console.error(error));
+    });
+  });
