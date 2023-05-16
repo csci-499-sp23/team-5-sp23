@@ -19,13 +19,7 @@ const NavBar = () => {
               <NavLink to="/Chat-Page">Chat</NavLink>
             </li>
             <li>
-              <NavLink to="/Profile-Page-Creation">Create Profile</NavLink>
-            </li>
-            <li>
               <NavLink to="/Profile-Page">User Profile</NavLink>
-            </li>
-            <li>
-              <NavLink to="/GoogleAPI">API Test</NavLink>
             </li>
             <li>
               <NavLink to="/PersonalityPage">MBTI/Personality Test</NavLink>

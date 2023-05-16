@@ -184,7 +184,7 @@ const MBTITest = () => {
       await updateDoc(docRef, { mbtiType: mbtiTypee });
 
       // console.log("Document written with ID: ", docRef.id);
-      navigate("/Profile-Page");
+      navigate("/Matching-Page");
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -192,7 +192,6 @@ const MBTITest = () => {
 
   return (
     <div className="quizBody">
-
       <h1>Personality Survey</h1>
 
       <div className="logo-container">
@@ -202,20 +201,22 @@ const MBTITest = () => {
       </div>
 
       {showResults ? (
-        <div style={{paddingBottom: "100px"}}>
+        <div style={{ paddingBottom: "100px" }}>
           <p>Your MBTI type is: {mbtiType ? mbtiType : getMBTI()}</p>
-          <button onClick={handleClick}
-          style={{
-            backgroundColor: '#efefef',
-            color: '#312E29',
-          }}>
-            Save Result</button> <br/>
+          <button
+            onClick={handleClick}
+            style={{
+              backgroundColor: "#efefef",
+              color: "#312E29",
+            }}
+          >
+            Save Result
+          </button>{" "}
+          <br />
           <button onClick={handleRetake}>Retake the Survey</button>
         </div>
-
       ) : (
-
-        <div style={{paddingBottom: "100px"}}>
+        <div style={{ paddingBottom: "100px" }}>
           <p>{questions[questionIndex].question}</p>
           {options.map((option, optionIndex) => (
             <button
@@ -230,70 +231,19 @@ const MBTITest = () => {
             </button>
           ))}
           <br />
-          <button onClick={handleRandomize}
-          style={{
-            backgroundColor: '#efefef',
-            color: '#312E29',
-          }}>
-            Randomize Result</button>
+          <button
+            onClick={handleRandomize}
+            style={{
+              backgroundColor: "#efefef",
+              color: "#312E29",
+            }}
+          >
+            Randomize Result
+          </button>
         </div>
       )}
     </div>
-    
   );
 };
-
-// <<<<<<< STYLING-MBTI --- 
-
-
-// // =======
-//   // Render survey questions and handle answers <--- what?
-//   if (!isCompleted) {
-//     const currentQuestion = questions[currentQuestionIndex];
-//     return (
-//       <div className="quizBody">
-
-//         <h1>Personality Survey</h1>
-
-//         <p>{currentQuestion.text}</p>
-        
-//         <div class="button-container">
-//           <button onClick={() => handleAnswer(true)}>
-//             Yes
-//           </button>
-//           <button onClick={() => handleAnswer(false)}>
-//             No
-//           </button>
-//         </div>
-
-
-//         <button onClick={handleRandomize}>Randomize Result</button>
-
-
-//       </div>
-//     );
-//   } else {
-//     return (
-//       <div className="quizBody">
-
-//         <h1>Your Result!</h1>
-//         <p>Your personality type is:
-//           <br />
-//           {personalityType}</p>
-//         <button onClick={handleClick}>Save Your Result!</button>
-//         <button onClick={resetSurvey} 
-//         style={{
-//           backgroundColor: '#efefef',
-//           color: '#312E29',
-//         }}>
-//         Restart Survey</button>
-
-//       </div>
-//     );
-//   }
-// }
-// // >>>>>>> STYLING-QUIZ
-// =======
-// >>>>>>> main
 
 export default MBTITest;
