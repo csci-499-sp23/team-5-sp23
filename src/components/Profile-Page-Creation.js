@@ -27,10 +27,10 @@ const Profile_Creation = () => {
     setInterests(event.target.value);
   };
   const handleGenderChange = (event) => {
-    setGenderPref(event.target.value);
+    setGenderPref(event.target.value.toLowerCase());
   };
   const handleYourGenderChange = (event) => {
-    setGender(event.target.value);
+    setGender(event.target.value.toLowerCase());
   };
 
   const { user } = UserAuth();

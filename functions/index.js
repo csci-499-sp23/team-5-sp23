@@ -7,39 +7,39 @@ const admin = require("firebase-admin");
 
 const serviceAccount = require("./csci499-firebase-adminsdk-x8g37-28651561e5.json");
 
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://csci499-default-rtdb.firebaseio.com"
-// });
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://csci499-default-rtdb.firebaseio.com"
+});
 
-// const firestore = admin.firestore();
-// const { FieldPath } = firestore;
-// firestore.settings({
-//   ignoreUndefinedProperties: true
-// });
+const firestore = admin.firestore();
+const { FieldPath } = firestore;
+firestore.settings({
+  ignoreUndefinedProperties: true
+});
 
-// async function getEmailFromUid(uid) {
-//   const userRecord = await admin.auth().getUser(uid);
-//   const email = userRecord.email;
-//   return email;
-// }
+async function getEmailFromUid(uid) {
+  const userRecord = await admin.auth().getUser(uid);
+  const email = userRecord.email;
+  return email;
+}
 
-// async function getProfiles(querySnapshot, batchSize) { // last Visible
-//   const profiles = [];
-//   // let newLastVisible;
+async function getProfiles(querySnapshot, batchSize) { // last Visible
+  const profiles = [];
+  // let newLastVisible;
 
-//   querySnapshot.forEach((doc) => {
-//     const profile = doc.data();
-//     profile.id = doc.id;
-//     profiles.push(profile);
-//     // newLastVisible = doc;
-//   });
+  querySnapshot.forEach((doc) => {
+    const profile = doc.data();
+    profile.id = doc.id;
+    profiles.push(profile);
+    // newLastVisible = doc;
+  });
   
-//   return {
-//     profiles: profiles.slice(0, batchSize),
-//     // lastVisible: newLastVisible || lastVisible,
-//   };
-// }
+  return {
+    profiles: profiles.slice(0, batchSize),
+    // lastVisible: newLastVisible || lastVisible,
+  };
+}
 
 // exports.createUserSwipeDoc = functions.auth.user().onCreate(async (user) => {
 //   const useremail = await getEmailFromUid(user.uid);
@@ -101,8 +101,9 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
   const userDocRef = firestore.collection("profiles").doc(useremail);
   const userDoc = await userDocRef.get();
   const genderPref = userDoc.data().genderPref;
+  console.log(genderPref);
   const genderPrefChoices = ["Male", "male", "Female", "female", "Other", "other"];
-  const isOutOfScope = (genderPref in genderPrefChoices);
+  const isOutOfScope = !genderPrefChoices.includes(genderPref);
 
   // const batchSize = 3;
   // let lastVisible = data.lastVisible;
@@ -121,7 +122,14 @@ exports.getUnswipedProfiles = functions.https.onCall(async (data, context) => {
       swipedIds || []
     );
     
-    if ()
+    if (!isOutOfScope){
+      query = query
+      .where(
+        "gender",
+        "==",
+        genderPref
+      );
+    }
 
     // if (lastVisible) {
     //   query = query.startAfter(lastVisible);
