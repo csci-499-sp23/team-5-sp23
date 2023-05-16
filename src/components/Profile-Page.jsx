@@ -19,33 +19,39 @@ const Profile = () => {
   const [interests, setInterests] = useState(
     "No interests set! Please edit your Profile!"
   );
+  const [mbtiType, setMbtiType] = useState(
+    "No MBTI type set! Please take the test!"
+  );
+
   const [hasImages, setHasImages] = useState(false);
   const [NoData, setData] = useState(true);
   const [paths, setPaths] = useState([]);
   const [pathsUpdated, setUpdated] = useState(false);
   const navigate = useNavigate();
   const { user } = UserAuth();
-  // const setInformation = (data) => {
-  //   // Set information into useStates:
-  //   data.name !== "" ? setName(UpperCase(data.name)) : console.log("There is no name");
-  //   data.location !== ""
-  //     ? setLocation(data.location)
-  //     : console.log("There is no location");
-  //   data.bio !== "" ? setBio(data.bio) : console.log("There is no bio");
-  //   data.birthdate !== ""
-  //     ? setBirthdate(data.birthdate)
-  //     : console.log("There is no birthdate");
-  //   data.interests !== ""
-  //     ? setInterests(data.interests)
-  //     : console.log("There is no interests");
-  //   setData(true);
-  // };
 
   //Changes lowerCase lettering of Name to Uppercase (name is stored as lowerCase)
   const UpperCase = (str) => {
     return str.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
+    }};
+  const setInformation = (data) => {
+    // Set information into useStates:
+    data.name !== "" ? setName(UpperCase(data.name)) : console.log("There is no name");
+    data.location !== ""
+      ? setLocation(data.location)
+      : console.log("There is no location");
+    data.bio !== "" ? setBio(data.bio) : console.log("There is no bio");
+    data.birthdate !== ""
+      ? setBirthdate(data.birthdate)
+      : console.log("There is no birthdate");
+    data.interests !== ""
+      ? setInterests(data.interests)
+      : console.log("There is no interests");
+    data.mbtiType !== ""
+      ? setMbtiType(data.mbtiType)
+      : console.log("There is no MBTI type");
+    setData(true);
   };
 
   useEffect(() => {
@@ -128,13 +134,20 @@ const Profile = () => {
 
   return (
     <>
-      <button onClick={handleEditProfile}>Edit Profile</button>
+      <div className="logo-container">
+        <Link to="/">
+          <img src={logo} alt="persona logo" className="logo" />
+        </Link>
+      </div>
+
       {NoData ? (
         <h1> Hi, we are getting your information.</h1>
       ) : (
         <>
-          <div>
-            <h2>Images:</h2>
+          <div className="displayProfile">
+            <h1>Your Profile</h1>
+
+            <h2>Photos:</h2>
             {hasImages ? (
               <div className="image_section">
                 <ImageSlider slides={paths} />
@@ -144,26 +157,26 @@ const Profile = () => {
                 You dont have any images! Please edit and upload some images!
               </h1>
             )}
-          </div>
-          <div>
+
             <h2>Name:</h2>
             <p>{name}</p>
-          </div>
-          <div>
+
             <h2>Birthdate:</h2>
             <p>{birthdate}</p>
-          </div>
-          <div>
+
             <h2>Location:</h2>
             <p>{location}</p>
-          </div>
-          <div>
+
             <h2>Bio:</h2>
             <p>{bio}</p>
-          </div>
-          <div>
+
             <h2>Interests:</h2>
             <p>{interests}</p>
+
+            <h2>MBTI Type:</h2>
+            <p>{mbtiType}</p>
+
+            <button onClick={handleEditProfile}>EDIT PROFILE</button>
           </div>
         </>
       )}
