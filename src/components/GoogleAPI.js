@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import logo from "./img/logo.png";
 import "./css/GoogleAPI.css";
 
 function GoogleAPI( {data, sendplaces} ) {

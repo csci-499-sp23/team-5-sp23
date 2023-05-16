@@ -182,24 +182,6 @@ const getPersonality = async (email) => {
     }
 };
 
-
-// export async function HandleClick(props) {
-//     const personality = await getPersonality(props.email);
-//     console.log(personality);
-//     const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({
-//         date,
-//         ...option,
-//     }));
-//     console.log(dateOptionsArray);
-//     const bestDateOptions = getBestDateOptions(personality, dateOptionsArray);
-    
-//     function getplaces (val) {
-//         props.frontendplaces(val);
-//     }
-    
-//     return <GoogleAPI data={bestDateOptions} sendplaces={getplaces} />;
-// }
-
 export function HandleClick({email}) {
     return new Promise((resolve, reject) => {
         getPersonality(email)
@@ -217,6 +199,4 @@ export function HandleClick({email}) {
         reject(error);
     });
 });
-}
-//  return <GoogleAPI data={bestDateOptions} sendplaces={getplaces} />;
-  
+}  
