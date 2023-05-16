@@ -34,7 +34,7 @@ const Profile = () => {
   const UpperCase = (str) => {
     return str.replace(/\w\S*/g, function (txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
+    }};
   const setInformation = (data) => {
     // Set information into useStates:
     data.name !== "" ? setName(UpperCase(data.name)) : console.log("There is no name");
