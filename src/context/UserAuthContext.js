@@ -20,9 +20,7 @@ export const AuthContextProvider = ({children}) => {
         return createUserWithEmailAndPassword(auth, email, password);
         
     };
-    const updateUserName = (name)  => {
-        return updateProfile(user, {displayName:name});
-    }
+   
     
     const signIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
