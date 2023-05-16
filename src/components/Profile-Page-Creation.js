@@ -24,7 +24,7 @@ const Profile_Creation = () => {
     const handleBirthdateChange = (event) => setBirthdate(event.target.value);
     const handleBioChange = (event) => setBio(event.target.value);
     const handleInterestsChange = (event) => {setInterests(event.target.value); console.log(interests);};
-
+    
     const {user} = UserAuth();
     const navigate = useNavigate();
 

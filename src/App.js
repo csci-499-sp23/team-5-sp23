@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 import Contact from "./components/Contact-Page";
 import Personality from "./components/PersonalityPage";
 import GoogleAPI from "./components/GoogleAPI";
+import PartnerProfile from "./components/Partner-Profile-Page";
 
 import { Routes, Route, NavLink } from "react-router-dom";
 import { AuthContextProvider } from "./context/UserAuthContext";
@@ -67,6 +68,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/Partner-Profile" element={<PartnerProfile />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>
