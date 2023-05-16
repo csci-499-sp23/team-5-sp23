@@ -5,7 +5,8 @@ import { UserAuth } from "../context/UserAuthContext";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import ImageSlider from "./modules/ImageSlider";
 import "./css/Profile-Page.css";
-import { useNavigate } from "react-router-dom";
+import logo from "./img/logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [name, setName] = useState("No Name set! Please edit your Profile!");
@@ -30,14 +31,14 @@ const Profile = () => {
   const navigate = useNavigate();
   const { user } = UserAuth();
 
-  //Changes lowerCase lettering of Name to Uppercase (name is stored as lowerCase)
-  const UpperCase = (str) => {
-    return str.replace(/\w\S*/g, function (txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    }};
+
+
   const setInformation = (data) => {
     // Set information into useStates:
-    data.name !== "" ? setName(UpperCase(data.name)) : console.log("There is no name");
+    console.log(data.name);
+    data.name !== "" ? setName(data.name.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    })) : console.log("There is no name");
     data.location !== ""
       ? setLocation(data.location)
       : console.log("There is no location");
@@ -55,24 +56,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const setInformation = (data) => {
-      // Set information into useStates:
-      data.name !== ""
-        ? setName(UpperCase(data.name))
-        : console.log("There is no name");
-      data.location !== ""
-        ? setLocation(data.location)
-        : console.log("There is no location");
-      data.bio !== "" ? setBio(data.bio) : console.log("There is no bio");
-      data.birthdate !== ""
-        ? setBirthdate(data.birthdate)
-        : console.log("There is no birthdate");
-      data.interests !== ""
-        ? setInterests(data.interests)
-        : console.log("There is no interests");
-      setData(true);
-    };
-
     const getFirestoreInformation = async () => {
       //get Firestore document
       const docRef = doc(db, "profiles", user.email);
@@ -141,7 +124,7 @@ const Profile = () => {
       </div>
 
       {NoData ? (
-        <h1> Hi, we are getting your information.</h1>
+        <h1> Hi! One moment as we prepare your information...</h1>
       ) : (
         <>
           <div className="displayProfile">
