@@ -5,8 +5,8 @@ import { UserAuth } from "../context/UserAuthContext";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import ImageSlider from "./modules/ImageSlider";
 import "./css/Profile-Page.css";
-import logo from "./img/logo.png";
-import { Link, useNavigate } from "react-router-dom";
+// import logo from "./img/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [name, setName] = useState("No Name set! Please edit your Profile!");
@@ -111,11 +111,11 @@ const Profile = () => {
 
   return (
     <>
-      <div className="logo-container">
+      {/* <div className="logo-container">
         <Link to="/">
           <img src={logo} alt="persona logo" className="logo" />
         </Link>
-      </div>
+      </div> */}
 
       {NoData ? (
         <h1> Hi! One moment as we prepare your information...</h1>
