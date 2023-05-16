@@ -193,9 +193,9 @@ function Card() {
             </TinderCard>
           ))}
         </div>
-        <div className="banner">
+        {/* <div className="banner">
           Matching
-        </div>
+        </div> */}
         <div className="newbuttons">
           <button
             style={{
