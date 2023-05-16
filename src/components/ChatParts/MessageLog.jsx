@@ -65,69 +65,34 @@ const MessagesLog = (props) => {
     //session != undefined && session.length > 1  && unsub;
   }, [session]);
 
-  useEffect(() => {
-    const GetMetaData = async () => {
-      const DocumentID =
-        user.email.localeCompare(userInfo.email) === 1
-          ? user.email + userInfo.email
-          : userInfo.email + user.email;
-
-      //Check if chat document exists
-      const docRef = doc(db, "messages", DocumentID);
-      const docSnap = await getDoc(docRef);
-      if (!docSnap.exists()) {
-        await setDoc(docRef, { messages: [] });
-      }
-      setSession([docRef, DocumentID]);
-    };
-
-    if (userInfo.name) {
-      if (session.length < 2) GetMetaData();
-      setDataExist(true);
-    }
-  }, [userInfo, user.email, session.length]);
-
   /* Get UserInfo + Make conversation + Input process */
   useEffect(() => {
     setInfo(props.userInfo);
   }, [props.userInfo]);
 
-  // useEffect(() => {
-  //   const GetMetaData = async () => {
-  //     const DocumentID =
-  //       user.email.localeCompare(userInfo.email) === 1
-  //         ? user.email + userInfo.email
-  //         : userInfo.email + user.email;
+  useEffect(() => {
+    console.log(user.email);
+    if (userInfo.name) {
+      const GetMetaData = async () => {
+        const DocumentID =
+          user.email.localeCompare(userInfo.email) === 1
+            ? user.email + userInfo.email
+            : userInfo.email + user.email;
+    
+        //Check if chat document exists
+        const docRef = doc(db, "messages", DocumentID);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+          await setDoc(docRef, { messages: [] });
+        }
+        setSession([docRef, DocumentID]);
+      };
+      GetMetaData();
+      setDataExist(true);
+    }
+  }, [userInfo, user.email]);
 
-  //     //Check if chat document exists
-  //     const docRef = doc(db, "messages", DocumentID);
-  //     const docSnap = await getDoc(docRef);
-  //     if (!docSnap.exists()) {
-  //       await setDoc(docRef, { messages: [] });
-  //     }
-  //     setSession([docRef, DocumentID]);
-  //   };
-
-  //   if (userInfo.name) {
-  //     if (session.length < 2) GetMetaData();
-  //     setDataExist(true);
-  //   }
-  // }, [userInfo]);
-
-  // const GetMetaData = async () => {
-  //   const DocumentID =
-  //     user.email.localeCompare(userInfo.email) === 1
-  //       ? user.email + userInfo.email
-  //       : userInfo.email + user.email;
-
-  //   //Check if chat document exists
-  //   const docRef = doc(db, "messages", DocumentID);
-  //   const docSnap = await getDoc(docRef);
-  //   if (!docSnap.exists()) {
-  //     await setDoc(docRef, { messages: [] });
-  //   }
-  //   setSession([docRef, DocumentID]);
-  // };
+  
 
   const handleKeyPress = async (event) => {
     if (event.key === "Enter") {

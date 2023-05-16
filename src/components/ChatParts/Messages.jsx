@@ -1,17 +1,18 @@
 import { Avatar, Tooltip } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserAuth } from "../../context/UserAuthContext";
 
 const Messages = (props) => {
   const [showTime, setShowTime] = useState(false);
   const [data, setData] = useState(props.data);
   const { user } = UserAuth();
-  const userRole = data.sender.email === user.email ? "person2" : "person1";
-  setData(props.data);
+  const userRole = data.sender.email === user.email ? 'person2': 'person1';
   const handleMouseEnter = () => {
     setShowTime(true);
   };
-
+  useEffect(() => {
+    setData(props.data);
+  }, [props.data])
   const handleMouseLeave = () => {
     setShowTime(false);
   };
@@ -20,7 +21,7 @@ const Messages = (props) => {
       display: "flex",
       alignItems: "flex-start",
       margin: "8px",
-      backgroundColor: userRole === "person1" ? "#1AEEE1" : "#6e7977",
+      backgroundColor: userRole === 'person1' ? '#1AEEE1' : '#6e7977',
       borderRadius: "10px",
       width: "fit-content",
       padding: "8px",
@@ -39,9 +40,11 @@ const Messages = (props) => {
     },
   };
 
+
+
   return (
     <div
-      style={chatMessageStyles.container}
+    style={chatMessageStyles.container}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -57,3 +60,6 @@ const Messages = (props) => {
 };
 
 export default Messages;
+
+
+
