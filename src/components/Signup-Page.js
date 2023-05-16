@@ -4,7 +4,7 @@ import React, { useState } from "react";
 // import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 // import { auth } from '../firebase-config';
 import { UserAuth } from "../context/UserAuthContext";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase-config";
 import "../components/css/Global-Styles.css";
@@ -17,7 +17,7 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { createUser } = UserAuth();
+  const { user, createUser } = UserAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,6 +48,10 @@ function Signup() {
 
   // Check which user is signed in:
   // console.log(auth?.currentUser?.email)
+
+  if (user) {
+    return <Navigate to="/Matching-Page" />;
+  }
 
   return (
     <div className="signupBody">

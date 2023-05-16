@@ -12,6 +12,7 @@ const userContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
+    const [isInitialized, setIsInitailized] = useState(false);
     const createUser = (email, password) =>{
         return createUserWithEmailAndPassword(auth, email, password);
     };
@@ -31,6 +32,7 @@ export const AuthContextProvider = ({children}) => {
             
             //console.log("This is the user")
             setUser(currentUser);
+            setIsInitailized(true);
             //console.log(user.email);
             //console.log("This is the users email: ")
             
@@ -41,7 +43,7 @@ export const AuthContextProvider = ({children}) => {
     }, );
     
     return (
-        <userContext.Provider value={{createUser, user, logoutAccount, signIn}}>
+        <userContext.Provider value={{createUser, user, logoutAccount, signIn, isInitialized}}>
             {children}
         </userContext.Provider>
     )

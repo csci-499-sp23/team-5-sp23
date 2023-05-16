@@ -11,11 +11,13 @@ const NavBar = () => {
     event.preventDefault();
     try {
       await logoutAccount();
-      navigate("/await-Signout");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
   };
+
+  if(!user) return null
 
   return (
     <nav className="container">
@@ -43,12 +45,12 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <li>
+            {/* <li>
               <NavLink to="/Signup-Page">Signup</NavLink>
             </li>
             <li>
               <NavLink to="/Login-Page">Login</NavLink>
-            </li>
+            </li> */}
           </>
         )}
       </div>
