@@ -3,7 +3,7 @@ import { TextField, Button, Box } from "@mui/material";
 import { UserAuth } from "../context/UserAuthContext";
 import { storage, db } from "../firebase-config";
 import { ref, uploadBytes } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 // import logo from "./img/logo.png";
@@ -47,19 +47,6 @@ const Profile_Creation = () => {
     ]);
   };
 
-  // const handleSave = () => {
-  //   // enter database code here to save profile information
-  //   console.log({
-  //     name,
-  //     location,
-  //     birthdate,
-  //     bio,
-  //     interests,
-  //     photos,
-  //     genderPref,
-  //   });
-  // };
-
   // Submit information functions:
   const sumbitPhotos = () => {
     const email = user.email;
@@ -72,27 +59,21 @@ const Profile_Creation = () => {
   };
   const submitProfileInformation = async () => {
     const docRef = doc(db, "profiles", user.email);
-    let updates = {};
-    let states = [
-      { title: "name", value: name },
-      { title: "location", value: location },
-      { title: "birthdate", value: birthdate },
-      { title: "bio", value: bio },
-      { title: "interests", value: interests },
-      { title: "genderPref", value: genderPref },
-    ];
-
-    states.forEach((state) => {
-      // debugger
-      if (state.value !== "") {
-        updates[state.title] = state.value;
-      }
+    await setDoc(docRef, {
+      name: `${name}`,
+      location: `${location}`,
+      birthdate: `${birthdate}`,
+      bio: `${bio}`,
+      interests: `${interests}`,
+      genderPref: `${genderPref}`,
     });
-
-    await updateDoc(docRef, updates);
   };
   const submitProfile = (event) => {
     event.preventDefault();
+    if(name === "" || location === "" || birthdate === "" || bio === "" || interests === "" || genderPref === "" || photos.empty){
+      console.log("Fill everything up!");
+      return;
+    }
     sumbitPhotos();
     submitProfileInformation();
     navigate("/Profile-Page");
@@ -100,11 +81,7 @@ const Profile_Creation = () => {
 
   return (
     <div className="profileContent">
-      {/* <div className="logo-container">
-        <Link to="/">
-          <img src={logo} alt="persona logo" className="logo" />
-        </Link>
-      </div> */}
+      
 
       <h1>Edit Your Profile</h1>
 
@@ -155,6 +132,7 @@ const Profile_Creation = () => {
         >
           <TextField
             id="filled-basic"
+            required
             variant="filled"
             label="Name"
             color="secondary"
@@ -176,6 +154,7 @@ const Profile_Creation = () => {
 
           <TextField
             label="Gender Preference"
+            required
             value={genderPref}
             placeholder="Male, Female, Other"
             variant="filled"
@@ -195,6 +174,7 @@ const Profile_Creation = () => {
 
           <TextField
             label="Location"
+            required
             value={location}
             variant="filled"
             onChange={handleLocationChange}
@@ -212,6 +192,7 @@ const Profile_Creation = () => {
           />
           <TextField
             label="Birthdate"
+            required
             type="date"
             variant="filled"
             value={birthdate}
@@ -230,6 +211,7 @@ const Profile_Creation = () => {
           />
           <TextField
             label="Bio"
+            required
             multiline
             variant="filled"
             rows={4}
@@ -248,6 +230,7 @@ const Profile_Creation = () => {
           />
           <TextField
             label="Interests"
+            required
             multiline
             variant="filled"
             rows={4}
