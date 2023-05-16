@@ -1,7 +1,6 @@
 import Home from "./components/Home-Page";
 import Login from "./components/Login-Page";
 import Match from "./components/Matching-Page";
-// import Chat from "./components/Chat-Page";
 import Profile from "./components/Profile-Page";
 import ProfileMaker from "./components/Profile-Page-Creation";
 import Signup from "./components/Signup-Page";
@@ -9,7 +8,6 @@ import TOS from "./components/Terms-Conditions-Page";
 import NavBar from "./components/NavBar";
 import Contact from "./components/Contact-Page";
 import Personality from "./components/PersonalityPage";
-import GoogleAPI from "./components/GoogleAPI";
 import PartnerProfile from "./components/Partner-Profile-Page";
 import ChatJS from "./components/Chat";
 
@@ -23,7 +21,7 @@ export default function App() {
       <AuthContextProvider>
         <NavBar />
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
+          
           <Route path="/Login-Page" element={<Login />} />
           <Route
             path="/Matching-Page"
@@ -53,14 +51,7 @@ export default function App() {
           <Route path="/PersonalityPage" element={<Personality />} />
           <Route path="/Terms-Conditions-Page" element={<TOS />} />
           <Route path="/Contact-Page" element={<Contact />} />
-          <Route
-            path="/GoogleAPI"
-            element={
-              <ProtectedRoute>
-                <GoogleAPI />
-              </ProtectedRoute>
-            }
-          />
+          
           <Route
             path="/Profile-Page"
             element={
