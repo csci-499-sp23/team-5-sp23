@@ -3,9 +3,10 @@ import { db, storage } from "../firebase-config";
 import { doc, getDoc } from "firebase/firestore";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import ImageSlider from "./modules/ImageSlider";
+import { useNavigate } from "react-router-dom";
 import "./css/Profile-Page.css";
-import logo from "./img/logo.png";
-import { Link } from "react-router-dom";
+// import logo from "./img/logo.png";
+// import { Link } from "react-router-dom";
 
 const PartnerProfile = () => { 
   const [partnerEmail, setPartnerEmail] = useState(undefined);
@@ -14,6 +15,7 @@ const PartnerProfile = () => {
   const [paths, setPaths] = useState([]);
   const [pathsUpdated, setUpdated] = useState(false);
   const [information, setInformation] = useState([]);
+  const navigate = useNavigate();
 
     //SET UP STATE HOOKS FOR PARTNER INFORMATION
 
@@ -85,14 +87,18 @@ const PartnerProfile = () => {
     GetInformation();
   }, [pathsUpdated, partnerEmail]);
 
+  const handleBack = () => {
+    navigate("/Matching-Page");
+  };
+
   return (
     <>
     
-      <div className="logo-container">
+      {/* <div className="logo-container">
         <Link to="/">
             <img src={logo} alt="persona logo" className="logo" />
         </Link>
-      </div>  
+      </div>   */}
 
       
       {NoData ? (
@@ -130,6 +136,11 @@ const PartnerProfile = () => {
           
             <h2>Interests:</h2>
             <p>{information.interests}</p>
+
+            <h2>MBTI Type:</h2>
+            <p>{information.mbtiType}</p>
+
+            <button onClick={handleBack}>GO BACK TO MATCHING!</button>
           </div>
         </>
       )}

@@ -184,7 +184,7 @@ const MBTITest = () => {
       await updateDoc(docRef, { mbtiType: mbtiTypee });
 
       // console.log("Document written with ID: ", docRef.id);
-      navigate("/Matching-Page");
+      navigate("/Profile-Page-Creation");
     } catch (error) {
       console.error("Error adding document: ", error);
     }
