@@ -1,36 +1,41 @@
-import SelectUser from "./SelectUser";
-//import Search from "./Search";
-import { Box, Container,  } from "@mui/material";
+import { AppBar, Toolbar, Typography, } from "@mui/material";
 
-const SideBar = (props) => {
+const NavBarChat = (props) => {
   const styles = {
-    mainContainer: {
-      height: "90vh",
-      display: "flex",
-      flexDirection: "column",
-      gap: "1rem",
+    appBar: {
+      backgroundColor: "#000",
+      height: "5vh",
     },
-    containerB: {
-      height: "100%",
-      backgroundColor: "#eee",
-      overflow: "auto",
-    },
-    avatarBox: {
+    toolbar: {
       display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-between",
+    },
+    title: {
+      color: "#fff",
+      fontFamily: 'Verdana',
+      fontWeight: "bold",
+    },
+    icons: {
+      color: "#fff",
     },
   };
-  const dealwiththis = (val) => {
-    props.SelectedUser(val);
-  };
+  // const unmatchHandler = () => {
+  //   console.log("unMatched");
+  // };
   return (
-    <Container sx={styles.mainContainer}>
-      <Box sx={styles.containerB}>
-        <SelectUser handleCallBack={dealwiththis} />
-      </Box>
-    </Container>
+    <AppBar position="static" sx={styles.appBar}>
+      <Toolbar sx={styles.toolbar}>
+        <Typography variant="h6" component="div" sx={styles.title}>
+          {props.name}
+        </Typography>
+        <div>
+          {/* <IconButton sx={styles.icons} onClick={unmatchHandler}>
+            <p>UnMatch</p>
+          </IconButton> */}
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 };
 
-export default SideBar;
+export default NavBarChat;
