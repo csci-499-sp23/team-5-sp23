@@ -1,7 +1,9 @@
+import React from 'react';
 import ".././css/PersonalityPage.css";
 import math from "math";
 import { db } from "../../firebase-config";
 import { doc, getDoc } from "firebase/firestore";
+import GoogleAPI from ".././GoogleAPI.js"
 
 export const mbtiTypes = {
   "ISTJ": 
@@ -152,35 +154,38 @@ function similarity(personality, dateOption) {
   return dotProduct / (pMagnitude * dMagnitude);
 }
 
-export async function handleClick(email) {
+async function handleClick(email) {
     const personality = await getPersonality(email);
-    const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({ date, ...option }));
-
-    const dateoption = getBestDateOptions( personality, dateOptionsArray );
-    console.log(dateoption);
-}
+    const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({
+      date,
+      ...option,
+    }));
+    const bestDateOptions = getBestDateOptions(personality, dateOptionsArray);
+    console.log(bestDateOptions);
+  }
   
-function getBestDateOptions(personality, dateOptions) {
+  function getBestDateOptions(personality, dateOptions) {
     if (!dateOptions) {
-        return [];
+      return [];
     }
-
-    const sortedOptions = dateOptions.map(option => ({
+  
+    const sortedOptions = dateOptions
+      .map((option) => ({
         option,
-        similarity: similarity(personality, option)
-    })).sort((a, b) => b.similarity - a.similarity);
-
-    return sortedOptions.slice(0, 3).map(option => option.option);
-}
-
-const getPersonality = async (email) => { 
-
+        similarity: similarity(personality, option),
+      }))
+      .sort((a, b) => b.similarity - a.similarity);
+  
+    return sortedOptions.slice(0, 3).map((option) => option.option);
+  }
+  
+  const getPersonality = async (email) => {
     const docRef = doc(db, "profiles", email);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        const data = docSnap.data();
-        return data.mbtiType;
-        } else {
-            console.log("No such document!");
-        }
-};
+      const data = docSnap.data();
+      return data.mbtiType;
+    } else {
+      console.log("No such document!");
+    }
+  };
