@@ -10,11 +10,16 @@ import NavBar from "./components/NavBar";
 import Contact from "./components/Contact-Page";
 import Personality from "./components/PersonalityPage";
 import GoogleAPI from "./components/GoogleAPI";
+
+import ChatJS from "./components/Chat";
+
 import PartnerProfile from "./components/Partner-Profile-Page";
+
 
 import { Routes, Route, NavLink } from "react-router-dom";
 import { AuthContextProvider } from "./context/UserAuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ChatSection from "./components/ChatParts/ChatSection";
 
 export default function App() {
   return (
@@ -68,7 +73,22 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/chatJS"
+            element={
+              <ProtectedRoute>
+                <ChatJS />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chatSectionTester"
+            element={ <ProtectedRoute><ChatSection/></ProtectedRoute> }
+          />
+
           <Route path="/Partner-Profile" element={<PartnerProfile />} />
+
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </AuthContextProvider>

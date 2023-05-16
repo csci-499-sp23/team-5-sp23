@@ -12,10 +12,10 @@ const ButtonGroup = ({ children }) => (
 
 const Home = () => {
   return (
-    <div className = "homepageContent">
-      <div className = "logo-container">
-        <Link to = "/">
-          <img src={logo} alt="persona logo" className="logo" />
+    <div className="homepageContent">
+      <div className="logo-container">
+        <Link to="/">
+          <img src={logo} alt="logo" className="logo" />
         </Link>
       </div>
 
@@ -46,17 +46,6 @@ const Home = () => {
             fontFamily: 'Verdana' }}>Login</Button>
         </Link>
       </ButtonGroup>
-
-      <footer>
-      <Link to="/Contact-Page">
-        Contact
-      </Link>
-      |
-      <Link to="/Terms-Conditions-Page">
-        Terms
-      </Link>
-    </footer>
-
     </div>
   );
 };

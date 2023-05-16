@@ -5,9 +5,7 @@ import { storage, db } from "../firebase-config";
 import { ref, uploadBytes } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 } from 'uuid';
-import { useNavigate, Link } from 'react-router-dom';
-import logo from "./img/logo.png";
-import "./css/Profile-Page-Creation.css";
+import { useNavigate } from "react-router";
 
 
 const Profile_Creation = () => {
@@ -62,14 +60,14 @@ const Profile_Creation = () => {
             const imageRef = ref(storage, `${email}/${photos[i].name + v4()}`)
             uploadBytes(imageRef, photos[i])
                 .then(()=>{
-                    console.log("Photo has been uploaded: ", photos[i].name)
+                    console.log("Item has been uploaded: ", photos[i].name)
                 })
         };
     };
     const submitProfileInformation = async () =>{
         const docRef = doc(db, 'profiles' , user.email);
         await setDoc(docRef, {
-            name: `${name}`,
+            name: `${name.toLowerCase()}`,
             location: `${location}`,
             birthdate: `${birthdate}`,
             bio: `${bio}`,
@@ -84,164 +82,151 @@ const Profile_Creation = () => {
     };
 
   return (
-  <div className="profileContent">
-    
-    <div className="logo-container">
-      <Link to="/">
-          <img src={logo} alt="persona logo" className="logo" />
-      </Link>
-    </div>  
+    <div style={{ background: "white" }}>
+      <div>
+        <h1>Profile</h1>
+        <div>
+          <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+          {photos.map((photo, index) => (
+            <div key={index}>
+              <img
+                src={URL.createObjectURL(photo)}
+                style={{ width: 500, height: 600 }}
+                alt=""
+              />
+              <button onClick={() => handleRemovePhoto(index)}>Remove</button>
+            </div>
+          ))}
+        </div>
+        <Box
+          component="form"
+          sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            id="filled-basic"
+            variant="filled"
+            label="Name"
+            color="secondary"
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            value={name}
+            onChange={handleNameChange}
+          />
+          <TextField
+            label="Location"
+            value={location}
+            variant="filled"
+            onChange={handleLocationChange}
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "white",
+              },
+            }}
+          />
+          <TextField
+            label="Birthdate"
+            type="date"
+            variant="filled"
+            value={birthdate}
+            onChange={handleBirthdateChange}
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "white",
+              },
+            }}
+          />
+          <TextField
+            label="Bio"
+            multiline
+            variant="filled"
+            rows={4}
+            value={bio}
+            onChange={handleBioChange}
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "white",
+              },
+            }}
+          />
+          <TextField
+            label="Interests"
+            multiline
+            variant="filled"
+            rows={4}
+            value={interests}
+            onChange={handleInterestsChange}
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: "white",
+              },
+            }}
+          />
+          <button type="submit" onClick={submitProfile}>
+            Submit Profile
+          </button>
+        </Box>
 
-    <h1>Edit Your Profile</h1>
-    
-    <div className="profileBody">
-
-    <div className="upload">
-      <input id="file-input" type="file" accept="image/*" onChange={handlePhotoUpload} />
-      
-      <button id="browse-button">CLICK TO UPLOAD PHOTOS...</button>
-    </div>
-      
-      <br /><br />
-      
-      {photos.map((photo, index) => (
-      <div key={index}>
-      <img
-        src={URL.createObjectURL(photo)}
-        style={{ 
-          maxHeight: 500, 
-          maxWidth: 800,
-          color: "transparent", 
-          backgroundColor: "transparent",
-        }}
-        alt={""}
-      />
-      
-      <br /><br />
-      
-      <button onClick={() => handleRemovePhoto(index)}>REMOVE CURRENT PHOTO</button>
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSave}
+            style={{ color: "white" }}
+          >
+            Save
+          </Button>
+        </div>
+        <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ color: "white" }}
+          >
+            Dislike
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ color: "white" }}
+          >
+            Like
+          </Button>
+        </div>
       </div>
-      ))}
-    
-    <br />
-
-    <Box
-      component="form"
-      sx={{ "& > :not(style)": { m: 1, width: "25ch" } }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        id="filled-basic"
-        variant="filled"
-        label="Name"
-        color="secondary"
-        height= "2.4em"
-        InputLabelProps={{
-          style: {
-            color: "#efefef",
-          },
-        }}
-        InputProps={{
-          style: {
-            color: "#312E29",
-            height: "4.6em",
-          },
-        }}
-        value={name}
-        onChange={handleNameChange}
-      />
-      <TextField
-        label="Location"
-        value={location}
-        variant="filled"
-        onChange={handleLocationChange}
-        InputLabelProps={{
-          style: {
-            color: "#efefef",
-          },
-        }}
-        InputProps={{
-          style: {
-            color: "#312E29",
-            height: "4.6em",
-          },
-        }}
-      />
-      <TextField
-        label="Birthdate"
-        type="date"
-        variant="filled"
-        value={birthdate}
-        onChange={handleBirthdateChange}
-        InputLabelProps={{
-          style: {
-            color: "#efefef",
-          },
-        }}
-        InputProps={{
-          style: {
-            color: "#312E29",
-            height: "4.6em",
-          },
-        }}
-      />
-      <TextField
-        label="Bio"
-        multiline
-        variant="filled"
-        rows={4}
-        value={bio}
-        onChange={handleBioChange}
-        InputLabelProps={{
-          style: {
-            color: "#efefef",
-          },
-        }}
-        InputProps={{
-          style: {
-            color: "#312E29",
-          },
-        }}
-      />
-      <TextField
-        label="Interests"
-        multiline
-        variant="filled"
-        rows={4}
-        value={interests}
-        onChange={handleInterestsChange}
-        InputLabelProps={{
-          style: {
-            color: "#efefef",
-          },
-        }}
-        InputProps={{
-          style: {
-            textAlign: "left",
-            color: "#312E29",
-          },
-        }}
-      />
-      <br />
-      <Button type="submit" onClick={submitProfile}>
-        Submit Entries
-      </Button>
-    </Box>
-    
-    <div>
-      <Button
-        onClick={handleSave}
-        style={{ color: "#efefef", backgroundColor: "#312E29" }}
-      >
-        Save to Profile
-      </Button>
     </div>
-    </div>
-
-  </div>
-
   );
 };
 
 export default Profile_Creation;
+
+// button text is not coming out white...
