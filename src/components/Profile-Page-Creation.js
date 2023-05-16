@@ -51,7 +51,13 @@ const Profile_Creation = () => {
   const sumbitPhotos = () => {
     const email = user.email;
     for (let i = 0; i < photos.length; i++) {
-      const imageRef = ref(storage, `${email}/${photos[i].name + v4()}`);
+      let imageRef = '';
+      if(i === 0){
+        imageRef = ref(storage, `${email}/profile-image`);
+      }else{
+        imageRef = ref(storage, `${email}/${photos[i].name + v4()}`);
+      }
+      
       uploadBytes(imageRef, photos[i]).then(() => {
         console.log("Photo has been uploaded: ", photos[i].name);
       });
