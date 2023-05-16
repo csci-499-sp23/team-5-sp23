@@ -166,7 +166,6 @@ function Card() {
       // const matches = await getMatches() 
       const result = await getMatches({ uid, batchSize });
       const matchData = result.data;
-      debugger;
       setMatches(matchData);
     }
     loadInitialMatches(user.uid);
