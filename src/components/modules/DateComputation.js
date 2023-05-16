@@ -1,9 +1,8 @@
-import React from 'react';
+
 import ".././css/PersonalityPage.css";
 import math from "math";
 import { db } from "../../firebase-config";
 import { doc, getDoc } from "firebase/firestore";
-import GoogleAPI from ".././GoogleAPI.js"
 
 export const mbtiTypes = {
   "ISTJ": 
@@ -154,38 +153,70 @@ function similarity(personality, dateOption) {
   return dotProduct / (pMagnitude * dMagnitude);
 }
 
-async function handleClick(email) {
-    const personality = await getPersonality(email);
-    const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({
-      date,
-      ...option,
-    }));
-    const bestDateOptions = getBestDateOptions(personality, dateOptionsArray);
-    console.log(bestDateOptions);
-  }
-  
-  function getBestDateOptions(personality, dateOptions) {
-    if (!dateOptions) {
-      return [];
-    }
-  
-    const sortedOptions = dateOptions
-      .map((option) => ({
-        option,
-        similarity: similarity(personality, option),
-      }))
-      .sort((a, b) => b.similarity - a.similarity);
-  
-    return sortedOptions.slice(0, 3).map((option) => option.option);
-  }
-  
-  const getPersonality = async (email) => {
+function getBestDateOptions(personality, dateOptions) {
+if (!dateOptions) {
+    return [];
+}
+
+const sortedOptions = dateOptions
+    .map((option) => ({
+    option,
+    similarity: similarity(personality, option),
+    }))
+    .sort((a, b) => b.similarity - a.similarity);
+
+return sortedOptions.slice(0, 3).map((option) => option.option);
+}
+
+const getPersonality = async (email) => {
+    console.log("email = ", email);
+    console.log("db = ",db);
     const docRef = doc(db, "profiles", email);
+    console.log("docRef ran");
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      const data = docSnap.data();
-      return data.mbtiType;
+        const data = docSnap.data();
+        return data.mbtiType;
     } else {
-      console.log("No such document!");
+        console.log("No such document!");
     }
-  };
+};
+
+
+// export async function HandleClick(props) {
+//     const personality = await getPersonality(props.email);
+//     console.log(personality);
+//     const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({
+//         date,
+//         ...option,
+//     }));
+//     console.log(dateOptionsArray);
+//     const bestDateOptions = getBestDateOptions(personality, dateOptionsArray);
+    
+//     function getplaces (val) {
+//         props.frontendplaces(val);
+//     }
+    
+//     return <GoogleAPI data={bestDateOptions} sendplaces={getplaces} />;
+// }
+
+export function HandleClick({email}) {
+    return new Promise((resolve, reject) => {
+        getPersonality(email)
+        .then((personality) => {
+            const dateOptionsArray = Object.entries(dateOptions).map(([date, option]) => ({
+                date,
+                ...option,
+            }));
+            console.log(dateOptionsArray);
+            const bestDateOptions = getBestDateOptions(personality, dateOptionsArray);
+            console.log(bestDateOptions);
+          resolve(bestDateOptions);
+    })
+    .catch((error) => {
+        reject(error);
+    });
+});
+}
+//  return <GoogleAPI data={bestDateOptions} sendplaces={getplaces} />;
+  
