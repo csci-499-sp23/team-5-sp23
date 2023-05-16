@@ -137,8 +137,8 @@ const PartnerProfile = () => {
             <h2>Interests:</h2>
             <p>{information.interests}</p>
 
-            {/* <h2>MBTI Type:</h2>
-            <p>{mbtiType}</p> */}
+            <h2>MBTI Type:</h2>
+            <p>{information.mbtiType}</p>
 
             <button onClick={handleBack}>GO BACK TO MATCHING!</button>
           </div>
