@@ -4,7 +4,7 @@ import { HandleClick } from './modules/DateComputation.js';
 import { UserAuth } from "../context/UserAuthContext";
 import GoogleAPI from "./GoogleAPI.js";
 
-function Quiz() {
+function APIBackendInterface() {
   const { user } = UserAuth();
   const [places, setPlaces] = useState([]);
   const [types, setTypes] = useState([]);
@@ -39,4 +39,4 @@ function Quiz() {
   );
 }
 
-export default Quiz;
+export default APIBackendInterface;

@@ -19,7 +19,7 @@ function GoogleAPI( {data, sendplaces} ) {
   
   useEffect(() => {
     sendplaces(places);
-  }, [places]);
+  }, [places, sendplaces]);
 
   useEffect(() => {
     if (latitude && longitude && (types.length !== 0)) {
