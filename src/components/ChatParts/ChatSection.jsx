@@ -28,7 +28,19 @@ const ChatSection = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ height: "90vh", backgroundColor: "orange" }}>
+    <div style={{
+      fontFamily: 'Verdana',
+      color: '#312E29',
+      fontWeight: 'bolder',
+      height: '100vh',
+      textAlign: 'center',
+      backgroundColor: '#C3AFA5',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+    <Container maxWidth="xl" sx={{ height: "90vh", }}>
       <Grid container spacing={0}>
         <Grid item xs={3} sx={styles.containerA}>
           <SideBar SelectedUser={userDeal} />
@@ -42,6 +54,7 @@ const ChatSection = () => {
         </Grid>
       </Grid>
     </Container>
+    </div>
   );
 };
 

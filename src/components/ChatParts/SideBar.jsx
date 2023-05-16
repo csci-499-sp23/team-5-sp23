@@ -10,16 +10,8 @@ const SideBar = (props) => {
       flexDirection: "column",
       gap: "1rem",
     },
-    containerA: {
-      height: "10%",
-      backgroundColor: "#ccc",
-      overflow: "auto",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-    },
     containerB: {
-      height: "90%",
+      height: "100%",
       backgroundColor: "#eee",
       overflow: "auto",
     },
@@ -34,12 +26,6 @@ const SideBar = (props) => {
   };
   return (
     <Container sx={styles.mainContainer}>
-      {/* <Box sx={styles.containerA}><Search /></Box> */}
-      <Box sx={styles.containerA}>
-        <Box sx={styles.avatarBox}>
-          <Avatar>H</Avatar>
-        </Box>
-      </Box>
       <Box sx={styles.containerB}>
         <SelectUser handleCallBack={dealwiththis} />
       </Box>

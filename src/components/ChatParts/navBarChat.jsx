@@ -12,6 +12,7 @@ const NavBarChat = (props) => {
     },
     title: {
       color: "#fff",
+      fontFamily: 'Verdana',
       fontWeight: "bold",
     },
     icons: {
@@ -28,9 +29,9 @@ const NavBarChat = (props) => {
           {props.name}
         </Typography>
         <div>
-          <IconButton sx={styles.icons} onClick={unmatchHandler}>
+          {/* <IconButton sx={styles.icons} onClick={unmatchHandler}>
             <p>UnMatch</p>
-          </IconButton>
+          </IconButton> */}
         </div>
       </Toolbar>
     </AppBar>
