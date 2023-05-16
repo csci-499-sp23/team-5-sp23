@@ -23,6 +23,8 @@ function Card() {
 
   const swipeLeft = httpsCallable(functions, "swipeLeft");
   const swipeRight = httpsCallable(functions, "swipeRight");
+  const getMatches = httpsCallable(functions, "getMatches");
+  const [matches, setMatches] = useState([]);
 
   async function getUnswipedProfiles(uid) {
     const getProfiles = httpsCallable(functions, "getUnswipedProfiles");
@@ -74,6 +76,21 @@ function Card() {
           );
         }
       }
+      const checkForNewMatches = async (uid) => {
+        // const matches = await getMatches() 
+        const matchAmount = matches.length;
+        
+        const result = await getMatches({ uid, batchSize });
+        const matchData = result.data;
+        // debugger;
+        setMatches(matchData);
+        if(matchData.length > matchAmount){
+          //Put pop up alert for match here
+          window.alert("You have a new Match!");
+        }
+      }
+      checkForNewMatches(user.uid);
+
       if (tempindex < 0) {
         // if we ran out of cards
         setTimeout(async () => {
@@ -144,7 +161,16 @@ function Card() {
       }
     }
     loadInitialProfiles();
-  }, [user.uid]);
+
+    const loadInitialMatches = async (uid) => {
+      // const matches = await getMatches() 
+      const result = await getMatches({ uid, batchSize });
+      const matchData = result.data;
+      debugger;
+      setMatches(matchData);
+    }
+    loadInitialMatches(user.uid);
+  }, [user.uid, getMatches]);
 
   return (
     <div>
